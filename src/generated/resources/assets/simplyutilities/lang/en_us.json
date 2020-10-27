@@ -1,0 +1,16 @@
+{
+  "block.simplyutilities.ender_inhibitor": "Ender Inhibitor",
+  "block.simplyutilities.ender_inhibitor.info": "Prevents Endermen around it from teleporting.",
+  "item.simplyutilities.exoleggings": "Exoskeleton Leggings",
+  "item.simplyutilities.exoleggings.info": "Prevents fall damage.",
+  "item.simplyutilities.exoleggings.info2": "(Texture WIP)",
+  "message.su.debug.hand.noitem": "No held item to debug.",
+  "message.su.home": "Warping to (%s)",
+  "message.su.inhibitororphans": "Removed %d orphaned inhibitors in this dimension.",
+  "message.su.maxhomes": "Unable to set new home, max %d homes allowed.",
+  "message.su.removehomefail": "Failed to removed home (%s)",
+  "message.su.removehomesuccess": "Successfully removed home (%s)",
+  "message.su.sethome": "Set new home point (%s)",
+  "su.key.shift": "Shift",
+  "su.moreinfo": "Press <%s> for info."
+}

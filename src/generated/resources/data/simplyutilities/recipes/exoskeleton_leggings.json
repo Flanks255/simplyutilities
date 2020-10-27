@@ -1,0 +1,35 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "config_name": "exoleggings",
+          "type": "simplyutilities:bool_config_condition"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "iai",
+          "ixi",
+          "i i"
+        ],
+        "key": {
+          "x": {
+            "item": "minecraft:leather_leggings"
+          },
+          "i": {
+            "item": "minecraft:iron_bars"
+          },
+          "a": {
+            "tag": "forge:storage_blocks/diamond"
+          }
+        },
+        "result": {
+          "item": "simplyutilities:exoleggings"
+        }
+      }
+    }
+  ]
+}

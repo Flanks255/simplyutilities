@@ -1,0 +1,42 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "values": [
+            {
+              "value": {
+                "modid": "quark",
+                "type": "forge:mod_loaded"
+              },
+              "type": "forge:not"
+            },
+            {
+              "config_name": "craftLogsToChests",
+              "type": "simplyutilities:bool_config_condition"
+            }
+          ],
+          "type": "forge:and"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "xxx",
+          "x x",
+          "xxx"
+        ],
+        "key": {
+          "x": {
+            "tag": "minecraft:logs"
+          }
+        },
+        "result": {
+          "item": "minecraft:chest",
+          "count": 4
+        }
+      }
+    }
+  ]
+}

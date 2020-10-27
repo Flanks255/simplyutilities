@@ -1,0 +1,29 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "config_name": "craftLogsToSticks",
+          "type": "simplyutilities:bool_config_condition"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "x",
+          "x"
+        ],
+        "key": {
+          "x": {
+            "tag": "minecraft:logs"
+          }
+        },
+        "result": {
+          "item": "minecraft:stick",
+          "count": 16
+        }
+      }
+    }
+  ]
+}

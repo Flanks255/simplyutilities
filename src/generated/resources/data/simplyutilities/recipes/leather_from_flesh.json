@@ -1,0 +1,22 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "config_name": "smeltFleshIntoLeather",
+          "type": "simplyutilities:bool_config_condition"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:smelting",
+        "ingredient": {
+          "item": "minecraft:rotten_flesh"
+        },
+        "result": "minecraft:leather",
+        "experience": 0.0,
+        "cookingtime": 400
+      }
+    }
+  ]
+}
