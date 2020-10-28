@@ -19,6 +19,10 @@ public class CommonConfiguration {
 
     public static ForgeConfigSpec.BooleanValue EXO_LEGGINGS;
 
+    public static ForgeConfigSpec.BooleanValue CMD_BED;
+    public static ForgeConfigSpec.BooleanValue CMD_SPAWN;
+    public static ForgeConfigSpec.BooleanValue CMD_HOME;
+
     static {
         COMMON_BUILDER.comment("Convenience Recipes").push("recipes");
             RECIPE_FLESH_LEATHER = COMMON_BUILDER.comment("Enable Smelting rotton flesh into leather").define("smeltFleshIntoLeather", true);
@@ -41,6 +45,11 @@ public class CommonConfiguration {
             EXO_LEGGINGS = COMMON_BUILDER.comment("Enable the Exoskeleton Leggings").comment("Absorbs fall damage.").define("exoleggings", true);
         COMMON_BUILDER.pop();
 
+        COMMON_BUILDER.comment("Commands").push("commands");
+            CMD_BED = COMMON_BUILDER.comment("Enable teleporting to the last slept in bed.").define("bed", true);
+            CMD_SPAWN = COMMON_BUILDER.comment("Enable teleporting to the spawn point.").define("spawn", true);
+            CMD_HOME = COMMON_BUILDER.comment("Enable home commands").define("home", true);
+        COMMON_BUILDER.pop();
 
         COMMON_CONFIG = COMMON_BUILDER.build();
     }

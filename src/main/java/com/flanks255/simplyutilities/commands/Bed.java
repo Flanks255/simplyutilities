@@ -1,6 +1,7 @@
 package com.flanks255.simplyutilities.commands;
 
 import com.flanks255.simplyutilities.SimplyUtilities;
+import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -15,7 +16,7 @@ import net.minecraft.world.server.ServerWorld;
 public class Bed {
     public static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("bed")
-                .requires(cs -> cs.hasPermissionLevel(0))
+                .requires(cs -> ConfigCache.cmd_bed)
                 .executes(Bed::toBed);
     }
 

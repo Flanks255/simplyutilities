@@ -1,5 +1,6 @@
 package com.flanks255.simplyutilities.commands.homes;
 
+import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.flanks255.simplyutilities.configuration.ServerConfiguration;
 import com.flanks255.simplyutilities.homes.PlayerHomes;
 import com.flanks255.simplyutilities.save.HomeDataManager;
@@ -17,7 +18,7 @@ import net.minecraft.world.World;
 public class SetHome {
     public static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("set-home")
-                .requires(cs -> cs.hasPermissionLevel(0))
+                .requires(cs -> ConfigCache.cmd_home)
                 .executes(cs -> setHome(cs, "home"))
                 .then(Commands.argument("Name", StringArgumentType.string())
                         .executes(cs -> setHome(cs, StringArgumentType.getString(cs, "Name"))));

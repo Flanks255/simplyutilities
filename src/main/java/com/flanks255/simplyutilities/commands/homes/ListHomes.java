@@ -1,5 +1,6 @@
 package com.flanks255.simplyutilities.commands.homes;
 
+import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.flanks255.simplyutilities.save.HomeDataManager;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -15,7 +16,7 @@ import java.util.Set;
 public class ListHomes {
     public static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("list-homes")
-                .requires(cs -> cs.hasPermissionLevel(0))
+                .requires(cs -> ConfigCache.cmd_home)
                 .executes(ListHomes::list);
     }
 

@@ -1,5 +1,6 @@
 package com.flanks255.simplyutilities.commands.homes;
 
+import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.flanks255.simplyutilities.homes.HomePoint;
 import com.flanks255.simplyutilities.homes.PlayerHomes;
 import com.flanks255.simplyutilities.save.HomeDataManager;
@@ -20,7 +21,7 @@ import java.util.Set;
 public class Home {
     public static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("home")
-                .requires(cs -> cs.hasPermissionLevel(0))
+                .requires(cs -> ConfigCache.cmd_home)
                 .executes(cs -> home(cs, "home"))
                 .then(Commands.argument("Name", StringArgumentType.string())
                         .suggests((cs, builder) -> ISuggestionProvider.suggest(getHomesForSuggestion(cs.getSource().asPlayer()), builder))

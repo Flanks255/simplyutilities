@@ -8,6 +8,10 @@ public class ConfigCache {
 
         doorFix = CommonConfiguration.FIXES_DOUBLEDOORFIX.get();
         forceDoorFix = CommonConfiguration.FIXES_FORCEDOUBLEDOORFIX.get();
+
+        cmd_bed = CommonConfiguration.CMD_BED.get();
+        cmd_spawn = CommonConfiguration.CMD_SPAWN.get();
+        cmd_home = CommonConfiguration.CMD_HOME.get();
     }
 
     public static boolean EnderInhibitorEnabled;
@@ -15,4 +19,8 @@ public class ConfigCache {
     public static boolean EnderInhibitorPlayers;
     public static boolean doorFix = true;
     public static boolean forceDoorFix = false;
+
+    public static boolean cmd_bed = true;
+    public static boolean cmd_spawn = true;
+    public static boolean cmd_home = true;
 }
