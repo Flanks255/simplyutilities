@@ -12,6 +12,9 @@ public class ConfigCache {
         cmd_bed = CommonConfiguration.CMD_BED.get();
         cmd_spawn = CommonConfiguration.CMD_SPAWN.get();
         cmd_home = CommonConfiguration.CMD_HOME.get();
+
+        zoom_fov = ClientConfiguration.ZOOMFOV.get();
+        zoom_smooth = ClientConfiguration.ZOOMSMOOTHCAM.get();
     }
 
     public static boolean EnderInhibitorEnabled;
@@ -23,4 +26,7 @@ public class ConfigCache {
     public static boolean cmd_bed = true;
     public static boolean cmd_spawn = true;
     public static boolean cmd_home = true;
+
+    public static double zoom_fov = 5.0d;
+    public static boolean zoom_smooth = true;
 }

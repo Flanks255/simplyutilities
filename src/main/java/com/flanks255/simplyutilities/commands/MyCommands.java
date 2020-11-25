@@ -21,6 +21,7 @@ public class MyCommands {
                 .then(RemoveHome.register())
                 .then(Debug.register())
                 .then(Inhibitor.register())
+                .then(Zoom.register())
 
         );
         dispatcher.register(
@@ -33,6 +34,7 @@ public class MyCommands {
                         .then(RemoveHome.register())
                         .then(Debug.register())
                         .then(Inhibitor.register())
+                        .then(Zoom.register())
         );
     }
 }

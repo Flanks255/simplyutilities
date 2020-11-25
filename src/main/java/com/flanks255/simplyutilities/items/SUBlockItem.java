@@ -27,14 +27,6 @@ public class SUBlockItem extends BlockItem {
         return !I18n.format(key).equals(key);
     }
 
-    private String fallbackString(String key, String fallback) {
-        if(hasTranslation(key))
-            return I18n.format(key);
-        else
-            return fallback;
-    }
-
-
     @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {

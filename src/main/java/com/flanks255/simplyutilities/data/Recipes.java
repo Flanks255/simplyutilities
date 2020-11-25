@@ -1,11 +1,8 @@
 package com.flanks255.simplyutilities.data;
 
 import com.flanks255.simplyutilities.SimplyUtilities;
-import com.flanks255.simplyutilities.configuration.CommonConfiguration;
-import net.minecraft.data.CookingRecipeBuilder;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapedRecipeBuilder;
+import com.google.gson.JsonObject;
+import net.minecraft.data.*;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
@@ -15,11 +12,11 @@ import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.conditions.AndCondition;
 import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
-import net.minecraftforge.common.data.ForgeRecipeProvider;
 
+import java.nio.file.Path;
 import java.util.function.Consumer;
 
-public class Recipes extends ForgeRecipeProvider {
+public class Recipes extends RecipeProvider {
     public Recipes(DataGenerator generatorIn) {
         super(generatorIn);
     }
@@ -95,5 +92,10 @@ public class Recipes extends ForgeRecipeProvider {
                         .addCriterion("has_leather_pants", hasItem(Items.LEATHER_LEGGINGS))::build)
                 .generateAdvancement()
                 .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "exoskeleton_leggings"));
+    }
+
+    @Override
+    protected void saveRecipeAdvancement(DirectoryCache cache, JsonObject cache2, Path advancementJson) {
+        // No thank you, good day sir.
     }
 }

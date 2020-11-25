@@ -28,6 +28,19 @@ public class SUNetwork {
                 .consumer(OpenDebugHandMessage::handle)
                 .add();
 
+        channel.messageBuilder(ZoomFOVMessage.class, 3)
+                .decoder(ZoomFOVMessage::decode)
+                .encoder(ZoomFOVMessage::encode)
+                .consumer(ZoomFOVMessage::handle)
+                .add();
+
+        channel.messageBuilder(ZoomSmoothMessage.class, 4)
+                .decoder(ZoomSmoothMessage::decode)
+                .encoder(ZoomSmoothMessage::encode)
+                .consumer(ZoomSmoothMessage::handle)
+                .add();
+
+
         return channel;
     }
 }

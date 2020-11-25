@@ -14,5 +14,8 @@ public class Generator {
         generator.addProvider(new Lang(generator));
         generator.addProvider(new BlockStates(generator, event.getExistingFileHelper()));
         generator.addProvider(new LootTables(generator));
+        SUBlockTags blockTags = new SUBlockTags(generator, event.getExistingFileHelper());
+        generator.addProvider(blockTags);
+        generator.addProvider(new SUItemTags(generator, blockTags, event.getExistingFileHelper()));
     }
 }

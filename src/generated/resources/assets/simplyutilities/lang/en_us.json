@@ -4,6 +4,8 @@
   "item.simplyutilities.exoleggings": "Exoskeleton Leggings",
   "item.simplyutilities.exoleggings.info": "Prevents fall damage.",
   "item.simplyutilities.exoleggings.info2": "(Texture WIP)",
+  "key.simplyutilities.category": "Simply Utilities",
+  "key.simplyutilities.zoom.desc": "Zoom",
   "message.su.debug.hand.noitem": "No held item to debug.",
   "message.su.home": "Warping to (%s)",
   "message.su.inhibitororphans": "Removed %d orphaned inhibitors in this dimension.",
@@ -11,6 +13,8 @@
   "message.su.removehomefail": "Failed to removed home (%s)",
   "message.su.removehomesuccess": "Successfully removed home (%s)",
   "message.su.sethome": "Set new home point (%s)",
+  "message.su.zoom.setfov": "Setting zoom FOV to %d",
+  "message.su.zoom.setsmooth": "Setting zoom smoothcam to %s",
   "su.key.shift": "Shift",
   "su.moreinfo": "Press <%s> for info."
 }

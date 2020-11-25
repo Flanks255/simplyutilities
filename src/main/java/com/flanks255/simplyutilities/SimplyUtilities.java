@@ -2,6 +2,7 @@ package com.flanks255.simplyutilities;
 
 import com.flanks255.simplyutilities.blocks.EnderInhibitor;
 import com.flanks255.simplyutilities.commands.MyCommands;
+import com.flanks255.simplyutilities.configuration.ClientConfiguration;
 import com.flanks255.simplyutilities.configuration.CommonConfiguration;
 import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.flanks255.simplyutilities.configuration.ServerConfiguration;
@@ -12,16 +13,24 @@ import com.flanks255.simplyutilities.items.SUBlockItem;
 import com.flanks255.simplyutilities.tweaks.DoubleDoorFix;
 import com.flanks255.simplyutilities.network.SUNetwork;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -56,9 +65,12 @@ public class SimplyUtilities
 
     //public static final RegistryObject<Item> CANISTER = SIMPLEITEMS.register("canister", FluidCanister::new);
 
+    private NonNullList<KeyBinding> keyBinds= NonNullList.create();
+
     public SimplyUtilities() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfiguration.SERVER_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfiguration.COMMON_CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfiguration.CLIENT_CONFIG);
 
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         SIMPLEITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -85,7 +97,10 @@ public class SimplyUtilities
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
+        MinecraftForge.EVENT_BUS.addListener(this::onRenderViewEvent);
         // do something that can only be done on the client
+        keyBinds.add(0, new KeyBinding("key.simplyutilities.zoom.desc", -1, "key.simplyutilities.category"));
+        ClientRegistry.registerKeyBinding(keyBinds.get(0));
     }
 
     private void onCommandsRegister(RegisterCommandsEvent event) {
@@ -94,6 +109,19 @@ public class SimplyUtilities
 
     private void onConfigReload(ModConfig.ModConfigEvent event) {
         ConfigCache.RefreshCache();
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private void onRenderViewEvent(EntityViewRenderEvent.FOVModifier event) {
+        if (keyBinds.get(0).isKeyDown()) {
+            event.setFOV(ConfigCache.zoom_fov);
+            if (ConfigCache.zoom_smooth)
+                Minecraft.getInstance().gameSettings.smoothCamera = true;
+        }
+        else {
+            if (ConfigCache.zoom_smooth)
+                Minecraft.getInstance().gameSettings.smoothCamera = false;
+        }
     }
 
 

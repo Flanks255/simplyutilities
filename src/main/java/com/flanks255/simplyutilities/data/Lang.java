@@ -15,6 +15,8 @@ public class Lang extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
+        add("key.simplyutilities.category", "Simply Utilities");
+
         add("su.moreinfo" ,"Press <%s> for info.");
         add("su.key.shift", "Shift");
 
@@ -25,6 +27,10 @@ public class Lang extends LanguageProvider {
         add("message.su.removehomefail", "Failed to removed home (%s)");
 
         add("message.su.debug.hand.noitem", "No held item to debug.");
+
+        add("key.simplyutilities.zoom.desc", "Zoom");
+        add("message.su.zoom.setfov", "Setting zoom FOV to %d");
+        add("message.su.zoom.setsmooth", "Setting zoom smoothcam to %s");
 
         add("message.su.inhibitororphans", "Removed %d orphaned inhibitors in this dimension.");
 
