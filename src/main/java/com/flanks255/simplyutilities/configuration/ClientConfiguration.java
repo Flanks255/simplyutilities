@@ -11,7 +11,7 @@ public class ClientConfiguration {
 
     static {
         CLIENT_BUILDER.comment("Zoom options.").push("zoom");
-            ZOOMFOV = CLIENT_BUILDER.comment("Zoomed in FOV value.").defineInRange("zoomfov", 5.0d, 1.0d, 180.0d);
+            ZOOMFOV = CLIENT_BUILDER.comment("Zoomed in FOV value.").defineInRange("zoomfov", 5.0d, 1.0d, 90.0d);
             ZOOMSMOOTHCAM = CLIENT_BUILDER.comment("Smooth camera movement while zoomed").define("zoomsmoothcam", true);
         CLIENT_BUILDER.pop();
 

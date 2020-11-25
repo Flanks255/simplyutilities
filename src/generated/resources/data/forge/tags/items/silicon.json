@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "appliedenergistics2:silicon",
+      "required": false
+    }
+  ]
+}
