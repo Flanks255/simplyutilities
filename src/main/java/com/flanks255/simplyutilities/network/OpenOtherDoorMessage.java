@@ -14,7 +14,7 @@ public class OpenOtherDoorMessage {
         blockPos = pos;
     }
 
-    private BlockPos blockPos;
+    private final BlockPos blockPos;
 
     public BlockPos getBlockPos() {
         return blockPos;

@@ -76,6 +76,7 @@ public class FluidDataManager extends WorldSavedData {
         }
     }
 
+    @Nonnull
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         ListNBT handlersNBT = new ListNBT();

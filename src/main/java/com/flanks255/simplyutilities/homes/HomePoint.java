@@ -8,7 +8,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class HomePoint {
-    private String name;
+    private final String name;
     private String world;
     private BlockPos postion;
 
@@ -30,10 +30,9 @@ public class HomePoint {
         return name;
     }
 
-    public HomePoint update(String newWorld, BlockPos newPos) {
+    public void update(String newWorld, BlockPos newPos) {
         this.world = newWorld;
         this.postion = newPos;
-        return this;
     }
 
     public CompoundNBT toNBT() {

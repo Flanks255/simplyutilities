@@ -14,6 +14,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class ExoLeggings extends ArmorItem {
     }
 
     private boolean hasTranslation(String key) {
-        return !I18n.format(key).equals(key);
+        return I18n.hasKey(key);
     }
 
     private String fallbackString(String key, String fallback) {
@@ -40,7 +41,7 @@ public class ExoLeggings extends ArmorItem {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         if (Screen.hasShiftDown()) {
             tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".info"));

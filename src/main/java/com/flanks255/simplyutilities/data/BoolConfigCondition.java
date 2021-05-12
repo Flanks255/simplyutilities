@@ -11,10 +11,10 @@ import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 
 public class BoolConfigCondition implements ICondition {
     private static final ResourceLocation NAME = new ResourceLocation(SimplyUtilities.MODID, "bool_config_condition");
-    String boolconfig;
+    private final String boolConfig;
 
     public BoolConfigCondition(String config) {
-        this.boolconfig = config;
+        this.boolConfig = config;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class BoolConfigCondition implements ICondition {
 
     @Override
     public boolean test() {
-        switch (boolconfig) {
+        switch (boolConfig) {
             default:
                 return true;
             case "smeltFleshIntoLeather":
@@ -45,7 +45,7 @@ public class BoolConfigCondition implements ICondition {
 
         @Override
         public void write(JsonObject json, BoolConfigCondition value) {
-            json.addProperty("config_name", value.boolconfig);
+            json.addProperty("config_name", value.boolConfig);
         }
 
         @Override

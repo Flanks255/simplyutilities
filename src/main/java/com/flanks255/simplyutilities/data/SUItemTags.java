@@ -10,8 +10,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import static net.minecraft.tags.ItemTags.makeWrapperTag;
-
 
 public class SUItemTags extends ItemTagsProvider {
 

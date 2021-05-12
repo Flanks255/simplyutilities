@@ -1,6 +1,5 @@
 package com.flanks255.simplyutilities.network;
 
-import com.flanks255.simplyutilities.SimplyUtilities;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -30,14 +29,12 @@ public class OpenDebugHandMessage {
     }
 
     public static void handle(final OpenDebugHandMessage message, final Supplier<NetworkEvent.Context> ctx) {
-        SimplyUtilities.LOGGER.info("Narf1");
         ctx.get().enqueueWork(
                 () -> {
                     PlayerEntity player = ctx.get().getSender();
-                    if (player != null && ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
+                    if (player != null && ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) { //TODO
                         //gotta move this to server
                         //Minecraft.getInstance().displayGuiScreen(new DebugScreen(message.getItemStack()));
-                        SimplyUtilities.LOGGER.info("Narf2");
                     }
                 });
         ctx.get().setPacketHandled(true);

@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -22,14 +23,14 @@ public class SUBlockItem extends BlockItem {
         this.block = blockIn;
     }
 
-    private Block block;
+    private final Block block;
     private boolean hasTranslation(String key) {
-        return !I18n.format(key).equals(key);
+        return I18n.hasKey(key);
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         if (Screen.hasShiftDown()) {
             tooltip.add(new TranslationTextComponent(block.getTranslationKey() + ".info"));

@@ -9,9 +9,9 @@ import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.loot.*;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -24,6 +24,7 @@ public class LootTables extends LootTableProvider {
         super(gen);
     }
 
+    @Nonnull
     @Override
     protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> getTables() {
         return ImmutableList.of(Pair.of(Blocks::new, LootParameterSets.BLOCK));
@@ -35,6 +36,7 @@ public class LootTables extends LootTableProvider {
             this.registerDropSelfLootTable(SimplyUtilities.ENDER_INHIBITOR.get());
         }
 
+        @Nonnull
         @Override
         protected Iterable<Block> getKnownBlocks() {
             return ForgeRegistries.BLOCKS.getValues().stream()
@@ -44,7 +46,7 @@ public class LootTables extends LootTableProvider {
     }
 
     @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, ValidationTracker validationtracker) {
+    protected void validate(Map<ResourceLocation, LootTable> map, @Nonnull ValidationTracker validationtracker) {
         map.forEach((name, table) -> LootTableManager.validateLootTable(validationtracker, name, table));
     }
 }

@@ -17,7 +17,7 @@ public class ZoomSmoothMessage {
         return smoothcam;
     }
 
-    private boolean smoothcam;
+    private final boolean smoothcam;
 
     public static ZoomSmoothMessage decode(final PacketBuffer buffer) {
         return new ZoomSmoothMessage(buffer.readBoolean());

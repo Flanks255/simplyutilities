@@ -24,7 +24,6 @@ import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModList;
@@ -42,7 +41,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-// The value here should match an entry in the META-INF/mods.toml file
 @Mod("simplyutilities")
 public class SimplyUtilities
 {
@@ -65,7 +63,7 @@ public class SimplyUtilities
 
     //public static final RegistryObject<Item> CANISTER = SIMPLEITEMS.register("canister", FluidCanister::new);
 
-    private NonNullList<KeyBinding> keyBinds= NonNullList.create();
+    private final NonNullList<KeyBinding> keyBinds = NonNullList.create();
 
     public SimplyUtilities() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfiguration.SERVER_CONFIG);
@@ -98,7 +96,6 @@ public class SimplyUtilities
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         MinecraftForge.EVENT_BUS.addListener(this::onRenderViewEvent);
-        // do something that can only be done on the client
         keyBinds.add(0, new KeyBinding("key.simplyutilities.zoom.desc", -1, "key.simplyutilities.category"));
         ClientRegistry.registerKeyBinding(keyBinds.get(0));
     }

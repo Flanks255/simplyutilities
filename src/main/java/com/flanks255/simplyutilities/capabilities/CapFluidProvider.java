@@ -1,6 +1,5 @@
 package com.flanks255.simplyutilities.capabilities;
 
-import com.flanks255.simplyutilities.save.FluidDataManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;

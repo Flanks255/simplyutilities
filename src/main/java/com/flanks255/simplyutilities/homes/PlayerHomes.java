@@ -10,9 +10,9 @@ import net.minecraftforge.common.util.Constants;
 import java.util.*;
 
 public class PlayerHomes {
-    private UUID ID;
-    private String Name;
-    private Map<String, HomePoint> Homes;
+    private final UUID ID;
+    private final String Name;
+    private final Map<String, HomePoint> Homes;
 
     public PlayerHomes(UUID uuid, String playerName) {
         Name = playerName;

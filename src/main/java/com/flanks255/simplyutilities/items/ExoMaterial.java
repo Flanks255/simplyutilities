@@ -8,14 +8,16 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 
+import javax.annotation.Nonnull;
+
 public class ExoMaterial implements IArmorMaterial {
     @Override
-    public int getDurability(EquipmentSlotType slotIn) {
+    public int getDurability(@Nonnull EquipmentSlotType slotIn) {
         return 256;
     }
 
     @Override
-    public int getDamageReductionAmount(EquipmentSlotType slotIn) {
+    public int getDamageReductionAmount(@Nonnull EquipmentSlotType slotIn) {
         return 2;
     }
 
@@ -24,16 +26,19 @@ public class ExoMaterial implements IArmorMaterial {
         return 0;
     }
 
+    @Nonnull
     @Override
     public SoundEvent getSoundEvent() {
         return SoundEvents.ITEM_ARMOR_EQUIP_LEATHER;
     }
 
+    @Nonnull
     @Override
     public Ingredient getRepairMaterial() {
         return Ingredient.fromItems(Items.IRON_INGOT);
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return SimplyUtilities.MODID + ":exo";

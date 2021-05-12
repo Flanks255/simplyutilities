@@ -2,7 +2,6 @@ package com.flanks255.simplyutilities.network;
 
 import com.flanks255.simplyutilities.configuration.ClientConfiguration;
 import com.flanks255.simplyutilities.configuration.ConfigCache;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -18,7 +17,7 @@ public class ZoomFOVMessage {
         return fov;
     }
 
-    private double fov;
+    private final double fov;
 
 
     public static ZoomFOVMessage decode(final PacketBuffer buffer) {

@@ -13,6 +13,7 @@ import net.minecraftforge.common.crafting.conditions.AndCondition;
 import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
 
+import javax.annotation.Nonnull;
 import java.nio.file.Path;
 import java.util.function.Consumer;
 
@@ -22,7 +23,7 @@ public class Recipes extends RecipeProvider {
     }
 
     @Override
-    protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected void registerRecipes(@Nonnull Consumer<IFinishedRecipe> consumer) {
         ConditionalRecipe.builder()
                 .addCondition(new BoolConfigCondition("craftLogsToSticks"))
                 .addRecipe(
@@ -95,7 +96,7 @@ public class Recipes extends RecipeProvider {
     }
 
     @Override
-    protected void saveRecipeAdvancement(DirectoryCache cache, JsonObject cache2, Path advancementJson) {
+    protected void saveRecipeAdvancement(@Nonnull DirectoryCache cache, @Nonnull JsonObject cache2, @Nonnull Path advancementJson) {
         // No thank you, good day sir.
     }
 }

@@ -9,6 +9,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -35,6 +36,7 @@ public class HomeDataManager extends WorldSavedData {
         }
     }
 
+    @Nonnull
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         ListNBT players = new ListNBT();

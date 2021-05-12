@@ -19,6 +19,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 
+import javax.annotation.Nonnull;
+
 public class EnderInhibitor extends Block {
     public EnderInhibitor() {
         super(AbstractBlock.Properties.create(new Material(
@@ -34,7 +36,7 @@ public class EnderInhibitor extends Block {
     }
 
     @Override
-    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+    public void onBlockAdded(@Nonnull BlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull BlockState oldState, boolean isMoving) {
         super.onBlockAdded(state, worldIn, pos, oldState, isMoving);
 
         if (!worldIn.isRemote)
@@ -42,7 +44,7 @@ public class EnderInhibitor extends Block {
     }
 
     @Override
-    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+    public void onBlockHarvested(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull PlayerEntity player) {
         super.onBlockHarvested(worldIn, pos, state, player);
 
         if (!worldIn.isRemote)
@@ -68,8 +70,9 @@ public class EnderInhibitor extends Block {
         }
     }
 
+    @Nonnull
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(@Nonnull BlockState state, @Nonnull IBlockReader worldIn, @Nonnull BlockPos pos, @Nonnull ISelectionContext context) {
         return VoxelShapes.create(0,0,0.4,1,1,0.6);
     }
 }

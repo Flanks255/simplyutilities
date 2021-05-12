@@ -10,6 +10,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
 
+import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class InhibitorManager extends WorldSavedData {
     }
 
     public static String NAME = SimplyUtilities.MODID + "_inhibitors";
-    private Set<BlockPos> inhibitors = new HashSet<>();
+    private final Set<BlockPos> inhibitors = new HashSet<>();
 
     public static InhibitorManager get(ServerWorld world) {
         return world.getSavedData().getOrCreate(InhibitorManager::new, NAME);
@@ -59,6 +60,7 @@ public class InhibitorManager extends WorldSavedData {
         }
     }
 
+    @Nonnull
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         ListNBT poslist = new ListNBT();
