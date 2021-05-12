@@ -1,5 +1,7 @@
 package com.flanks255.simplyutilities.data;
 
+import com.flanks255.simplyutilities.SUBlocks;
+import com.flanks255.simplyutilities.SUItems;
 import com.flanks255.simplyutilities.SimplyUtilities;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
@@ -35,12 +37,12 @@ public class Lang extends LanguageProvider {
         add("message.su.inhibitororphans", "Removed %d orphaned inhibitors in this dimension.");
 
         //addItem(SimplyUtilities.CANISTER, "Fluid Canister");
-        addBlock(SimplyUtilities.ENDER_INHIBITOR, "Ender Inhibitor");
-        addBlockExtra(SimplyUtilities.ENDER_INHIBITOR, ".info", "Prevents Endermen around it from teleporting.");
+        addBlock(SUBlocks.ENDER_INHIBITOR, "Ender Inhibitor");
+        addBlockExtra(SUBlocks.ENDER_INHIBITOR, ".info", "Prevents Endermen around it from teleporting.");
 
-        addItem(SimplyUtilities.EXOLEGGINGS, "Exoskeleton Leggings");
-        addItemExtra(SimplyUtilities.EXOLEGGINGS, ".info", "Prevents fall damage.");
-        addItemExtra(SimplyUtilities.EXOLEGGINGS, ".info2", "(Texture WIP)");
+        addItem(SUItems.EXOLEGGINGS, "Exoskeleton Leggings");
+        addItemExtra(SUItems.EXOLEGGINGS, ".info", "Prevents fall damage.");
+        addItemExtra(SUItems.EXOLEGGINGS, ".info2", "(Texture WIP)");
     }
 
     private void addBlockExtra(Supplier<? extends Block> key, String name, String text) {

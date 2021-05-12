@@ -1,5 +1,7 @@
 package com.flanks255.simplyutilities.data;
 
+import com.flanks255.simplyutilities.SUBlocks;
+import com.flanks255.simplyutilities.SUItems;
 import com.flanks255.simplyutilities.SimplyUtilities;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
@@ -21,12 +23,12 @@ public class ItemModels extends ItemModelProvider {
         //singleTexture("canister", mcLoc("item/handheld"), "layer0", modLoc("item/canister"));
 
 
-        for (RegistryObject<Item> item : SimplyUtilities.SIMPLEITEMS.getEntries()) {
+        for (RegistryObject<Item> item : SUItems.SIMPLEITEMS.getEntries()) {
             String name = item.get().getRegistryName().getPath();
             singleTexture(name, mcLoc("item/handheld"), "layer0", modLoc("item/" + name));
         }
 
-        registerBlockItem(SimplyUtilities.ENDER_INHIBITOR.get());
+        registerBlockItem(SUBlocks.ENDER_INHIBITOR.get());
     }
 
 

@@ -1,5 +1,6 @@
 package com.flanks255.simplyutilities.data;
 
+import com.flanks255.simplyutilities.SUItems;
 import com.flanks255.simplyutilities.SimplyUtilities;
 import com.google.gson.JsonObject;
 import net.minecraft.data.*;
@@ -67,7 +68,7 @@ public class Recipes extends RecipeProvider {
         ConditionalRecipe.builder()
                 .addCondition(new BoolConfigCondition("enableEnderInhibitor"))
                 .addRecipe(
-                        ShapedRecipeBuilder.shapedRecipe(SimplyUtilities.ENDER_INHIBITOR_ITEM.get())
+                        ShapedRecipeBuilder.shapedRecipe(SUItems.ENDER_INHIBITOR.get())
                                 .patternLine(" x ")
                                 .patternLine(" b ")
                                 .patternLine("aca")
@@ -83,7 +84,7 @@ public class Recipes extends RecipeProvider {
         ConditionalRecipe.builder()
                 .addCondition(new BoolConfigCondition("exoleggings"))
                 .addRecipe(
-                        ShapedRecipeBuilder.shapedRecipe(SimplyUtilities.EXOLEGGINGS.get())
+                        ShapedRecipeBuilder.shapedRecipe(SUItems.EXOLEGGINGS.get())
                         .patternLine("iai")
                         .patternLine("ixi")
                         .patternLine("i i")

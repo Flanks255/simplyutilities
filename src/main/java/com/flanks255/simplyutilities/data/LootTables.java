@@ -1,5 +1,6 @@
 package com.flanks255.simplyutilities.data;
 
+import com.flanks255.simplyutilities.SUBlocks;
 import com.flanks255.simplyutilities.SimplyUtilities;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
@@ -33,7 +34,7 @@ public class LootTables extends LootTableProvider {
     private static class Blocks extends BlockLootTables {
         @Override
         protected void addTables() {
-            this.registerDropSelfLootTable(SimplyUtilities.ENDER_INHIBITOR.get());
+            this.registerDropSelfLootTable(SUBlocks.ENDER_INHIBITOR.get());
         }
 
         @Nonnull

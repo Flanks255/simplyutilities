@@ -10,6 +10,8 @@ import com.flanks255.simplyutilities.data.BoolConfigCondition;
 import com.flanks255.simplyutilities.data.Generator;
 import com.flanks255.simplyutilities.items.ExoLeggings;
 import com.flanks255.simplyutilities.items.SUBlockItem;
+import com.flanks255.simplyutilities.network.ClientNetProxy;
+import com.flanks255.simplyutilities.network.CommonNetProxy;
 import com.flanks255.simplyutilities.tweaks.DoubleDoorFix;
 import com.flanks255.simplyutilities.network.SUNetwork;
 import net.minecraft.block.Block;
@@ -25,10 +27,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.fml.DeferredWorkQueue;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.*;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -48,41 +48,38 @@ public class SimplyUtilities
     public static final String MODID = "simplyutilities";
     public static SimpleChannel NETWORK;
 
+    public static CommonNetProxy NETPROXY;
+
     public static boolean isQuarkLoaded = false;
-
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-    //Items with 1 basic texture.
-    public static final DeferredRegister<Item> SIMPLEITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
-
-    public static final RegistryObject<Item> EXOLEGGINGS = SIMPLEITEMS.register("exoleggings", ExoLeggings::new);
-
-
-    public static final RegistryObject<Block> ENDER_INHIBITOR = BLOCKS.register("ender_inhibitor", EnderInhibitor::new);
-    public static final RegistryObject<Item> ENDER_INHIBITOR_ITEM = ITEMS.register("ender_inhibitor", () -> new SUBlockItem(ENDER_INHIBITOR.get(), new Item.Properties().maxStackSize(64).group(ItemGroup.MISC)));
-
-    //public static final RegistryObject<Item> CANISTER = SIMPLEITEMS.register("canister", FluidCanister::new);
 
     private final NonNullList<KeyBinding> keyBinds = NonNullList.create();
 
     public SimplyUtilities() {
+        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        SUBlocks.init(modBus);
+        SUItems.init(modBus);
+
+        // Configs
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfiguration.SERVER_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfiguration.COMMON_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfiguration.CLIENT_CONFIG);
+        modBus.addListener(this::onConfigReload);
 
-        ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        SIMPLEITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
-
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        // Commands
         MinecraftForge.EVENT_BUS.addListener(this::onCommandsRegister);
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, DoubleDoorFix::playerInteraction);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onConfigReload);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(Generator::gatherData);
 
+        // Data Generators
+        modBus.addListener(Generator::gatherData);
+
+        // Misc Event Hooks
+        modBus.addListener(this::setup);
+        modBus.addListener(this::doClientStuff);
         MinecraftForge.EVENT_BUS.addListener(EnderInhibitor::TeleportEvent);
         MinecraftForge.EVENT_BUS.addListener(ExoLeggings::onEntityHurt);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, DoubleDoorFix::playerInteraction);
+
+        NETPROXY = DistExecutor.safeRunForDist(() -> ClientNetProxy::new, () -> CommonNetProxy::new);
     }
 
     private void setup(final FMLCommonSetupEvent event)
@@ -96,6 +93,7 @@ public class SimplyUtilities
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         MinecraftForge.EVENT_BUS.addListener(this::onRenderViewEvent);
+
         keyBinds.add(0, new KeyBinding("key.simplyutilities.zoom.desc", -1, "key.simplyutilities.category"));
         ClientRegistry.registerKeyBinding(keyBinds.get(0));
     }
