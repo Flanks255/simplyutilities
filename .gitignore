@@ -13,10 +13,8 @@ out
 *.iml
 .idea
 
-# gradle
 build
 .gradle
-# gradle.properties
 # other
 eclipse
 run
