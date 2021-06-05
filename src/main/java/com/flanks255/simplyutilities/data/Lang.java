@@ -38,7 +38,9 @@ public class Lang extends LanguageProvider {
 
         //addItem(SimplyUtilities.CANISTER, "Fluid Canister");
         addBlock(SUBlocks.ENDER_INHIBITOR, "Ender Inhibitor");
+        addBlock(SUBlocks.ONLINE_DETECTOR, "Online Detector");
         addBlockExtra(SUBlocks.ENDER_INHIBITOR, ".info", "Prevents Endermen around it from teleporting.");
+        addBlockExtra(SUBlocks.ONLINE_DETECTOR, ".info", "Emits redstone power when the player who placed the block is online.");
 
         addItem(SUItems.EXOLEGGINGS, "Exoskeleton Leggings");
         addItemExtra(SUItems.EXOLEGGINGS, ".info", "Prevents fall damage.");

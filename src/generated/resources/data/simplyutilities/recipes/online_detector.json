@@ -1,0 +1,41 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "config_name": "online_detector",
+          "type": "simplyutilities:bool_config_condition"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "SSS",
+          "RER",
+          "ABA"
+        ],
+        "key": {
+          "S": {
+            "item": "minecraft:smooth_stone_slab"
+          },
+          "R": {
+            "tag": "forge:dusts/redstone"
+          },
+          "E": {
+            "item": "minecraft:ender_eye"
+          },
+          "A": {
+            "item": "minecraft:smooth_stone"
+          },
+          "B": {
+            "tag": "forge:storage_blocks/redstone"
+          }
+        },
+        "result": {
+          "item": "simplyutilities:online_detector"
+        }
+      }
+    }
+  ]
+}

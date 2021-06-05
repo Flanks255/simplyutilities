@@ -19,6 +19,8 @@ public class CommonConfiguration {
 
     public static ForgeConfigSpec.BooleanValue EXO_LEGGINGS;
 
+    public static ForgeConfigSpec.BooleanValue ONLINE_DETECTOR;
+
     public static ForgeConfigSpec.BooleanValue CMD_BED;
     public static ForgeConfigSpec.BooleanValue CMD_SPAWN;
     public static ForgeConfigSpec.BooleanValue CMD_HOME;
@@ -43,6 +45,10 @@ public class CommonConfiguration {
 
         COMMON_BUILDER.comment("Exoskeleton").push("exoskeleton");
             EXO_LEGGINGS = COMMON_BUILDER.comment("Enable the Exoskeleton Leggings").comment("Absorbs fall damage.").define("exoleggings", true);
+        COMMON_BUILDER.pop();
+
+        COMMON_BUILDER.comment("Online Detector").push("onlinedetector");
+        ONLINE_DETECTOR = COMMON_BUILDER.comment("Enable the Online Detector").comment("Emits redstone when the placing player is online").define("online_detector", true);
         COMMON_BUILDER.pop();
 
         COMMON_BUILDER.comment("Commands").push("commands");

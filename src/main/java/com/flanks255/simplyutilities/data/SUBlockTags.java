@@ -9,4 +9,8 @@ public class SUBlockTags extends BlockTagsProvider {
     public SUBlockTags(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
         super(generatorIn, SimplyUtilities.MODID, existingFileHelper);
     }
+
+    @Override
+    protected void registerTags() {
+    }
 }

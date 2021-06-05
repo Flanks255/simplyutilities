@@ -11,17 +11,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class SUItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SimplyUtilities.MODID);
-    //Items with 1 basic texture.
-    public static final DeferredRegister<Item> SIMPLEITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SimplyUtilities.MODID);
 
-    public static final RegistryObject<Item> EXOLEGGINGS = SIMPLEITEMS.register("exoleggings", ExoLeggings::new);
-    public static final RegistryObject<Item> ENDER_INHIBITOR = ITEMS.register("ender_inhibitor", () -> new SUBlockItem(SUBlocks.ENDER_INHIBITOR.get(), new Item.Properties().maxStackSize(64).group(ItemGroup.MISC)));
+    public static final RegistryObject<Item> EXOLEGGINGS = ITEMS.register("exoleggings", ExoLeggings::new);
 
-    //public static final RegistryObject<Item> CANISTER = SIMPLEITEMS.register("canister", FluidCanister::new);
-
+     //public static final RegistryObject<Item> CANISTER = SIMPLEITEMS.register("canister", FluidCanister::new);
 
     public static void init(IEventBus eventBus) {
         ITEMS.register(eventBus);
-        SIMPLEITEMS.register(eventBus);
     }
 }

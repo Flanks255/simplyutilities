@@ -37,6 +37,8 @@ public class BoolConfigCondition implements ICondition {
                 return ConfigCache.EnderInhibitorEnabled;
             case "exoleggings":
                 return CommonConfiguration.EXO_LEGGINGS.get();
+            case "online_detector":
+                return CommonConfiguration.ONLINE_DETECTOR.get();
         }
     }
 

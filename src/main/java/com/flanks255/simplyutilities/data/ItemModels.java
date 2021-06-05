@@ -20,15 +20,15 @@ public class ItemModels extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        //singleTexture("canister", mcLoc("item/handheld"), "layer0", modLoc("item/canister"));
-
-
-        for (RegistryObject<Item> item : SUItems.SIMPLEITEMS.getEntries()) {
-            String name = item.get().getRegistryName().getPath();
-            singleTexture(name, mcLoc("item/handheld"), "layer0", modLoc("item/" + name));
-        }
+        simpleItem(SUItems.EXOLEGGINGS.get());
 
         registerBlockItem(SUBlocks.ENDER_INHIBITOR.get());
+        registerBlockItem(SUBlocks.ONLINE_DETECTOR.get());
+    }
+
+    private void simpleItem(Item item) {
+        String name = item.getRegistryName().getPath();
+        singleTexture(name, mcLoc("item/handheld"), "layer0", modLoc("item/" + name));
     }
 
 

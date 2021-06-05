@@ -1,5 +1,6 @@
 package com.flanks255.simplyutilities.data;
 
+import com.flanks255.simplyutilities.SUBlocks;
 import com.flanks255.simplyutilities.SUItems;
 import com.flanks255.simplyutilities.SimplyUtilities;
 import com.google.gson.JsonObject;
@@ -68,7 +69,7 @@ public class Recipes extends RecipeProvider {
         ConditionalRecipe.builder()
                 .addCondition(new BoolConfigCondition("enableEnderInhibitor"))
                 .addRecipe(
-                        ShapedRecipeBuilder.shapedRecipe(SUItems.ENDER_INHIBITOR.get())
+                        ShapedRecipeBuilder.shapedRecipe(SUBlocks.ENDER_INHIBITOR.getItem())
                                 .patternLine(" x ")
                                 .patternLine(" b ")
                                 .patternLine("aca")
@@ -94,6 +95,22 @@ public class Recipes extends RecipeProvider {
                         .addCriterion("has_leather_pants", hasItem(Items.LEATHER_LEGGINGS))::build)
                 .generateAdvancement()
                 .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "exoskeleton_leggings"));
+
+        ConditionalRecipe.builder()
+            .addCondition(new BoolConfigCondition("online_detector"))
+            .addRecipe(
+                ShapedRecipeBuilder.shapedRecipe(SUBlocks.ONLINE_DETECTOR.getItem())
+                .patternLine("SSS")
+                .patternLine("RER")
+                .patternLine("ABA")
+                .key('S', Items.SMOOTH_STONE_SLAB)
+                .key('R', Tags.Items.DUSTS_REDSTONE)
+                .key('E', Items.ENDER_EYE)
+                .key('A', Items.SMOOTH_STONE)
+                .key('B', Tags.Items.STORAGE_BLOCKS_REDSTONE)
+                .addCriterion("", hasItem(Items.AIR))::build)
+            .generateAdvancement()
+            .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "online_detector"));
     }
 
     @Override
