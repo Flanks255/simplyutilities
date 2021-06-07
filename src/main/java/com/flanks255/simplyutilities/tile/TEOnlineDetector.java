@@ -88,8 +88,8 @@ public class TEOnlineDetector extends TileEntity implements ITickableTileEntity 
     }
 
     public boolean isOnline(UUID uuidIn) {
-        if (world != null) {
-            return world.getPlayerByUuid(uuidIn) != null;
+        if (world != null && world.getServer() != null) {
+            return world.getServer().getPlayerList().getPlayerByUUID(uuidIn) != null;
         } else
             return false;
     }
