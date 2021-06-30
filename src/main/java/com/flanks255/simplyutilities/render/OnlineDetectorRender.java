@@ -26,7 +26,7 @@ public class OnlineDetectorRender extends TileEntityRenderer<TEOnlineDetector> {
         if (tileEntityIn == null || !tileEntityIn.hasWorld())
             return;
 
-        IVertexBuilder vertexBuilder = buffer.getBuffer(RenderType.getEntitySolid(OFF_TEXTURE));
+        IVertexBuilder vertexBuilder = buffer.getBuffer(RenderType.getEntitySolid(tileEntityIn.onlineState?ON_TEXTURE:OFF_TEXTURE));
 
         matrixStack.push();
         matrixStack.translate(0.5D, 1.5D, 0.5D);
@@ -57,7 +57,8 @@ public class OnlineDetectorRender extends TileEntityRenderer<TEOnlineDetector> {
         matrixStack.pop();
 
         matrixStack.push();
-        matrixStack.rotate(Vector3f.YP.rotationDegrees(eyeInterpolated));
+        if (tileEntityIn.onlineState)
+            matrixStack.rotate(Vector3f.YP.rotationDegrees(eyeInterpolated));
         model.Eye.render(matrixStack, vertexBuilder, combinedLightIn, OverlayTexture.NO_OVERLAY);
         matrixStack.pop();
 

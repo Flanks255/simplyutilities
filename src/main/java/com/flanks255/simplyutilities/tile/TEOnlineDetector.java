@@ -43,6 +43,7 @@ public class TEOnlineDetector extends TileEntity implements ITickableTileEntity 
 
         nbt.putUniqueId("PlacerUUID", uuid);
         nbt.putString("PlacerName", playerName);
+        nbt.putBoolean("OnlineState", onlineState);
         return nbt;
     }
     @Override
@@ -51,17 +52,22 @@ public class TEOnlineDetector extends TileEntity implements ITickableTileEntity 
 
         uuid = nbt.getUniqueId("PlacerUUID");
         playerName = nbt.getString("PlacerName");
+        onlineState = nbt.getBoolean("OnlineState");
     }
 
     // Update packet
     @Nullable
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return super.getUpdatePacket();
+        CompoundNBT nbt = new CompoundNBT();
+        nbt.putBoolean("OnlineState", onlineState);
+        return new SUpdateTileEntityPacket(getPos(), 0, nbt);
     }
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        super.onDataPacket(net, pkt);
+        SimplyUtilities.LOGGER.info("onDataPacket");
+        CompoundNBT nbt = pkt.getNbtCompound();
+        onlineState = nbt.getBoolean("OnlineState");
     }
 
     @Override
@@ -70,13 +76,14 @@ public class TEOnlineDetector extends TileEntity implements ITickableTileEntity 
 
         uuid = nbt.getUniqueId("PlacerUUID");
         playerName = nbt.getString("PlacerName");
+        onlineState = nbt.getBoolean("OnlineState");
     }
 
     @Override
     public CompoundNBT write(CompoundNBT nbt) {
         nbt.putUniqueId("PlacerUUID", uuid);
         nbt.putString("PlacerName", playerName);
-
+        nbt.putBoolean("OnlineState", onlineState);
         return super.write(nbt);
     }
 
