@@ -11,25 +11,25 @@
       "recipe": {
         "type": "minecraft:crafting_shaped",
         "pattern": [
-          "SSS",
+          "GBG",
           "RER",
-          "ABA"
+          "HHH"
         ],
         "key": {
-          "S": {
-            "item": "minecraft:smooth_stone_slab"
+          "G": {
+            "tag": "forge:ingots/gold"
           },
-          "R": {
-            "tag": "forge:dusts/redstone"
+          "B": {
+            "tag": "forge:storage_blocks/redstone"
           },
           "E": {
             "item": "minecraft:ender_eye"
           },
-          "A": {
-            "item": "minecraft:smooth_stone"
+          "R": {
+            "item": "minecraft:repeater"
           },
-          "B": {
-            "tag": "forge:storage_blocks/redstone"
+          "H": {
+            "item": "minecraft:warped_hyphae"
           }
         },
         "result": {

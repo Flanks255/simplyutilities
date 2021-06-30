@@ -1,11 +1,14 @@
 package com.flanks255.simplyutilities.commands.debug;
 
+import com.flanks255.simplyutilities.SimplyUtilities;
+import com.flanks255.simplyutilities.network.OpenDebugHandMessage;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 public class DebugHand {
 
@@ -17,8 +20,7 @@ public class DebugHand {
             ctx.getSource().sendErrorMessage(new TranslationTextComponent("message.su.debug.hand.noitem"));
             return 0;
         }
-        //SimplyUtilities.NETWORK.send(PacketDistributor.PLAYER.with(()-> (ServerPlayerEntity) player), new OpenDebugHandMessage(player.getHeldItemMainhand()));
-        ctx.getSource().sendFeedback(new StringTextComponent(player.getHeldItemMainhand().getTag().toString()), false);
+        //SimplyUtilities.NETWORK.send(PacketDistributor.PLAYER.with(()-> player), new OpenDebugHandMessage(player.getHeldItemMainhand()));
         return 0;
     }
 }

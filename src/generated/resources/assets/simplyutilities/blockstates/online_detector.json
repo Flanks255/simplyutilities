@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "simplyutilities:block/online_detector"
+      "model": "simplyutilities:block/entity"
     }
   }
 }

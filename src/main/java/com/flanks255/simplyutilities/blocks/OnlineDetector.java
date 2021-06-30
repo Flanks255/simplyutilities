@@ -29,6 +29,7 @@ public class OnlineDetector extends Block {
     public OnlineDetector() {
         super(AbstractBlock.Properties.create(Material.IRON)
         .hardnessAndResistance(2.0f)
+            .notSolid()
         .harvestTool(ToolType.PICKAXE));
 
         setDefaultState(getStateContainer().getBaseState().with(ON, false));

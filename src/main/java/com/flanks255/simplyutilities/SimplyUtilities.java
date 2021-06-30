@@ -11,6 +11,7 @@ import com.flanks255.simplyutilities.data.Generator;
 import com.flanks255.simplyutilities.items.ExoLeggings;
 import com.flanks255.simplyutilities.network.ClientNetProxy;
 import com.flanks255.simplyutilities.network.CommonNetProxy;
+import com.flanks255.simplyutilities.render.OnlineDetectorRender;
 import com.flanks255.simplyutilities.tweaks.DoubleDoorFix;
 import com.flanks255.simplyutilities.network.SUNetwork;
 import net.minecraft.client.Minecraft;
@@ -87,6 +88,8 @@ public class SimplyUtilities
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         MinecraftForge.EVENT_BUS.addListener(this::onRenderViewEvent);
+
+        ClientRegistry.bindTileEntityRenderer(SUBlocks.ONLINE_DETECTOR.getTileEntityType(), OnlineDetectorRender::new);
 
         keyBinds.add(0, new KeyBinding("key.simplyutilities.zoom.desc", -1, "key.simplyutilities.category"));
         ClientRegistry.registerKeyBinding(keyBinds.get(0));

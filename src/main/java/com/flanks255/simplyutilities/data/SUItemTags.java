@@ -23,7 +23,6 @@ public class SUItemTags extends ItemTagsProvider {
     protected void registerTags() {
         ITag.INamedTag<Item> fSiliconTag = ItemTags.makeWrapperTag(new ResourceLocation("forge", "silicon").toString());
         ITag.INamedTag<Item> ae2SiliconTag = ItemTags.makeWrapperTag(new ResourceLocation("appliedenergistics2", "silicon").toString());
-
         this.getOrCreateBuilder(fSiliconTag).addOptional(new ResourceLocation("appliedenergistics2", "silicon"));
         this.getOrCreateBuilder(ae2SiliconTag).addOptional(new ResourceLocation("refinedstorage", "silicon"));
     }

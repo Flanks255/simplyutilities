@@ -16,10 +16,11 @@ public class BlockStates extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         simpleBlock(SUBlocks.ENDER_INHIBITOR.get(), models().getExistingFile(modLoc("ender_inhibitor")));
+        ModelFile blank = models().getExistingFile(modLoc("entity"));
 
         ResourceLocation placeholderTex = modLoc("block/placeholder");
-        ModelFile placeholderCube = models().cubeAll("online_detector", placeholderTex);
+        ModelFile placeholderCube = models().cubeAll("placeholder", placeholderTex);
 
-        simpleBlock(SUBlocks.ONLINE_DETECTOR.getBlock(), placeholderCube);
+        simpleBlock(SUBlocks.ONLINE_DETECTOR.getBlock(), blank);
     }
 }

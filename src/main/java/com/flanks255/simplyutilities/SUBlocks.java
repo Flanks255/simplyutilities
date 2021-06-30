@@ -3,6 +3,7 @@ package com.flanks255.simplyutilities;
 import com.flanks255.simplyutilities.blocks.EnderInhibitor;
 import com.flanks255.simplyutilities.blocks.OnlineDetector;
 import com.flanks255.simplyutilities.items.SUBlockItem;
+import com.flanks255.simplyutilities.render.OnlineDetectorItemStackRender;
 import com.flanks255.simplyutilities.tile.TEOnlineDetector;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -20,7 +21,7 @@ public class SUBlocks {
         (b) -> new SUBlockItem(b,new Item.Properties().maxStackSize(64).group(ItemGroup.MISC)));
 
     public static final SUBlockReg<OnlineDetector, SUBlockItem, TEOnlineDetector> ONLINE_DETECTOR = new SUBlockReg<>("online_detector", OnlineDetector::new,
-        (b) -> new SUBlockItem(b, new Item.Properties().maxStackSize(64).group(ItemGroup.MISC)), TEOnlineDetector::new);
+        (b) -> new SUBlockItem(b, new Item.Properties().maxStackSize(64).group(ItemGroup.MISC).setISTER(() -> OnlineDetectorItemStackRender::new)), TEOnlineDetector::new);
 
     public static void init(IEventBus eventBus) {
         BLOCKS.register(eventBus);
