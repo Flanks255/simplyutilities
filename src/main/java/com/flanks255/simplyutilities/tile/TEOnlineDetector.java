@@ -30,8 +30,8 @@ public class TEOnlineDetector extends TileEntity implements ITickableTileEntity 
     private final int interval = 20;
 
     public boolean onlineState;
-    public int oldEyeAngle, eyeAngle, prevEyeAngle = 0;
-    public float eyeOffset, eyeOffsetTarget = 0;
+    public int baseEyeAngle = 0;
+    public float currentEyeOffset, prevEyeOffset, eyeOffsetTarget = 0;
     public long targetTicks;
     public float ringAngle, prevRingAngle = 0;
     private final Random rand;
@@ -108,17 +108,16 @@ public class TEOnlineDetector extends TileEntity implements ITickableTileEntity 
             }
 
             if (targetTicks - world.getGameTime() >= 0) {
-                eyeOffset = eyeOffsetTarget * (1 - ((targetTicks - world.getGameTime()) / 20.0f));
-                prevEyeAngle = eyeAngle;
-                eyeAngle = (int) (oldEyeAngle + eyeOffset);
+                prevEyeOffset = currentEyeOffset;
+                currentEyeOffset = eyeOffsetTarget * (1 - ((targetTicks - world.getGameTime()) / 20.0f));
             } else
-                prevEyeAngle = eyeAngle;
+                prevEyeOffset = currentEyeOffset;
 
         }
         if (world != null && world.isRemote && (world.getGameTime() + tickOffset) % 80 == 0) {
-            oldEyeAngle += eyeOffsetTarget;
-            oldEyeAngle = wrapDegrees(oldEyeAngle);
-            eyeOffset = 0;
+            baseEyeAngle += eyeOffsetTarget;
+            baseEyeAngle = wrapDegrees(baseEyeAngle);
+            currentEyeOffset =  prevEyeOffset = 0;
             eyeOffsetTarget = rand.nextInt(270) - 135;
             targetTicks = world.getGameTime() + 20;
         }
