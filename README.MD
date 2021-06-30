@@ -1,8 +1,7 @@
 #Simply Utilities
 
-[![Curse Forge](http://cf.way2muchnoise.eu/simply-utilities.svg)](https://minecraft.curseforge.com/projects/simply-backpacks)
-[![Curse Forge](http://cf.way2muchnoise.eu/versions/simply-utilities.svg)](https://minecraft.curseforge.com/projects/simply-backpacks)
-[![Curse Forge](http://cf.way2muchnoise.eu/packs/short_simply-utilities.svg)](https://minecraft.curseforge.com/projects/simply-backpacks)
+[![Curse Forge](http://cf.way2muchnoise.eu/simply-utilities.svg)](https://minecraft.curseforge.com/projects/simply-utilities)
+[![Curse Forge](http://cf.way2muchnoise.eu/versions/simply-utilities.svg)](https://minecraft.curseforge.com/projects/simply-utilities)
 
 Simply Utilities provides a small collection of functions and items to fill some niches, all fully configurable.
 
@@ -19,4 +18,6 @@ Ender Inhibitor
 Exoskeleton Leggings
     Absorbs fall damage while equipped.
 
+Online Detector
+    Emits redstone when the player who placed it is currently online on the server.
  
