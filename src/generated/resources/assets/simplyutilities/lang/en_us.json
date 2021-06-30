@@ -3,6 +3,7 @@
   "block.simplyutilities.ender_inhibitor.info": "Prevents Endermen around it from teleporting.",
   "block.simplyutilities.online_detector": "Online Detector",
   "block.simplyutilities.online_detector.info": "Emits redstone power when the player who placed the block is online.",
+  "block.simplyutilities.online_detector.jei.info": "Outputs a redstone signal//nwhen the player who placed//nthe block is online.",
   "item.simplyutilities.exoleggings": "Exoskeleton Leggings",
   "item.simplyutilities.exoleggings.info": "Prevents fall damage.",
   "item.simplyutilities.exoleggings.info2": "(Texture WIP)",

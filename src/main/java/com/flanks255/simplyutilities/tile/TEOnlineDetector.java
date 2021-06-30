@@ -30,7 +30,7 @@ public class TEOnlineDetector extends TileEntity implements ITickableTileEntity 
     private final int interval = 20;
 
     public boolean onlineState;
-    public float oldEyeAngle, eyeAngle = 0;
+    public int oldEyeAngle, eyeAngle, prevEyeAngle = 0;
     public float eyeOffset, eyeOffsetTarget = 0;
     public long targetTicks;
     public float ringAngle, prevRingAngle = 0;
@@ -80,6 +80,15 @@ public class TEOnlineDetector extends TileEntity implements ITickableTileEntity 
         return super.write(nbt);
     }
 
+    public int wrapDegrees(int in) {
+        if (in > 360)
+            in -= 360;
+        else if (in < 0)
+            in += 360;
+
+        return in;
+    }
+
     @Override
     public void tick() {
         if (world != null && world.isRemote) {
@@ -90,21 +99,20 @@ public class TEOnlineDetector extends TileEntity implements ITickableTileEntity 
                 ringAngle -= 360;
                 prevRingAngle -= 360;
             }
-            if (oldEyeAngle >= 360) {
-                oldEyeAngle -= 360;
-            } else if (oldEyeAngle < 0)
-                oldEyeAngle += 360;
 
             if (targetTicks - world.getGameTime() >= 0) {
                 eyeOffset = eyeOffsetTarget * (1 - ((targetTicks - world.getGameTime()) / 20.0f));
-                eyeAngle = oldEyeAngle + eyeOffset;
-            }
+                prevEyeAngle = eyeAngle;
+                eyeAngle = (int) (oldEyeAngle + eyeOffset);
+            } else
+                prevEyeAngle = eyeAngle;
 
         }
         if (world != null && world.isRemote && (world.getGameTime() + tickOffset) % 80 == 0) {
-            oldEyeAngle = eyeAngle;
+            oldEyeAngle += eyeOffsetTarget;
+            oldEyeAngle = wrapDegrees(oldEyeAngle);
             eyeOffset = 0;
-            eyeOffsetTarget = rand.nextInt(360) - 180;
+            eyeOffsetTarget = rand.nextInt(270) - 135;
             targetTicks = world.getGameTime() + 20;
         }
         if (world != null && !world.isRemote && (world.getGameTime() + tickOffset) % interval == 0) {

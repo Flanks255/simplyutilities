@@ -36,6 +36,8 @@ public class OnlineDetectorRender extends TileEntityRenderer<TEOnlineDetector> {
         float angle1 = tileEntityIn.ringAngle + (tileEntityIn.ringAngle - tileEntityIn.prevRingAngle) * partialTicks;
         float angle2 = -angle1;
 
+        float eyeInterpolated = tileEntityIn.prevEyeAngle + (tileEntityIn.eyeAngle - tileEntityIn.prevEyeAngle) * partialTicks;
+
         model.ArmAndStand.render(matrixStack, vertexBuilder, combinedLightIn, OverlayTexture.NO_OVERLAY);
         model.Base.render(matrixStack, vertexBuilder, combinedLightIn, OverlayTexture.NO_OVERLAY);
         model.bone.render(matrixStack, vertexBuilder, combinedLightIn, OverlayTexture.NO_OVERLAY);
@@ -55,7 +57,7 @@ public class OnlineDetectorRender extends TileEntityRenderer<TEOnlineDetector> {
         matrixStack.pop();
 
         matrixStack.push();
-        matrixStack.rotate(Vector3f.YP.rotationDegrees(tileEntityIn.eyeAngle));
+        matrixStack.rotate(Vector3f.YP.rotationDegrees(eyeInterpolated));
         model.Eye.render(matrixStack, vertexBuilder, combinedLightIn, OverlayTexture.NO_OVERLAY);
         matrixStack.pop();
 
