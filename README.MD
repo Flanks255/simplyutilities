@@ -1,7 +1,7 @@
 #Simply Utilities
 
-[![Curse Forge](http://cf.way2muchnoise.eu/simply-utilities.svg)](https://minecraft.curseforge.com/projects/simply-utilities)
-[![Curse Forge](http://cf.way2muchnoise.eu/versions/simply-utilities.svg)](https://minecraft.curseforge.com/projects/simply-utilities)
+[![Curse Forge](http://cf.way2muchnoise.eu/simply-utilities.svg)](https://www.curseforge.com/minecraft/mc-mods/simply-utilities)
+[![Curse Forge](http://cf.way2muchnoise.eu/versions/simply-utilities.svg)](https://www.curseforge.com/minecraft/mc-mods/simply-utilities)
 
 Simply Utilities provides a small collection of functions and items to fill some niches, all fully configurable.
 
