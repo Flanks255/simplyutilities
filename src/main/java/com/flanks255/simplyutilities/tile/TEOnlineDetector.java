@@ -65,7 +65,6 @@ public class TEOnlineDetector extends TileEntity implements ITickableTileEntity 
     }
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        SimplyUtilities.LOGGER.info("onDataPacket");
         CompoundNBT nbt = pkt.getNbtCompound();
         onlineState = nbt.getBoolean("OnlineState");
     }

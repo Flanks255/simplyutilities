@@ -11,6 +11,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
@@ -35,6 +37,31 @@ public class OnlineDetectorRender extends TileEntityRenderer<TEOnlineDetector> {
         matrixStack.push();
         matrixStack.translate(0.5D, 1.5D, 0.5D);
         matrixStack.scale(-1, -1, 1);
+
+        switch(tileEntityIn.getBlockState().get(BlockStateProperties.FACING)) {
+            case NORTH:
+                matrixStack.translate(0, 1, -1);
+                matrixStack.rotate(Vector3f.XP.rotationDegrees(90));
+                break;
+            case WEST:
+                matrixStack.translate(1, 1, 0);
+                matrixStack.rotate(Vector3f.ZP.rotationDegrees(90));
+                break;
+            case EAST:
+                matrixStack.translate(-1, 1, 0);
+                matrixStack.rotate(Vector3f.ZP.rotationDegrees(270));
+                break;
+            case SOUTH:
+                matrixStack.translate(0, 1, 1);
+                matrixStack.rotate(Vector3f.XP.rotationDegrees(270));
+                break;
+            case DOWN:
+                matrixStack.translate(0, 2, 0);
+                matrixStack.rotate(Vector3f.XP.rotationDegrees(180));
+                break;
+            default:
+                break;
+        }
 
 
         float angle1 = tileEntityIn.ringAngle + (tileEntityIn.ringAngle - tileEntityIn.prevRingAngle) * partialTicks;
