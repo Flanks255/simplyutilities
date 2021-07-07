@@ -40,11 +40,10 @@ public class Lang extends LanguageProvider {
         addBlock(SUBlocks.ENDER_INHIBITOR, "Ender Inhibitor");
         addBlock(SUBlocks.ONLINE_DETECTOR, "Online Detector");
         addBlockExtra(SUBlocks.ENDER_INHIBITOR, ".info", "Prevents Endermen around it from teleporting.");
-        addBlockExtra(SUBlocks.ONLINE_DETECTOR, ".info", "Emits redstone power when the player who placed the block is online.");
+        addBlockExtra(SUBlocks.ONLINE_DETECTOR, ".info", "Emits a redstone signal when the player who placed the block is online.");
 
         addItem(SUItems.EXOLEGGINGS, "Exoskeleton Leggings");
         addItemExtra(SUItems.EXOLEGGINGS, ".info", "Prevents fall damage.");
-        addItemExtra(SUItems.EXOLEGGINGS, ".info2", "(Texture WIP)");
 
         addJEITabBlock(SUBlocks.ONLINE_DETECTOR, "Outputs a redstone signal//nwhen the player who placed//nthe block is online.");
     }
