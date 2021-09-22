@@ -1,10 +1,10 @@
 package com.flanks255.simplyutilities.homes;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.Constants;
 
 import java.util.*;
@@ -20,8 +20,8 @@ public class PlayerHomes {
         Homes = new HashMap<>();
     }
 
-    public void setHome(String name, RegistryKey<World> world, BlockPos pos) {
-        setHome(name, world.getLocation().toString(), pos);
+    public void setHome(String name, ResourceKey<Level> world, BlockPos pos) {
+        setHome(name, world.location().toString(), pos);
     }
     public void setHome(String name, String world, BlockPos pos) {
         if (isHome(name)) {
@@ -65,11 +65,11 @@ public class PlayerHomes {
             return false;
     }
 
-    public CompoundNBT toNBT() {
-        CompoundNBT nbt = new CompoundNBT();
-        ListNBT homeList = new ListNBT();
+    public CompoundTag toNBT() {
+        CompoundTag nbt = new CompoundTag();
+        ListTag homeList = new ListTag();
 
-        nbt.putUniqueId("UUID", ID);
+        nbt.putUUID("UUID", ID);
         nbt.putString("Name", Name);
         for (Map.Entry<String, HomePoint> entry : Homes.entrySet()) {
             homeList.add(entry.getValue().toNBT());
@@ -79,16 +79,16 @@ public class PlayerHomes {
         return nbt;
     }
 
-    public static Optional<PlayerHomes> fromNBT(CompoundNBT nbt) {
+    public static Optional<PlayerHomes> fromNBT(CompoundTag nbt) {
         if (nbt.contains("UUID") && nbt.contains("Name")) {
-            PlayerHomes player = new PlayerHomes(nbt.getUniqueId("UUID"), nbt.getString("Name"));
+            PlayerHomes player = new PlayerHomes(nbt.getUUID("UUID"), nbt.getString("Name"));
 
             if (nbt.contains("Homes")) {
-                ListNBT homes = nbt.getList("Homes", Constants.NBT.TAG_COMPOUND);
+                ListTag homes = nbt.getList("Homes", Constants.NBT.TAG_COMPOUND);
                 for (int i = 0; i < homes.size(); i++) {
-                    CompoundNBT home = homes.getCompound(i);
+                    CompoundTag home = homes.getCompound(i);
                     if (home.contains("Name") && home.contains("WorldKey") && home.contains("Pos")) {
-                        player.setHome(home.getString("Name"), home.getString("WorldKey"), BlockPos.fromLong(home.getLong("Pos")));
+                        player.setHome(home.getString("Name"), home.getString("WorldKey"), BlockPos.of(home.getLong("Pos")));
                     }
                 }
             }

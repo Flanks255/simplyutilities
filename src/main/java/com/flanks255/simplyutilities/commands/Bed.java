@@ -4,25 +4,25 @@ import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 
 public class Bed {
-    public static ArgumentBuilder<CommandSource, ?> register() {
+    public static ArgumentBuilder<CommandSourceStack, ?> register() {
         return Commands.literal("bed")
                 .requires(cs -> ConfigCache.cmd_bed)
                 .executes(Bed::toBed);
     }
 
-    public static int toBed(CommandContext<CommandSource> ctx) throws CommandSyntaxException {
-        ServerPlayerEntity player = ctx.getSource().asPlayer();
-        ServerWorld TargetWorld = player.getServer().getWorld(player.func_241141_L_());
-        BlockPos spawnPoint = player.func_241140_K_();
+    public static int toBed(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        ServerLevel TargetWorld = player.getServer().getLevel(player.getRespawnDimension());
+        BlockPos spawnPoint = player.getRespawnPosition();
         if (spawnPoint != null && TargetWorld != null)
-            player.teleport(TargetWorld, spawnPoint.getX(), spawnPoint.getY(),spawnPoint.getZ(), player.getYaw(0), player.getPitch(0));
+            player.teleportTo(TargetWorld, spawnPoint.getX(), spawnPoint.getY(),spawnPoint.getZ(), player.getViewYRot(0), player.getViewXRot(0));
         return 0;
     }
 }

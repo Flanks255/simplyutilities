@@ -1,12 +1,14 @@
 package com.flanks255.simplyutilities.capabilities;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
+
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class SUFluidHandler implements IFluidHandler {
 
@@ -27,13 +29,13 @@ public class SUFluidHandler implements IFluidHandler {
         return uuid;
     }
 
-    public CompoundNBT toNBT() {
-        CompoundNBT nbt = new CompoundNBT();
+    public CompoundTag toNBT() {
+        CompoundTag nbt = new CompoundTag();
 
-        nbt.putUniqueId("UUID", uuid);
+        nbt.putUUID("UUID", uuid);
         nbt.putInt("Capacity", capacity);
         if (!storedFluid.isEmpty()) {
-            CompoundNBT fluidnbt = new CompoundNBT();
+            CompoundTag fluidnbt = new CompoundTag();
             storedFluid.writeToNBT(fluidnbt);
             nbt.put("Fluid", fluidnbt);
         }
@@ -41,9 +43,9 @@ public class SUFluidHandler implements IFluidHandler {
         return nbt;
     }
 
-    public static LazyOptional<SUFluidHandler> fromNBT(CompoundNBT nbt) {
+    public static LazyOptional<SUFluidHandler> fromNBT(CompoundTag nbt) {
         if(nbt.contains("UUID") && nbt.contains("Capacity")) {
-            SUFluidHandler canHandler = new SUFluidHandler(nbt.getUniqueId("UUID"), nbt.getInt("Capacity"));
+            SUFluidHandler canHandler = new SUFluidHandler(nbt.getUUID("UUID"), nbt.getInt("Capacity"));
             canHandler.setStoredFluid(FluidStack.loadFluidStackFromNBT(nbt.getCompound("Fluid")));
             return LazyOptional.of(() -> canHandler);
         }

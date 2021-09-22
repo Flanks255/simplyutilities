@@ -4,11 +4,10 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
-import org.apache.commons.lang3.StringUtils;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
@@ -24,12 +23,9 @@ public class JEIPlugin implements IModPlugin {
     @Override
     public void registerRecipes(@Nonnull IRecipeRegistration registration) {
         SUItems.ITEMS.getEntries().forEach((item) -> {
-            String key = item.get().getTranslationKey()+".jei.info";
-            if (I18n.hasKey(key)) {
-                String langEntry = TextFormatting.getTextWithoutFormattingCodes(I18n.format(key));
-                if (langEntry != null)
-                    registration.addIngredientInfo(new ItemStack(item.get()), VanillaTypes.ITEM, StringUtils.splitByWholeSeparator(langEntry, "//n"));
-            }
+            String key = item.get().getDescriptionId()+".jei.info";
+            if (I18n.exists(key)) {
+                registration.addIngredientInfo(new ItemStack(item.get()), VanillaTypes.ITEM, new TextComponent(I18n.get(key)));            }
         });
     }
 }

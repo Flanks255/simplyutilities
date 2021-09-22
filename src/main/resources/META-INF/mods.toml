@@ -1,5 +1,5 @@
 modLoader="javafml" #mandatory
-loaderVersion="[32,)"
+loaderVersion="[37,)"
 license="MIT"
 [[mods]]
 modId="simplyutilities"

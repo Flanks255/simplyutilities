@@ -1,41 +1,41 @@
 package com.flanks255.simplyutilities.items;
 
 import com.flanks255.simplyutilities.SimplyUtilities;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 
 import javax.annotation.Nonnull;
 
-public class ExoMaterial implements IArmorMaterial {
+public class ExoMaterial implements ArmorMaterial {
     @Override
-    public int getDurability(@Nonnull EquipmentSlotType slotIn) {
+    public int getDurabilityForSlot(@Nonnull EquipmentSlot slotIn) {
         return 256;
     }
 
     @Override
-    public int getDamageReductionAmount(@Nonnull EquipmentSlotType slotIn) {
+    public int getDefenseForSlot(@Nonnull EquipmentSlot slotIn) {
         return 2;
     }
 
     @Override
-    public int getEnchantability() {
+    public int getEnchantmentValue() {
         return 0;
     }
 
     @Nonnull
     @Override
-    public SoundEvent getSoundEvent() {
-        return SoundEvents.ITEM_ARMOR_EQUIP_LEATHER;
+    public SoundEvent getEquipSound() {
+        return SoundEvents.ARMOR_EQUIP_LEATHER;
     }
 
     @Nonnull
     @Override
-    public Ingredient getRepairMaterial() {
-        return Ingredient.fromItems(Items.IRON_INGOT);
+    public Ingredient getRepairIngredient() {
+        return Ingredient.of(Items.IRON_INGOT);
     }
 
     @Nonnull

@@ -2,9 +2,9 @@ package com.flanks255.simplyutilities.network;
 
 import com.flanks255.simplyutilities.configuration.ClientConfiguration;
 import com.flanks255.simplyutilities.configuration.ConfigCache;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkDirection;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -19,11 +19,11 @@ public class ZoomSmoothMessage {
 
     private final boolean smoothcam;
 
-    public static ZoomSmoothMessage decode(final PacketBuffer buffer) {
+    public static ZoomSmoothMessage decode(final FriendlyByteBuf buffer) {
         return new ZoomSmoothMessage(buffer.readBoolean());
     }
 
-    public static void encode(final ZoomSmoothMessage message, final PacketBuffer buffer) {
+    public static void encode(final ZoomSmoothMessage message, final FriendlyByteBuf buffer) {
         buffer.writeBoolean(message.isSmoothcam());
     }
 

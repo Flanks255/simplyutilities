@@ -2,28 +2,28 @@ package com.flanks255.simplyutilities.blocks;
 
 import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.flanks255.simplyutilities.save.InhibitorManager;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.event.entity.living.EnderTeleportEvent;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraftforge.event.entity.EntityTeleportEvent;
 
 import javax.annotation.Nonnull;
 
 public class EnderInhibitor extends Block {
     public EnderInhibitor() {
-        super(AbstractBlock.Properties.create(new Material(
+        super(BlockBehaviour.Properties.of(new Material(
                 MaterialColor.EMERALD,
                 false,
                 false,
@@ -32,47 +32,57 @@ public class EnderInhibitor extends Block {
                 false,
                 false,
                 PushReaction.BLOCK
-        )));
+        )).strength(2.0f).noOcclusion());
     }
 
     @Override
-    public void onBlockAdded(@Nonnull BlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull BlockState oldState, boolean isMoving) {
-        super.onBlockAdded(state, worldIn, pos, oldState, isMoving);
+    public void onPlace(@Nonnull BlockState state, @Nonnull Level worldIn, @Nonnull BlockPos pos, @Nonnull BlockState oldState, boolean isMoving) {
+        super.onPlace(state, worldIn, pos, oldState, isMoving);
 
-        if (!worldIn.isRemote)
-            InhibitorManager.get((ServerWorld)worldIn).addInhibitor(pos);
+        if (!worldIn.isClientSide)
+            InhibitorManager.get((ServerLevel)worldIn).addInhibitor(pos);
     }
 
     @Override
-    public void onBlockHarvested(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull PlayerEntity player) {
-        super.onBlockHarvested(worldIn, pos, state, player);
+    public void playerWillDestroy(@Nonnull Level worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull Player player) {
+        super.playerWillDestroy(worldIn, pos, state, player);
 
-        if (!worldIn.isRemote)
-            InhibitorManager.get((ServerWorld)worldIn).removeInhibitor(pos);
+        if (!worldIn.isClientSide)
+            InhibitorManager.get((ServerLevel)worldIn).removeInhibitor(pos);
     }
 
     @Override
-    public void onBlockExploded(BlockState state, World world, BlockPos pos, Explosion explosion) {
+    public void onBlockExploded(BlockState state, Level world, BlockPos pos, Explosion explosion) {
         super.onBlockExploded(state, world, pos, explosion);
 
-        if (!world.isRemote)
-            InhibitorManager.get((ServerWorld)world).removeInhibitor(pos);
+        if (!world.isClientSide)
+            InhibitorManager.get((ServerLevel)world).removeInhibitor(pos);
     }
 
-    public static void TeleportEvent(EnderTeleportEvent event) {
-        if (!ConfigCache.EnderInhibitorEnabled || (!ConfigCache.EnderInhibitorPlayers && event.getEntityLiving() instanceof PlayerEntity))
+    public static void TeleportEvent(EntityTeleportEvent.EnderEntity event) {
+        if (!ConfigCache.EnderInhibitorEnabled || (!ConfigCache.EnderInhibitorPlayers && event.getEntityLiving() instanceof Player))
             return;
 
-        World world = event.getEntityLiving().getEntityWorld();
-        if (!world.isRemote && world instanceof ServerWorld) {
-            if(InhibitorManager.get((ServerWorld) world).InhibitorCloseEnough(event.getEntityLiving().getPosition()))
+        Level world = event.getEntityLiving().getCommandSenderWorld();
+        if (!world.isClientSide && world instanceof ServerLevel) {
+            if(InhibitorManager.get((ServerLevel) world).InhibitorCloseEnough(event.getEntityLiving().blockPosition()))
+                event.setCanceled(true);
+        }
+    }
+    public static void PearlTeleportEvent(EntityTeleportEvent.EnderPearl event) {
+        if (!ConfigCache.EnderInhibitorEnabled || !ConfigCache.EnderInhibitorPlayers)
+            return;
+
+        Level world = event.getPlayer().getCommandSenderWorld();
+        if (!world.isClientSide && world instanceof ServerLevel) {
+            if(InhibitorManager.get((ServerLevel) world).InhibitorCloseEnough(event.getPlayer().blockPosition()))
                 event.setCanceled(true);
         }
     }
 
     @Nonnull
     @Override
-    public VoxelShape getShape(@Nonnull BlockState state, @Nonnull IBlockReader worldIn, @Nonnull BlockPos pos, @Nonnull ISelectionContext context) {
-        return VoxelShapes.create(0,0,0.4,1,1,0.6);
+    public VoxelShape getShape(@Nonnull BlockState state, @Nonnull BlockGetter worldIn, @Nonnull BlockPos pos, @Nonnull CollisionContext context) {
+        return Shapes.box(0,0,0.4,1,1,0.6);
     }
 }

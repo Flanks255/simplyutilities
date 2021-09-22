@@ -2,9 +2,9 @@ package com.flanks255.simplyutilities.network;
 
 import com.flanks255.simplyutilities.configuration.ClientConfiguration;
 import com.flanks255.simplyutilities.configuration.ConfigCache;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkDirection;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -20,11 +20,11 @@ public class ZoomFOVMessage {
     private final double fov;
 
 
-    public static ZoomFOVMessage decode(final PacketBuffer buffer) {
+    public static ZoomFOVMessage decode(final FriendlyByteBuf buffer) {
         return new ZoomFOVMessage(buffer.readDouble());
     }
 
-    public static void encode(final ZoomFOVMessage message, PacketBuffer buffer) {
+    public static void encode(final ZoomFOVMessage message, FriendlyByteBuf buffer) {
         buffer.writeDouble(message.getFov());
     }
 

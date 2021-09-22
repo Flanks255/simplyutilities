@@ -4,11 +4,12 @@ import com.flanks255.simplyutilities.SUBlocks;
 import com.flanks255.simplyutilities.SUItems;
 import com.flanks255.simplyutilities.SimplyUtilities;
 import com.google.gson.JsonObject;
-import net.minecraft.data.*;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.HashCache;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.conditions.AndCondition;
@@ -19,65 +20,70 @@ import javax.annotation.Nonnull;
 import java.nio.file.Path;
 import java.util.function.Consumer;
 
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+
 public class Recipes extends RecipeProvider {
     public Recipes(DataGenerator generatorIn) {
         super(generatorIn);
     }
 
     @Override
-    protected void registerRecipes(@Nonnull Consumer<IFinishedRecipe> consumer) {
+    protected void buildCraftingRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
         ConditionalRecipe.builder()
                 .addCondition(new BoolConfigCondition("craftLogsToSticks"))
                 .addRecipe(
-                    ShapedRecipeBuilder.shapedRecipe(Items.STICK, 16)
-                            .patternLine("x")
-                            .patternLine("x")
-                            .key('x', ItemTags.LOGS)
-                            .addCriterion("has_logs", hasItem(Items.OAK_LOG))::build)
+                    ShapedRecipeBuilder.shaped(Items.STICK, 16)
+                            .pattern("x")
+                            .pattern("x")
+                            .define('x', ItemTags.LOGS)
+                            .unlockedBy("has_logs", has(Items.OAK_LOG))::save)
                 .generateAdvancement()
                 .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "stick_from_logs"));
 
         ConditionalRecipe.builder()
                 .addCondition(new AndCondition(new NotCondition(new ModLoadedCondition("quark")), new BoolConfigCondition("craftLogsToChests")))
                 .addRecipe(
-                        ShapedRecipeBuilder.shapedRecipe(Items.CHEST, 4)
-                                .patternLine("xxx")
-                                .patternLine("x x")
-                                .patternLine("xxx")
-                                .key('x', ItemTags.LOGS)
-                                .addCriterion("has_logs", hasItem(Items.OAK_LOG))::build)
+                        ShapedRecipeBuilder.shaped(Items.CHEST, 4)
+                                .pattern("xxx")
+                                .pattern("x x")
+                                .pattern("xxx")
+                                .define('x', ItemTags.LOGS)
+                                .unlockedBy("has_logs", has(Items.OAK_LOG))::save)
                 .generateAdvancement()
                 .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "chests_from_logs"));
 
         ConditionalRecipe.builder()
                 .addCondition(new BoolConfigCondition("smeltFleshIntoLeather"))
                 .addRecipe(
-                        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(Items.ROTTEN_FLESH), Items.LEATHER, 0.0F, 400)
-                            .addCriterion("has_flesh", hasItem(Items.ROTTEN_FLESH))::build)
+                        SimpleCookingRecipeBuilder.smelting(Ingredient.of(Items.ROTTEN_FLESH), Items.LEATHER, 0.0F, 400)
+                            .unlockedBy("has_flesh", has(Items.ROTTEN_FLESH))::save)
                 .generateAdvancement()
                 .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "leather_from_flesh"));
 
-        ShapedRecipeBuilder.shapedRecipe(Items.STICKY_PISTON)
-                .patternLine("x")
-                .patternLine("y")
-                .key('x', Tags.Items.SLIMEBALLS)
-                .key('y', Items.PISTON)
-                .addCriterion("hasSlimeBall", hasItem(Items.SLIME_BALL))
-                .build(consumer,new ResourceLocation(SimplyUtilities.MODID, "sticky_piston"));
+        ShapedRecipeBuilder.shaped(Items.STICKY_PISTON)
+                .pattern("x")
+                .pattern("y")
+                .define('x', Tags.Items.SLIMEBALLS)
+                .define('y', Items.PISTON)
+                .unlockedBy("hasSlimeBall", has(Items.SLIME_BALL))
+                .save(consumer,new ResourceLocation(SimplyUtilities.MODID, "sticky_piston"));
 
         // Ender inhibitor
         ConditionalRecipe.builder()
                 .addCondition(new BoolConfigCondition("enableEnderInhibitor"))
                 .addRecipe(
-                        ShapedRecipeBuilder.shapedRecipe(SUBlocks.ENDER_INHIBITOR.getItem())
-                                .patternLine(" x ")
-                                .patternLine(" b ")
-                                .patternLine("aca")
-                                .key('x', Items.ENDER_PEARL)
-                                .key('b', Tags.Items.STORAGE_BLOCKS_IRON)
-                                .key('c', Items.ANVIL)
-                                .key('a', Tags.Items.STORAGE_BLOCKS_DIAMOND)
-                                .addCriterion("has_pearl", hasItem(Items.ENDER_PEARL))::build)
+                        ShapedRecipeBuilder.shaped(SUBlocks.ENDER_INHIBITOR.getItem())
+                                .pattern(" x ")
+                                .pattern(" b ")
+                                .pattern("aca")
+                                .define('x', Items.ENDER_PEARL)
+                                .define('b', Tags.Items.STORAGE_BLOCKS_IRON)
+                                .define('c', Items.ANVIL)
+                                .define('a', Tags.Items.STORAGE_BLOCKS_DIAMOND)
+                                .unlockedBy("has_pearl", has(Items.ENDER_PEARL))::save)
                 .generateAdvancement()
                 .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "ender_inhibitor"));
 
@@ -85,36 +91,36 @@ public class Recipes extends RecipeProvider {
         ConditionalRecipe.builder()
                 .addCondition(new BoolConfigCondition("exoleggings"))
                 .addRecipe(
-                        ShapedRecipeBuilder.shapedRecipe(SUItems.EXOLEGGINGS.get())
-                        .patternLine("iai")
-                        .patternLine("ixi")
-                        .patternLine("i i")
-                        .key('x', Items.LEATHER_LEGGINGS)
-                        .key('i', Items.IRON_BARS)
-                        .key('a', Tags.Items.STORAGE_BLOCKS_DIAMOND)
-                        .addCriterion("has_leather_pants", hasItem(Items.LEATHER_LEGGINGS))::build)
+                        ShapedRecipeBuilder.shaped(SUItems.EXOLEGGINGS.get())
+                        .pattern("iai")
+                        .pattern("ixi")
+                        .pattern("i i")
+                        .define('x', Items.LEATHER_LEGGINGS)
+                        .define('i', Items.IRON_BARS)
+                        .define('a', Tags.Items.STORAGE_BLOCKS_DIAMOND)
+                        .unlockedBy("has_leather_pants", has(Items.LEATHER_LEGGINGS))::save)
                 .generateAdvancement()
                 .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "exoskeleton_leggings"));
 
         ConditionalRecipe.builder()
             .addCondition(new BoolConfigCondition("online_detector"))
             .addRecipe(
-                ShapedRecipeBuilder.shapedRecipe(SUBlocks.ONLINE_DETECTOR.getItem())
-                .patternLine("GBG")
-                .patternLine("RER")
-                .patternLine("HHH")
-                .key('G', Tags.Items.INGOTS_GOLD)
-                .key('B', Tags.Items.STORAGE_BLOCKS_REDSTONE)
-                .key('E', Items.ENDER_EYE)
-                .key('R', Items.REPEATER)
-                .key('H', Items.WARPED_HYPHAE)
-                .addCriterion("", hasItem(Items.AIR))::build)
+                ShapedRecipeBuilder.shaped(SUBlocks.ONLINE_DETECTOR.getItem())
+                .pattern("GBG")
+                .pattern("RER")
+                .pattern("HHH")
+                .define('G', Tags.Items.INGOTS_GOLD)
+                .define('B', Tags.Items.STORAGE_BLOCKS_REDSTONE)
+                .define('E', Items.ENDER_EYE)
+                .define('R', Items.REPEATER)
+                .define('H', Items.WARPED_HYPHAE)
+                .unlockedBy("", has(Items.AIR))::save)
             .generateAdvancement()
             .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "online_detector"));
     }
 
     @Override
-    protected void saveRecipeAdvancement(@Nonnull DirectoryCache cache, @Nonnull JsonObject cache2, @Nonnull Path advancementJson) {
+    protected void saveAdvancement(@Nonnull HashCache cache, @Nonnull JsonObject cache2, @Nonnull Path advancementJson) {
         // No thank you, good day sir.
     }
 }

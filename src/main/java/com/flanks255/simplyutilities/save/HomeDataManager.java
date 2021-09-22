@@ -2,11 +2,11 @@ package com.flanks255.simplyutilities.save;
 
 import com.flanks255.simplyutilities.SimplyUtilities;
 import com.flanks255.simplyutilities.homes.PlayerHomes;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.WorldSavedData;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nonnull;
@@ -14,32 +14,29 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class HomeDataManager extends WorldSavedData {
-    public HomeDataManager() {
-        super(NAME);
-    }
-
+public class HomeDataManager extends SavedData {
     private static final String NAME = SimplyUtilities.MODID+"_homedata";
     private static final Map<UUID, PlayerHomes> data = new HashMap<>();
 
-    public static HomeDataManager get(World world) {
-        ServerWorld serverWorld = world.getServer().func_241755_D_();
-        return serverWorld.getSavedData().getOrCreate(HomeDataManager::new, NAME);
+    public static HomeDataManager get(Level world) {
+        ServerLevel serverWorld = world.getServer().overworld();
+        return serverWorld.getDataStorage().computeIfAbsent(HomeDataManager::load, HomeDataManager::new, NAME);
     }
 
-    @Override
-    public void read(CompoundNBT nbt) {
+    public static HomeDataManager load(CompoundTag nbt) {
         if (nbt.contains("Players")) {
-            ListNBT players = nbt.getList("Players", Constants.NBT.TAG_COMPOUND);
+            ListTag players = nbt.getList("Players", Constants.NBT.TAG_COMPOUND);
 
-            players.forEach(playerNBT -> PlayerHomes.fromNBT((CompoundNBT) playerNBT).ifPresent(player -> data.put(player.getID(), player)));
+            players.forEach(playerNBT -> PlayerHomes.fromNBT((CompoundTag) playerNBT).ifPresent(player -> data.put(player.getID(), player)));
         }
+
+        return new HomeDataManager();
     }
 
     @Nonnull
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        ListNBT players = new ListNBT();
+    public CompoundTag save(CompoundTag compound) {
+        ListTag players = new ListTag();
 
         data.forEach(((uuid, playerHomes) -> players.add(playerHomes.toNBT())));
         compound.put("Players", players);

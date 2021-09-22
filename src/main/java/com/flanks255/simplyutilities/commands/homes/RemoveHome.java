@@ -7,36 +7,36 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
-import net.minecraft.command.ISuggestionProvider;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.Set;
 
 public class RemoveHome {
-    public static ArgumentBuilder<CommandSource, ?> register() {
+    public static ArgumentBuilder<CommandSourceStack, ?> register() {
         return Commands.literal("remove-home")
                 .requires(cs -> ConfigCache.cmd_home)
                 .executes(cs -> setHome(cs, "home"))
                 .then(Commands.argument("Name", StringArgumentType.string())
-                        .suggests((cs, builder) -> ISuggestionProvider.suggest(getHomesForSuggestion(cs.getSource().asPlayer()),builder))
+                        .suggests((cs, builder) -> SharedSuggestionProvider.suggest(getHomesForSuggestion(cs.getSource().getPlayerOrException()),builder))
                         .executes(cs -> setHome(cs, StringArgumentType.getString(cs, "Name"))));
     }
 
-    private static Set<String> getHomesForSuggestion(ServerPlayerEntity playerEntity) {
-        HomeDataManager homedata = HomeDataManager.get(playerEntity.getServerWorld());
-        return  homedata.getPlayerHomes(playerEntity.getUniqueID(), playerEntity.getDisplayName().getString()).getHomes();
+    private static Set<String> getHomesForSuggestion(ServerPlayer playerEntity) {
+        HomeDataManager homedata = HomeDataManager.get(playerEntity.getLevel());
+        return  homedata.getPlayerHomes(playerEntity.getUUID(), playerEntity.getDisplayName().getString()).getHomes();
     }
 
-    public static int setHome(CommandContext<CommandSource> ctx, String name) throws CommandSyntaxException {
-        ServerPlayerEntity player = ctx.getSource().asPlayer();
-        HomeDataManager homes = HomeDataManager.get(ctx.getSource().getWorld());
+    public static int setHome(CommandContext<CommandSourceStack> ctx, String name) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        HomeDataManager homes = HomeDataManager.get(ctx.getSource().getLevel());
 
-        PlayerHomes playerdata = homes.getPlayerHomes(player.getUniqueID(), player.getDisplayName().getString());
+        PlayerHomes playerdata = homes.getPlayerHomes(player.getUUID(), player.getDisplayName().getString());
 
-        ctx.getSource().sendFeedback( new TranslationTextComponent(playerdata.removeHome(name)?"message.su.removehomesuccess":"message.su.removehomefail", name), false );
+        ctx.getSource().sendSuccess( new TranslatableComponent(playerdata.removeHome(name)?"message.su.removehomesuccess":"message.su.removehomefail", name), false );
         return 0;
     }
 }

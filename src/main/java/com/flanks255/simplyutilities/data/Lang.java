@@ -3,9 +3,9 @@ package com.flanks255.simplyutilities.data;
 import com.flanks255.simplyutilities.SUBlocks;
 import com.flanks255.simplyutilities.SUItems;
 import com.flanks255.simplyutilities.SimplyUtilities;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.common.data.LanguageProvider;
 
 import java.util.function.Supplier;
@@ -49,18 +49,18 @@ public class Lang extends LanguageProvider {
     }
 
     private void addBlockExtra(Supplier<? extends Block> key, String name, String text) {
-        add(key.get().getTranslationKey()+name, text);
+        add(key.get().getDescriptionId()+name, text);
     }
 
     private void addItemExtra(Supplier<? extends Item> key, String name, String text) {
-        add(key.get().getTranslationKey()+name, text);
+        add(key.get().getDescriptionId()+name, text);
     }
 
     private void addJEITab(Supplier<? extends Item> item, String text) {
-        add(item.get().getTranslationKey()+".jei.info", text);
+        add(item.get().getDescriptionId()+".jei.info", text);
     }
 
     private void addJEITabBlock(Supplier<? extends Block> item, String text) {
-        add(item.get().asItem().getTranslationKey()+".jei.info", text);
+        add(item.get().asItem().getDescriptionId()+".jei.info", text);
     }
 }

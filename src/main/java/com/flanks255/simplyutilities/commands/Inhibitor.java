@@ -5,43 +5,43 @@ import com.flanks255.simplyutilities.save.InhibitorManager;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class Inhibitor {
-    public static ArgumentBuilder<CommandSource, ?> register() {
+    public static ArgumentBuilder<CommandSourceStack, ?> register() {
         return Commands.literal("inhibitor")
                 .then(Commands.literal("list").executes(Inhibitor::list))
                 .then(Commands.literal("check-orphans").executes(Inhibitor::checkOrphans));
     }
 
-    public static int list(CommandContext<CommandSource> ctx) throws CommandSyntaxException {
-        ServerPlayerEntity player = ctx.getSource().asPlayer();
-        ServerWorld world = player.getServerWorld();
+    public static int list(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        ServerLevel world = player.getLevel();
 
         Set<BlockPos> inhibitors = InhibitorManager.get(world).getInhibitors();
 
         if (inhibitors.isEmpty()) {
-            ctx.getSource().sendFeedback(new StringTextComponent("[ ]"), false);
+            ctx.getSource().sendSuccess(new TextComponent("[ ]"), false);
         }
         else {
-            ctx.getSource().sendFeedback(new StringTextComponent(inhibitors.toString()), false);
+            ctx.getSource().sendSuccess(new TextComponent(inhibitors.toString()), false);
         }
 
         return 0;
     }
 
-    public static int checkOrphans(CommandContext<CommandSource> ctx) throws CommandSyntaxException {
-        ServerPlayerEntity player = ctx.getSource().asPlayer();
-        ServerWorld world = player.getServerWorld();
+    public static int checkOrphans(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        ServerLevel world = player.getLevel();
 
         InhibitorManager inhibitorManager = InhibitorManager.get(world);
         Set<BlockPos> inhibitors = inhibitorManager.getInhibitors();
@@ -54,7 +54,7 @@ public class Inhibitor {
         if (!removeset.isEmpty())
             inhibitorManager.removeInhibitors(removeset);
 
-        ctx.getSource().sendFeedback(new TranslationTextComponent("message.su.inhibitororphans", removeset.size()), false);
+        ctx.getSource().sendSuccess(new TranslatableComponent("message.su.inhibitororphans", removeset.size()), false);
 
         return 0;
     }

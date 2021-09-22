@@ -1,10 +1,11 @@
 package com.flanks255.simplyutilities.gui;
 
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.network.chat.Component;
 
-public class ScrollingTextDisplay extends Widget {
-    public ScrollingTextDisplay(int x, int y, int width, int height, ITextComponent title) {
+public class ScrollingTextDisplay extends AbstractWidget {
+    public ScrollingTextDisplay(int x, int y, int width, int height, Component title) {
         super(x, y, width, height, title);
     }
 
@@ -17,5 +18,10 @@ public class ScrollingTextDisplay extends Widget {
         }
         else
             return super.mouseScrolled(mouseX,mouseY,delta);
+    }
+
+    @Override
+    public void updateNarration(NarrationElementOutput p_169152_) {
+        //Wut is this?
     }
 }

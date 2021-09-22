@@ -2,28 +2,31 @@ package com.flanks255.simplyutilities.save;
 
 import com.flanks255.simplyutilities.SimplyUtilities;
 import com.flanks255.simplyutilities.configuration.ConfigCache;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.LongNBT;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.WorldSavedData;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.LongTag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
-public class InhibitorManager extends WorldSavedData {
+public class InhibitorManager extends SavedData {
     public InhibitorManager() {
-        super(NAME);
+    }
+
+    public InhibitorManager(Set<BlockPos> set) {
+        inhibitors.addAll(set);
     }
 
     public static String NAME = SimplyUtilities.MODID + "_inhibitors";
     private final Set<BlockPos> inhibitors = new HashSet<>();
 
-    public static InhibitorManager get(ServerWorld world) {
-        return world.getSavedData().getOrCreate(InhibitorManager::new, NAME);
+    public static InhibitorManager get(ServerLevel world) {
+        return world.getDataStorage().computeIfAbsent(InhibitorManager::load, InhibitorManager::new, NAME);
     }
 
     public void addInhibitor(BlockPos pos) {
@@ -45,26 +48,26 @@ public class InhibitorManager extends WorldSavedData {
     public boolean InhibitorCloseEnough(BlockPos teleporterPos) {
         double threshhold = ConfigCache.EnderInhibitorRange;
         for (BlockPos inhibitor : inhibitors) {
-            if (inhibitor.distanceSq(teleporterPos) < threshhold * threshhold)
+            if (inhibitor.distSqr(teleporterPos) < threshhold * threshhold)
                 return true;
         }
         return false;
     }
 
-    @Override
-    public void read(CompoundNBT nbt) {
+    public static InhibitorManager load(CompoundTag nbt) {
+        Set<BlockPos> inhibitors = new HashSet<>();
         if (nbt.contains("Inhibitors")) {
-            inhibitors.clear();
-            ListNBT positions = nbt.getList("Inhibitors", Constants.NBT.TAG_LONG);
-            positions.forEach((pos) -> inhibitors.add(BlockPos.fromLong(((LongNBT)pos).getLong())));
+            ListTag positions = nbt.getList("Inhibitors", Constants.NBT.TAG_LONG);
+            positions.forEach((pos) -> inhibitors.add(BlockPos.of(((LongTag)pos).getAsLong())));
         }
+        return new InhibitorManager(inhibitors);
     }
 
     @Nonnull
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        ListNBT poslist = new ListNBT();
-        inhibitors.forEach((pos -> poslist.add(LongNBT.valueOf(pos.toLong()))));
+    public CompoundTag save(CompoundTag compound) {
+        ListTag poslist = new ListTag();
+        inhibitors.forEach((pos -> poslist.add(LongTag.valueOf(pos.asLong()))));
 
         compound.put("Inhibitors", poslist);
         return compound;

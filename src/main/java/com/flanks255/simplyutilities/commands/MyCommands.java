@@ -6,11 +6,11 @@ import com.flanks255.simplyutilities.commands.homes.ListHomes;
 import com.flanks255.simplyutilities.commands.homes.RemoveHome;
 import com.flanks255.simplyutilities.commands.homes.SetHome;
 import com.mojang.brigadier.CommandDispatcher;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 
 public class MyCommands {
-    public static void register(CommandDispatcher<CommandSource> dispatcher) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
                 Commands.literal("su")
                 .then(Spawn.register())

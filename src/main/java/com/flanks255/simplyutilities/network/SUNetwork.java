@@ -1,9 +1,10 @@
 package com.flanks255.simplyutilities.network;
 
 import com.flanks255.simplyutilities.SimplyUtilities;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fmllegacy.network.NetworkDirection;
+import net.minecraftforge.fmllegacy.network.NetworkRegistry;
+import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
 
 public class SUNetwork {
     public static final ResourceLocation channelName = new ResourceLocation(SimplyUtilities.MODID, "network");
@@ -22,19 +23,19 @@ public class SUNetwork {
                 .consumer(OpenOtherDoorMessage::handle)
                 .add();
 
-        channel.messageBuilder(OpenDebugHandMessage.class, 2)
+        channel.messageBuilder(OpenDebugHandMessage.class, 2, NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(OpenDebugHandMessage::decode)
                 .encoder(OpenDebugHandMessage::encode)
                 .consumer(OpenDebugHandMessage::handle)
                 .add();
 
-        channel.messageBuilder(ZoomFOVMessage.class, 3)
+        channel.messageBuilder(ZoomFOVMessage.class, 3, NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(ZoomFOVMessage::decode)
                 .encoder(ZoomFOVMessage::encode)
                 .consumer(ZoomFOVMessage::handle)
                 .add();
 
-        channel.messageBuilder(ZoomSmoothMessage.class, 4)
+        channel.messageBuilder(ZoomSmoothMessage.class, 4, NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(ZoomSmoothMessage::decode)
                 .encoder(ZoomSmoothMessage::encode)
                 .consumer(ZoomSmoothMessage::handle)

@@ -4,23 +4,23 @@ import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.world.storage.IWorldInfo;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.storage.LevelData;
 
 public class Spawn {
-    public static ArgumentBuilder<CommandSource, ?> register() {
+    public static ArgumentBuilder<CommandSourceStack, ?> register() {
         return Commands.literal("spawn")
                 .requires(cs -> ConfigCache.cmd_spawn)
                 .executes(Spawn::spawn);
     }
 
-    public static int spawn(CommandContext<CommandSource> ctx) throws CommandSyntaxException {
-        ServerPlayerEntity player = ctx.getSource().asPlayer();
-        IWorldInfo worldInfo = player.getServerWorld().getWorldInfo();
+    public static int spawn(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        LevelData worldInfo = player.getLevel().getLevelData();
 
-        player.teleport(ctx.getSource().getServer().func_241755_D_(), worldInfo.getSpawnX(), worldInfo.getSpawnY(), worldInfo.getSpawnZ(), player.getYaw(0), player.getPitch(0));
+        player.teleportTo(ctx.getSource().getServer().overworld(), worldInfo.getXSpawn(), worldInfo.getYSpawn(), worldInfo.getZSpawn(), player.getViewYRot(0), player.getViewXRot(0));
         return 0;
     }
 }

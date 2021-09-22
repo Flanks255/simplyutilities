@@ -1,11 +1,11 @@
 package com.flanks255.simplyutilities.network;
 
 import com.flanks255.simplyutilities.tweaks.DoubleDoorFix;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -20,20 +20,20 @@ public class OpenOtherDoorMessage {
         return blockPos;
     }
 
-    public static OpenOtherDoorMessage decode(final PacketBuffer buffer) {
+    public static OpenOtherDoorMessage decode(final FriendlyByteBuf buffer) {
         return new OpenOtherDoorMessage(buffer.readBlockPos());
     }
 
-    public static void encode(final OpenOtherDoorMessage message, final PacketBuffer buffer) {
+    public static void encode(final OpenOtherDoorMessage message, final FriendlyByteBuf buffer) {
         buffer.writeBlockPos(message.blockPos);
     }
 
     public static void handle(final OpenOtherDoorMessage message, final Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(
                 () -> {
-                    ServerPlayerEntity player = ctx.get().getSender();
+                    ServerPlayer player = ctx.get().getSender();
                     if (player != null) {
-                        World world = player.getEntityWorld();
+                        Level world = player.getCommandSenderWorld();
                         DoubleDoorFix.openOtherDoor(world, message.getBlockPos());
                     }
                 });
