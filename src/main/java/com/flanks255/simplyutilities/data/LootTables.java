@@ -36,6 +36,7 @@ public class LootTables extends LootTableProvider {
         protected void addTables() {
             this.registerDropSelfLootTable(SUBlocks.ENDER_INHIBITOR.get());
             this.registerDropSelfLootTable(SUBlocks.ONLINE_DETECTOR.get());
+            this.registerDropSelfLootTable(SUBlocks.PLACEHOLDER.get());
         }
 
         @Nonnull

@@ -6,7 +6,10 @@ import com.flanks255.simplyutilities.configuration.ClientConfiguration;
 import com.flanks255.simplyutilities.configuration.CommonConfiguration;
 import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.flanks255.simplyutilities.configuration.ServerConfiguration;
+import com.flanks255.simplyutilities.crafting.CopyNBTRecipeShaped;
 import com.flanks255.simplyutilities.crafting.FluidIngredient;
+import com.flanks255.simplyutilities.crafting.RightClickRecipe;
+import com.flanks255.simplyutilities.crafting.TargetNBTIngredient;
 import com.flanks255.simplyutilities.data.BoolConfigCondition;
 import com.flanks255.simplyutilities.data.Generator;
 import com.flanks255.simplyutilities.items.ExoLeggings;
@@ -25,7 +28,6 @@ import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.*;
@@ -36,8 +38,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -50,6 +50,10 @@ public class SimplyUtilities
 
     public static CommonNetProxy NETPROXY;
 
+
+
+
+
     public static boolean isQuarkLoaded = false;
 
     private final NonNullList<KeyBinding> keyBinds = NonNullList.create();
@@ -60,8 +64,7 @@ public class SimplyUtilities
         SUBlocks.init(modBus);
         SUItems.init(modBus);
 
-        DeferredRegister<IRecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MODID);
-
+        SUCrafting.init(modBus);
 
 
         // Configs
@@ -81,7 +84,7 @@ public class SimplyUtilities
         modBus.addListener(this::doClientStuff);
         MinecraftForge.EVENT_BUS.addListener(EnderInhibitor::TeleportEvent);
         MinecraftForge.EVENT_BUS.addListener(ExoLeggings::onEntityHurt);
-        MinecraftForge.EVENT_BUS.addListener(SimplyUtilities::registerIngredients);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, RightClickRecipe::RightClickEvent);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, DoubleDoorFix::playerInteraction);
 
         NETPROXY = DistExecutor.safeRunForDist(() -> ClientNetProxy::new, () -> CommonNetProxy::new);
@@ -91,6 +94,8 @@ public class SimplyUtilities
     {
         DeferredWorkQueue.runLater(() -> {
             CraftingHelper.register(BoolConfigCondition.Serializer.INSTANCE);
+            CraftingHelper.register(FluidIngredient.Serializer.NAME, FluidIngredient.SERIALIZER);
+            CraftingHelper.register(TargetNBTIngredient.Serializer.NAME, TargetNBTIngredient.SERIALIZER);
         });
         NETWORK = SUNetwork.getNetworkChannel();
         isQuarkLoaded = ModList.get().isLoaded("quark");
@@ -126,8 +131,5 @@ public class SimplyUtilities
         }
     }
 
-    private static void registerIngredients( RegistryEvent.Register<IRecipeSerializer<?>> evt) {
-        CraftingHelper.register(FluidIngredient.Serializer.NAME, FluidIngredient.SERIALIZER);
-    }
 
 }

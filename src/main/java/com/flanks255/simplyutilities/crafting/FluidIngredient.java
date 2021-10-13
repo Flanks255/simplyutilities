@@ -22,11 +22,14 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class FluidIngredient extends Ingredient {
+    /*
     private final Boolean bucketsOnly;
     private final List<Fluid> matchingFluids;
     private final ResourceLocation specificFluid;
     private final ITag<Fluid> fluidITag;
     private final int fluidAmount;
+
+     */
     private ItemStack[] bucketCache;
 
 
@@ -35,12 +38,13 @@ public class FluidIngredient extends Ingredient {
     }
 
     public static FluidIngredient fromTag(ITag<Fluid> tagIn, int amount, boolean bucketOnly) {
-
+        return null;
     }
 
     @Nonnull
     @Override
     public ItemStack[] getMatchingStacks() {
+        /*
         if (bucketCache == null) {
             List<ItemStack> tmp = new ArrayList<>();
             matchingFluids.forEach((fluid -> {
@@ -51,6 +55,9 @@ public class FluidIngredient extends Ingredient {
             bucketCache = tmp.toArray(tmp.toArray(new ItemStack[0]));
         }
         return bucketCache;
+
+         */
+        return null;
     }
 
     @Override

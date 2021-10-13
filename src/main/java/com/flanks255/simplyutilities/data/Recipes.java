@@ -3,8 +3,13 @@ package com.flanks255.simplyutilities.data;
 import com.flanks255.simplyutilities.SUBlocks;
 import com.flanks255.simplyutilities.SUItems;
 import com.flanks255.simplyutilities.SimplyUtilities;
+import com.flanks255.simplyutilities.crafting.RightClickRecipe;
+import com.flanks255.simplyutilities.crafting.TargetNBTIngredient;
+import com.flanks255.simplyutilities.crafting.WrappedRecipe;
 import com.google.gson.JsonObject;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.*;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
@@ -111,6 +116,10 @@ public class Recipes extends RecipeProvider {
                 .addCriterion("", hasItem(Items.AIR))::build)
             .generateAdvancement()
             .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "online_detector"));
+
+
+        //consumer.accept(new RightClickRecipe.FinishedRecipe(new ResourceLocation(SimplyUtilities.MODID, "rightclick/rightclicktest"),
+        //    new ItemStack(Items.NETHER_STAR), Ingredient.fromItems(Items.APPLE), Blocks.GOLD_BLOCK));
     }
 
     @Override
