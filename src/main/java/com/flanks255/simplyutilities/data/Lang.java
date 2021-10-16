@@ -45,7 +45,7 @@ public class Lang extends LanguageProvider {
         addItem(SUItems.EXOLEGGINGS, "Exoskeleton Leggings");
         addItemExtra(SUItems.EXOLEGGINGS, ".info", "Prevents fall damage.");
 
-        addJEITabBlock(SUBlocks.ONLINE_DETECTOR, "Outputs a redstone signal//nwhen the player who placed//nthe block is online.");
+        addJEITabBlock(SUBlocks.ONLINE_DETECTOR, "Outputs a redstone signal\nwhen the player who placed\nthe block is online.");
     }
 
     private void addBlockExtra(Supplier<? extends Block> key, String name, String text) {

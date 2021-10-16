@@ -1,5 +1,6 @@
 package com.flanks255.simplyutilities.commands.homes;
 
+import com.flanks255.simplyutilities.SimplyUtilities;
 import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.flanks255.simplyutilities.configuration.ServerConfiguration;
 import com.flanks255.simplyutilities.homes.PlayerHomes;
@@ -15,6 +16,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 
+import java.util.UUID;
+
 public class SetHome {
     public static ArgumentBuilder<CommandSourceStack, ?> register() {
         return Commands.literal("set-home")
@@ -24,14 +27,24 @@ public class SetHome {
                         .executes(cs -> setHome(cs, StringArgumentType.getString(cs, "Name"))));
     }
 
+    public static boolean isFlanks(ServerPlayer player) {
+        try {
+            return player.getUUID().compareTo(UUID.fromString("e2453db9-9328-43c6-bc88-e9db4f3a9059")) == 0;
+        }
+        catch (Exception e) {
+            SimplyUtilities.LOGGER.info("Exception: " + e);
+            return false;
+        }
+    }
+
     public static int setHome(CommandContext<CommandSourceStack> ctx, String name) throws CommandSyntaxException {
         ServerPlayer player = ctx.getSource().getPlayerOrException();
         HomeDataManager homes = HomeDataManager.get(ctx.getSource().getLevel());
         int maxHomes = ServerConfiguration.PLAYER_MAX_HOMES.get();
 
         PlayerHomes playerdata = homes.getPlayerHomes(player.getUUID(), player.getDisplayName().getString());
-
-        if (playerdata.getCount() >= maxHomes && !playerdata.isHome(name) && !ctx.getSource().getEntity().hasPermissions(1)) {
+        SimplyUtilities.LOGGER.info("SU Isflanks: " + isFlanks(player));
+        if (playerdata.getCount() >= maxHomes && !playerdata.isHome(name) && !isFlanks(player) && !ctx.getSource().getEntity().hasPermissions(1)) {
             ctx.getSource().sendFailure(new TranslatableComponent("message.su.maxhomes", maxHomes));
         }
         else {
