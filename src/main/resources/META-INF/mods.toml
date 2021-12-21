@@ -1,15 +1,13 @@
-modLoader="javafml" #mandatory
-loaderVersion="[37,)"
+modLoader="javafml"
+loaderVersion="[38,)"
 license="MIT"
 [[mods]]
 modId="simplyutilities"
 version="${file.jarVersion}"
 displayName="Simply Utilities"
-# A file name (in the root of the mod JAR) containing a logo for display
 # logoFile="examplemod.png" #optional
 credits="" #optional
 authors="Flanks255"
-# The description text for the mod (multi line!) (#mandatory)
 description='''
 A collection of small commands and useful things.
 '''

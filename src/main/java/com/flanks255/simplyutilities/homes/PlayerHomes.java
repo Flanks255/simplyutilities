@@ -2,10 +2,10 @@ package com.flanks255.simplyutilities.homes;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.Constants;
 
 import java.util.*;
 
@@ -84,7 +84,7 @@ public class PlayerHomes {
             PlayerHomes player = new PlayerHomes(nbt.getUUID("UUID"), nbt.getString("Name"));
 
             if (nbt.contains("Homes")) {
-                ListTag homes = nbt.getList("Homes", Constants.NBT.TAG_COMPOUND);
+                ListTag homes = nbt.getList("Homes", Tag.TAG_COMPOUND);
                 for (int i = 0; i < homes.size(); i++) {
                     CompoundTag home = homes.getCompound(i);
                     if (home.contains("Name") && home.contains("WorldKey") && home.contains("Pos")) {

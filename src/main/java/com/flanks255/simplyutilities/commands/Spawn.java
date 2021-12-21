@@ -12,13 +12,13 @@ import net.minecraft.world.level.storage.LevelData;
 public class Spawn {
     public static ArgumentBuilder<CommandSourceStack, ?> register() {
         return Commands.literal("spawn")
-                .requires(cs -> ConfigCache.cmd_spawn)
-                .executes(Spawn::spawn);
+            .requires(cs -> ConfigCache.cmd_spawn)
+            .executes(Spawn::spawn);
     }
 
     public static int spawn(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         ServerPlayer player = ctx.getSource().getPlayerOrException();
-        LevelData worldInfo = player.getLevel().getLevelData();
+        LevelData worldInfo = player.level.getLevelData();
 
         player.teleportTo(ctx.getSource().getServer().overworld(), worldInfo.getXSpawn(), worldInfo.getYSpawn(), worldInfo.getZSpawn(), player.getViewYRot(0), player.getViewXRot(0));
         return 0;

@@ -21,15 +21,15 @@ import java.util.Set;
 public class Home {
     public static ArgumentBuilder<CommandSourceStack, ?> register() {
         return Commands.literal("home")
-                .requires(cs -> ConfigCache.cmd_home)
-                .executes(cs -> home(cs, "home"))
-                .then(Commands.argument("Name", StringArgumentType.string())
-                        .suggests((cs, builder) -> SharedSuggestionProvider.suggest(getHomesForSuggestion(cs.getSource().getPlayerOrException()), builder))
+            .requires(cs -> ConfigCache.cmd_home)
+            .executes(cs -> home(cs, "home"))
+            .then(Commands.argument("Name", StringArgumentType.string())
+                .suggests((cs, builder) -> SharedSuggestionProvider.suggest(getHomesForSuggestion(cs.getSource().getPlayerOrException()), builder))
                 .executes(cs -> home(cs, StringArgumentType.getString(cs, "Name"))));
     }
 
     private static Set<String> getHomesForSuggestion(ServerPlayer playerEntity) {
-        HomeDataManager homedata = HomeDataManager.get(playerEntity.getLevel());
+        HomeDataManager homedata = HomeDataManager.get(playerEntity.level);
         return  homedata.getPlayerHomes(playerEntity.getUUID(), playerEntity.getDisplayName().getString()).getHomes();
     }
 

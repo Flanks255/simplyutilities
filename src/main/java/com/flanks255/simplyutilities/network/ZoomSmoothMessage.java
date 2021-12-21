@@ -3,8 +3,8 @@ package com.flanks255.simplyutilities.network;
 import com.flanks255.simplyutilities.configuration.ClientConfiguration;
 import com.flanks255.simplyutilities.configuration.ConfigCache;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fmllegacy.network.NetworkDirection;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -30,11 +30,11 @@ public class ZoomSmoothMessage {
     public static void handle(final ZoomSmoothMessage message, final Supplier<NetworkEvent.Context> ctx) {
         if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
             ctx.get().enqueueWork(
-                    () -> {
-                        ClientConfiguration.ZOOMSMOOTHCAM.set(message.isSmoothcam());
-                        ClientConfiguration.CLIENT_CONFIG.save();
-                        ConfigCache.RefreshCache();
-                    }
+                () -> {
+                    ClientConfiguration.ZOOMSMOOTHCAM.set(message.isSmoothcam());
+                    ClientConfiguration.CLIENT_CONFIG.save();
+                    ConfigCache.RefreshCache();
+                }
             );
         }
         ctx.get().setPacketHandled(true);

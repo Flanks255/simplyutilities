@@ -5,7 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -30,13 +30,13 @@ public class OpenOtherDoorMessage {
 
     public static void handle(final OpenOtherDoorMessage message, final Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(
-                () -> {
-                    ServerPlayer player = ctx.get().getSender();
-                    if (player != null) {
-                        Level world = player.getCommandSenderWorld();
-                        DoubleDoorFix.openOtherDoor(world, message.getBlockPos());
-                    }
-                });
+            () -> {
+                ServerPlayer player = ctx.get().getSender();
+                if (player != null) {
+                    Level world = player.getCommandSenderWorld();
+                    DoubleDoorFix.openOtherDoor(world, message.getBlockPos());
+                }
+            });
         ctx.get().setPacketHandled(true);
     }
 }

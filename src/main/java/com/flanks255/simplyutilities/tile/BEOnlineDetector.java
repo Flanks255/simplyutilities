@@ -61,7 +61,7 @@ public class BEOnlineDetector extends BlockEntity {
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         CompoundTag nbt = new CompoundTag();
         nbt.putBoolean("OnlineState", onlineState);
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), 0, nbt);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
@@ -79,11 +79,10 @@ public class BEOnlineDetector extends BlockEntity {
     }
 
     @Override
-    public CompoundTag save(CompoundTag nbt) {
+    protected void saveAdditional(CompoundTag nbt) {
         nbt.putUUID("PlacerUUID", uuid);
         nbt.putString("PlacerName", playerName);
         nbt.putBoolean("OnlineState", onlineState);
-        return super.save(nbt);
     }
 
     public static int wrapDegrees(int in) {

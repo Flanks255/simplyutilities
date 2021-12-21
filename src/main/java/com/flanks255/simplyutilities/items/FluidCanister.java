@@ -26,14 +26,13 @@ public class FluidCanister extends Item {
     }
 
     @Override
-    public boolean showDurabilityBar(ItemStack stack) {
+    public boolean isBarVisible(ItemStack stack) {
         return true;
     }
 
     @Override
-    public double getDurabilityForDisplay(ItemStack stack) {
-        SimplyUtilities.LOGGER.info("getDurability");
-        return 0.5;
+    public int getBarColor(ItemStack stack) {
+        return 0x7f7f7f;
     }
 
     @Override

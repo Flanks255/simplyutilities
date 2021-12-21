@@ -4,10 +4,10 @@ import com.flanks255.simplyutilities.SimplyUtilities;
 import com.flanks255.simplyutilities.homes.PlayerHomes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.saveddata.SavedData;
-import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class HomeDataManager extends SavedData {
 
     public static HomeDataManager load(CompoundTag nbt) {
         if (nbt.contains("Players")) {
-            ListTag players = nbt.getList("Players", Constants.NBT.TAG_COMPOUND);
+            ListTag players = nbt.getList("Players", Tag.TAG_COMPOUND);
 
             players.forEach(playerNBT -> PlayerHomes.fromNBT((CompoundTag) playerNBT).ifPresent(player -> data.put(player.getID(), player)));
         }

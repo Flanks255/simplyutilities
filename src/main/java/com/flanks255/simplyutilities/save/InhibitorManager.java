@@ -6,9 +6,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.LongTag;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.saveddata.SavedData;
-import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;
@@ -57,7 +57,7 @@ public class InhibitorManager extends SavedData {
     public static InhibitorManager load(CompoundTag nbt) {
         Set<BlockPos> inhibitors = new HashSet<>();
         if (nbt.contains("Inhibitors")) {
-            ListTag positions = nbt.getList("Inhibitors", Constants.NBT.TAG_LONG);
+            ListTag positions = nbt.getList("Inhibitors", Tag.TAG_LONG);
             positions.forEach((pos) -> inhibitors.add(BlockPos.of(((LongTag)pos).getAsLong())));
         }
         return new InhibitorManager(inhibitors);

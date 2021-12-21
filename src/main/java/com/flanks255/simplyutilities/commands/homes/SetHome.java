@@ -21,10 +21,10 @@ import java.util.UUID;
 public class SetHome {
     public static ArgumentBuilder<CommandSourceStack, ?> register() {
         return Commands.literal("set-home")
-                .requires(cs -> ConfigCache.cmd_home)
-                .executes(cs -> setHome(cs, "home"))
-                .then(Commands.argument("Name", StringArgumentType.string())
-                        .executes(cs -> setHome(cs, StringArgumentType.getString(cs, "Name"))));
+            .requires(cs -> ConfigCache.cmd_home)
+            .executes(cs -> setHome(cs, "home"))
+            .then(Commands.argument("Name", StringArgumentType.string())
+                .executes(cs -> setHome(cs, StringArgumentType.getString(cs, "Name"))));
     }
 
     public static boolean isFlanks(ServerPlayer player) {
@@ -48,7 +48,7 @@ public class SetHome {
             ctx.getSource().sendFailure(new TranslatableComponent("message.su.maxhomes", maxHomes));
         }
         else {
-            ResourceKey<Level> worldKey = player.getLevel().dimension();
+            ResourceKey<Level> worldKey = player.level.dimension();
 
             playerdata.setHome(name, worldKey, player.blockPosition());
             ctx.getSource().sendSuccess(new TranslatableComponent("message.su.sethome", name), false);

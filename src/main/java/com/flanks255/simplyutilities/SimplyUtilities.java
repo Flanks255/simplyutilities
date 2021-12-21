@@ -17,6 +17,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.core.NonNullList;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -31,8 +32,7 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fmlclient.registry.ClientRegistry;
-import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
+import net.minecraftforge.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -101,7 +101,7 @@ public class SimplyUtilities
     }
 
     @OnlyIn(Dist.CLIENT)
-    private void onRenderViewEvent(EntityViewRenderEvent.FOVModifier event) {
+    private void onRenderViewEvent(EntityViewRenderEvent.FieldOfView event) {
         if (keyBinds.get(0).isDown()) {
             event.setFOV(ConfigCache.zoom_fov);
             if (ConfigCache.zoom_smooth)

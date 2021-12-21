@@ -1,9 +1,8 @@
 package com.flanks255.simplyutilities.network;
 
-import com.flanks255.simplyutilities.SimplyUtilities;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -29,9 +28,9 @@ public class OpenDebugHandMessage {
 
     public static void handle(final OpenDebugHandMessage message, final Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(
-                () -> {
-                    ClientPacketStuff.handleDebugHandMessage(ctx.get().getSender(), message);
-                });
+            () -> {
+                ClientPacketStuff.handleDebugHandMessage(ctx.get().getSender(), message);
+            });
         ctx.get().setPacketHandled(true);
     }
 }
