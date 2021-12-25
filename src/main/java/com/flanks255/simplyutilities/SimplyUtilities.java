@@ -84,7 +84,7 @@ public class SimplyUtilities
         modBus.addListener(this::doClientStuff);
         MinecraftForge.EVENT_BUS.addListener(EnderInhibitor::TeleportEvent);
         MinecraftForge.EVENT_BUS.addListener(ExoLeggings::onEntityHurt);
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, RightClickRecipe::RightClickEvent);
+        //MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, RightClickRecipe::RightClickEvent);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, DoubleDoorFix::playerInteraction);
 
         NETPROXY = DistExecutor.safeRunForDist(() -> ClientNetProxy::new, () -> CommonNetProxy::new);
