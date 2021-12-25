@@ -6,6 +6,8 @@ import com.flanks255.simplyutilities.configuration.ClientConfiguration;
 import com.flanks255.simplyutilities.configuration.CommonConfiguration;
 import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.flanks255.simplyutilities.configuration.ServerConfiguration;
+import com.flanks255.simplyutilities.crafting.FluidIngredient;
+import com.flanks255.simplyutilities.crafting.TargetNBTIngredient;
 import com.flanks255.simplyutilities.data.BoolConfigCondition;
 import com.flanks255.simplyutilities.data.Generator;
 import com.flanks255.simplyutilities.items.ExoLeggings;
@@ -52,6 +54,7 @@ public class SimplyUtilities
 
         SUBlocks.init(modBus);
         SUItems.init(modBus);
+        SUCrafting.init(modBus);
 
         modBus.addListener(ModelLayers::registerLayerDefinitions);
         modBus.addListener(ModelLayers::registerEntityRenderers);
@@ -80,7 +83,11 @@ public class SimplyUtilities
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        event.enqueueWork(() -> CraftingHelper.register(BoolConfigCondition.Serializer.INSTANCE));
+        event.enqueueWork(() -> {
+            CraftingHelper.register(BoolConfigCondition.Serializer.INSTANCE);
+            CraftingHelper.register(FluidIngredient.Serializer.NAME, FluidIngredient.SERIALIZER);
+            CraftingHelper.register(TargetNBTIngredient.Serializer.NAME, TargetNBTIngredient.SERIALIZER);
+        });
         NETWORK = SUNetwork.getNetworkChannel();
         isQuarkLoaded = ModList.get().isLoaded("quark");
     }

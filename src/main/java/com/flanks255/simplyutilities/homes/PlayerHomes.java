@@ -71,7 +71,7 @@ public class PlayerHomes {
 
         nbt.putUUID("UUID", ID);
         nbt.putString("Name", Name);
-        for (Map.Entry<String, HomePoint> entry : Homes.entrySet()) {
+        for (var entry : Homes.entrySet()) {
             homeList.add(entry.getValue().toNBT());
         }
         nbt.put("Homes", homeList);
