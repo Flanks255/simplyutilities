@@ -21,10 +21,10 @@ import java.util.Set;
 public class Home {
     public static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("home")
-                .requires(cs -> ConfigCache.cmd_home)
-                .executes(cs -> home(cs, "home"))
-                .then(Commands.argument("Name", StringArgumentType.string())
-                        .suggests((cs, builder) -> ISuggestionProvider.suggest(getHomesForSuggestion(cs.getSource().asPlayer()), builder))
+            .requires(cs -> ConfigCache.cmd_home)
+            .executes(cs -> home(cs, "home"))
+            .then(Commands.argument("Name", StringArgumentType.string())
+                .suggests((cs, builder) -> ISuggestionProvider.suggest(getHomesForSuggestion(cs.getSource().asPlayer()), builder))
                 .executes(cs -> home(cs, StringArgumentType.getString(cs, "Name"))));
     }
 
