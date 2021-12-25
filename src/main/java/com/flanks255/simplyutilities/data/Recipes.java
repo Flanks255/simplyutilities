@@ -115,11 +115,6 @@ public class Recipes extends RecipeProvider {
                     .unlockedBy("", has(Items.AIR))::save)
             .generateAdvancement()
             .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "online_detector"));
-
-        ShapelessRecipeBuilder.shapeless(Items.MAGMA_BLOCK)
-            .requires(Tags.Items.COBBLESTONE)
-            .requires(new FluidIngredient(FluidTags.LAVA, false))
-            .unlockedBy("", has(Items.AIR)).save(consumer, new ResourceLocation(SimplyUtilities.MODID, "test_magma_block"));
     }
 
     @Override
