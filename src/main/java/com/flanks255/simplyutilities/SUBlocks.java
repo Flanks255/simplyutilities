@@ -24,8 +24,8 @@ public class SUBlocks {
     public static final SUBlockReg<OnlineDetector, SUBlockItem, TEOnlineDetector> ONLINE_DETECTOR = new SUBlockReg<>("online_detector", OnlineDetector::new,
         (b) -> new SUBlockItem(b, new Item.Properties().maxStackSize(64).group(ItemGroup.MISC).setISTER(() -> OnlineDetectorItemStackRender::new)), TEOnlineDetector::new);
 
-    public static final SUBlockReg<Placeholder, Placeholder.PlaceHolderItem, ?> PLACEHOLDER = new SUBlockReg<>("placeholder", Placeholder::new,
-        Placeholder.PlaceHolderItem::new);
+//    public static final SUBlockReg<Placeholder, Placeholder.PlaceHolderItem, ?> PLACEHOLDER = new SUBlockReg<>("placeholder", Placeholder::new,
+//        Placeholder.PlaceHolderItem::new);
 
     public static void init(IEventBus eventBus) {
         BLOCKS.register(eventBus);
