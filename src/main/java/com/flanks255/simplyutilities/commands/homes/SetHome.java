@@ -18,10 +18,10 @@ import net.minecraft.world.World;
 public class SetHome {
     public static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("set-home")
-                .requires(cs -> ConfigCache.cmd_home)
-                .executes(cs -> setHome(cs, "home"))
-                .then(Commands.argument("Name", StringArgumentType.string())
-                        .executes(cs -> setHome(cs, StringArgumentType.getString(cs, "Name"))));
+            .requires(cs -> ConfigCache.cmd_home)
+            .executes(cs -> setHome(cs, "home"))
+            .then(Commands.argument("Name", StringArgumentType.string())
+                .executes(cs -> setHome(cs, StringArgumentType.getString(cs, "Name"))));
     }
 
     public static int setHome(CommandContext<CommandSource> ctx, String name) throws CommandSyntaxException {

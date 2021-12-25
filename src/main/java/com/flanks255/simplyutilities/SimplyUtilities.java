@@ -6,6 +6,10 @@ import com.flanks255.simplyutilities.configuration.ClientConfiguration;
 import com.flanks255.simplyutilities.configuration.CommonConfiguration;
 import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.flanks255.simplyutilities.configuration.ServerConfiguration;
+import com.flanks255.simplyutilities.crafting.CopyNBTRecipeShaped;
+import com.flanks255.simplyutilities.crafting.FluidIngredient;
+import com.flanks255.simplyutilities.crafting.RightClickRecipe;
+import com.flanks255.simplyutilities.crafting.TargetNBTIngredient;
 import com.flanks255.simplyutilities.data.BoolConfigCondition;
 import com.flanks255.simplyutilities.data.Generator;
 import com.flanks255.simplyutilities.items.ExoLeggings;
@@ -16,6 +20,7 @@ import com.flanks255.simplyutilities.tweaks.DoubleDoorFix;
 import com.flanks255.simplyutilities.network.SUNetwork;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -45,6 +50,10 @@ public class SimplyUtilities
 
     public static CommonNetProxy NETPROXY;
 
+
+
+
+
     public static boolean isQuarkLoaded = false;
 
     private final NonNullList<KeyBinding> keyBinds = NonNullList.create();
@@ -54,6 +63,9 @@ public class SimplyUtilities
 
         SUBlocks.init(modBus);
         SUItems.init(modBus);
+
+        SUCrafting.init(modBus);
+
 
         // Configs
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfiguration.SERVER_CONFIG);
@@ -72,6 +84,7 @@ public class SimplyUtilities
         modBus.addListener(this::doClientStuff);
         MinecraftForge.EVENT_BUS.addListener(EnderInhibitor::TeleportEvent);
         MinecraftForge.EVENT_BUS.addListener(ExoLeggings::onEntityHurt);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, RightClickRecipe::RightClickEvent);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, DoubleDoorFix::playerInteraction);
 
         NETPROXY = DistExecutor.safeRunForDist(() -> ClientNetProxy::new, () -> CommonNetProxy::new);
@@ -81,6 +94,8 @@ public class SimplyUtilities
     {
         DeferredWorkQueue.runLater(() -> {
             CraftingHelper.register(BoolConfigCondition.Serializer.INSTANCE);
+            CraftingHelper.register(FluidIngredient.Serializer.NAME, FluidIngredient.SERIALIZER);
+            CraftingHelper.register(TargetNBTIngredient.Serializer.NAME, TargetNBTIngredient.SERIALIZER);
         });
         NETWORK = SUNetwork.getNetworkChannel();
         isQuarkLoaded = ModList.get().isLoaded("quark");

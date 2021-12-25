@@ -26,7 +26,7 @@ version = "${modversion}-build.${ENV.GITHUB_RUN_NUMBER ?: 9999}"
 group = 'com.flanks255'
 archivesBaseName = 'simplyutilities'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
@@ -40,10 +40,6 @@ minecraft {
         client {
             workingDirectory project.file('run')
 
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            property 'forge.logging.console.level', 'debug'
-
             mods {
                 simplyutilities {
                     source sourceSets.main
@@ -54,9 +50,7 @@ minecraft {
         server {
             workingDirectory project.file('run')
 
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            property 'forge.logging.console.level', 'debug'
+            args 'nogui'
 
             mods {
                 simplyutilities {
@@ -67,10 +61,6 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            property 'forge.logging.console.level', 'debug'
 
             args '--mod', 'simplyutilities', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
@@ -88,7 +78,7 @@ dependencies {
 
     compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
-    compileOnly fg.deobf("curse.maven:TOP-245211:3157997")
+    runtimeOnly fg.deobf("curse.maven:TOP-245211:3157997")
 }
 
 jar {
