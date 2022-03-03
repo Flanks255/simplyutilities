@@ -89,19 +89,17 @@ public class DebugScreen extends Screen {
                 drawString(matrixStack, font, "Display Name: " + stack.getHoverName().getString() ,guiLeft + 8, guiTop + 24, 0xFFFFFF);
                 drawString(matrixStack, font,"Registry Name: " + stack.getItem().getRegistryName() ,guiLeft + 8, guiTop + 34, 0xFFFFFF);
                 break;
-            case TAGS:
-                drawString(matrixStack, font, "Tags: " + stack.getItem().getTags() ,guiLeft + 8, guiTop + 24, 0xFFFFFF);
+            case TAGS: //TODO i hope this works later...
+                drawString(matrixStack, font, "Tags: " + stack.getTags() ,guiLeft + 8, guiTop + 24, 0xFFFFFF);
                 break;
             case NBT:
                 if (stack.hasTag()) {
-/*
-                    String lineList[] = stack.getTag().getPrettyDisplay(" ", 1).getString().split("\n");
+/*                    String lineList[] = stack.getTag().getPrettyDisplay(" ", 1).getString().split("\n");
                     int y = guiTop + 24;
                     for (String line : lineList) {
                         drawString(matrixStack, font,new TextComponent(line), guiLeft + 8, y, 0xFFFFFF);
                         y += 10;
-                    }
-*/
+                    }*/
                 }
                 else
                     drawString(matrixStack, font, "NBT: None" ,guiLeft + 8, guiTop + 24, 0xFFFFFF);

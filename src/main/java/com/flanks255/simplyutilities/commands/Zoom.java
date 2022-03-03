@@ -17,8 +17,8 @@ import net.minecraftforge.network.PacketDistributor;
 public class Zoom {
     public static ArgumentBuilder<CommandSourceStack, ?> register() {
         return Commands.literal("zoom")
-                .then(Commands.literal("setfov").then(Commands.argument("FOV", DoubleArgumentType.doubleArg(1.0d, 90.0d)).executes(cs -> setFOV(cs, DoubleArgumentType.getDouble(cs, "FOV")))))
-                .then(Commands.literal("setsmooth").then(Commands.argument("enabled", BoolArgumentType.bool()).executes(cs -> setSmooth(cs, BoolArgumentType.getBool(cs, "enabled")))));
+            .then(Commands.literal("setfov").then(Commands.argument("FOV", DoubleArgumentType.doubleArg(1.0d, 90.0d)).executes(cs -> setFOV(cs, DoubleArgumentType.getDouble(cs, "FOV")))))
+            .then(Commands.literal("setsmooth").then(Commands.argument("enabled", BoolArgumentType.bool()).executes(cs -> setSmooth(cs, BoolArgumentType.getBool(cs, "enabled")))));
     }
 
     public static int setFOV(CommandContext<CommandSourceStack> ctx, double fov) throws CommandSyntaxException {

@@ -24,6 +24,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraftforge.registries.RegistryObject;
 
 public class SULootTables extends LootTableProvider {
     public SULootTables(DataGenerator gen) {
@@ -46,9 +47,8 @@ public class SULootTables extends LootTableProvider {
         @Nonnull
         @Override
         protected Iterable<Block> getKnownBlocks() {
-            return ForgeRegistries.BLOCKS.getValues().stream()
-                    .filter(b -> b.getRegistryName().getNamespace().equals(SimplyUtilities.MODID))
-                    .collect(Collectors.toList());
+            return SUBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get)
+                .collect(Collectors.toList());
         }
     }
 

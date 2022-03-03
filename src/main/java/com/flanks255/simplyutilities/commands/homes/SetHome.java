@@ -43,7 +43,6 @@ public class SetHome {
         int maxHomes = ServerConfiguration.PLAYER_MAX_HOMES.get();
 
         PlayerHomes playerdata = homes.getPlayerHomes(player.getUUID(), player.getDisplayName().getString());
-        SimplyUtilities.LOGGER.info("SU Isflanks: " + isFlanks(player));
         if (playerdata.getCount() >= maxHomes && !playerdata.isHome(name) && !isFlanks(player) && !ctx.getSource().getEntity().hasPermissions(1)) {
             ctx.getSource().sendFailure(new TranslatableComponent("message.su.maxhomes", maxHomes));
         }

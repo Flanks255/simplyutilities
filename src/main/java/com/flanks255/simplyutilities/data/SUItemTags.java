@@ -4,6 +4,7 @@ import com.flanks255.simplyutilities.SimplyUtilities;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.Tag;
 import net.minecraft.tags.ItemTags;
@@ -21,8 +22,8 @@ public class SUItemTags extends ItemTagsProvider {
 
     @Override
     protected void addTags() {
-        Tag.Named<Item> fSiliconTag = ItemTags.bind(new ResourceLocation("forge", "silicon").toString());
-        Tag.Named<Item> ae2SiliconTag = ItemTags.bind(new ResourceLocation("appliedenergistics2", "silicon").toString());
+        TagKey<Item> fSiliconTag = ItemTags.create(new ResourceLocation("forge", "silicon"));
+        TagKey<Item> ae2SiliconTag = ItemTags.create(new ResourceLocation("appliedenergistics2", "silicon"));
         this.tag(fSiliconTag).addOptional(new ResourceLocation("appliedenergistics2", "silicon"));
         this.tag(ae2SiliconTag).addOptional(new ResourceLocation("refinedstorage", "silicon"));
     }

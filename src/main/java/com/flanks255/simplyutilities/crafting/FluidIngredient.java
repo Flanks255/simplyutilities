@@ -11,8 +11,8 @@ import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.SerializationTags;
 import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.BucketItem;
@@ -37,7 +37,7 @@ public class FluidIngredient extends Ingredient {
 
     private final Boolean advanced;
     private final List<Fluid> matchingFluids = new ArrayList<>();
-    private final Tag<Fluid> fluidTag;
+    private final TagKey<Fluid> fluidTag;
 
     private ItemStack[] bucketCache = null;
     private IntList matchingStacksPacked;
@@ -47,13 +47,14 @@ public class FluidIngredient extends Ingredient {
             return matchingFluids;
 
         if (fluidTag != null)
-            matchingFluids.addAll(fluidTag.getValues());
+            Registry.FLUID.getTag(fluidTag).ifPresent(tag -> tag.forEach(fluid -> matchingFluids.add(fluid.value())));
+            //matchingFluids.addAll(fluidTag.getValues());
 
         return matchingFluids;
     }
 
 
-    public FluidIngredient(Tag<Fluid> tagIn, boolean advancedIn) {
+    public FluidIngredient(TagKey<Fluid> tagIn, boolean advancedIn) {
         super(Stream.empty());
 
         advanced = advancedIn;
@@ -103,8 +104,7 @@ public class FluidIngredient extends Ingredient {
 
         json.addProperty("advanced", advanced);
         if (fluidTag != null) {
-            json.addProperty("tag", SerializationTags.getInstance().getIdOrThrow(Registry.FLUID_REGISTRY, fluidTag, () -> new IllegalStateException("Unknown fluid tag")
-            ).toString());
+            json.addProperty("tag", fluidTag.location().toString());
         }
         else {
             json.addProperty("fluid", getMatchingFluids().get(0).getRegistryName().toString());
@@ -154,11 +154,8 @@ public class FluidIngredient extends Ingredient {
             boolean advanced = json.has("advanced") && GsonHelper.getAsBoolean(json, "advanced");
             if (json.has("tag")) {
                 ResourceLocation tagRes = new ResourceLocation(GsonHelper.getAsString(json, "tag"));
-                Tag<Fluid> fluidTag = SerializationTags.getInstance().getTagOrThrow(Registry.FLUID_REGISTRY, tagRes, (tag) -> new IllegalStateException("Unknown fluid tag: " + tag));
-                if (fluidTag != null)
-                    return new FluidIngredient(fluidTag, advanced);
-                else
-                    throw new JsonSyntaxException("invalid fluid tag: " + tagRes);
+                TagKey<Fluid> fluidTag = TagKey.create(Registry.FLUID_REGISTRY, tagRes);
+                return new FluidIngredient(fluidTag, advanced);
             }
             else if (json.has("fluid")) {
                 ResourceLocation fluidRes = new ResourceLocation(GsonHelper.getAsString(json, "fluid"));
