@@ -40,8 +40,7 @@ public class RightClickRecipe implements Recipe<Inventory> {
 
 
     public boolean matches(ItemStack itemInput, Block blockInput) {
-        //return input.test(itemInput) && block.matchesBlock(blockInput);
-        return false;
+        return input.test(itemInput) && (block == blockInput);
     }
 
     @Override
@@ -86,9 +85,9 @@ public class RightClickRecipe implements Recipe<Inventory> {
             final ItemStack held = event.getPlayer().getItemInHand(event.getHand());
             final Block block = event.getWorld().getBlockState(event.getPos()).getBlock();
 
-            for (Recipe<?> recipe : rightClickRecipes) {
-                if (recipe instanceof RightClickRecipe)
-                    if (((RightClickRecipe) recipe).matches(held, block)) {
+            for (RightClickRecipe recipe : rightClickRecipes) {
+                if (recipe != null)
+                    if (recipe.matches(held, block)) {
                         held.shrink(1);
                         ItemHandlerHelper.giveItemToPlayer(event.getPlayer(), recipe.getResultItem().copy());
                         event.setCanceled(true);

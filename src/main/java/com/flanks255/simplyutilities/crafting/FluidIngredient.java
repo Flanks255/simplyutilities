@@ -1,6 +1,7 @@
 package com.flanks255.simplyutilities.crafting;
 
 import com.flanks255.simplyutilities.SimplyUtilities;
+import com.flanks255.simplyutilities.utils.TagLookup;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -37,7 +38,7 @@ public class FluidIngredient extends Ingredient {
 
     private final Boolean advanced;
     private final List<Fluid> matchingFluids = new ArrayList<>();
-    private final TagKey<Fluid> fluidTag;
+    private final TagLookup<Fluid> fluidTag;
 
     private ItemStack[] bucketCache = null;
     private IntList matchingStacksPacked;
@@ -47,7 +48,8 @@ public class FluidIngredient extends Ingredient {
             return matchingFluids;
 
         if (fluidTag != null)
-            Registry.FLUID.getTag(fluidTag).ifPresent(tag -> tag.forEach(fluid -> matchingFluids.add(fluid.value())));
+            matchingFluids.addAll(fluidTag.get().stream().toList());
+            //Registry.FLUID.getTag(fluidTag).ifPresent(tag -> tag.forEach(fluid -> matchingFluids.add(fluid.value())));
             //matchingFluids.addAll(fluidTag.getValues());
 
         return matchingFluids;
@@ -59,7 +61,7 @@ public class FluidIngredient extends Ingredient {
 
         advanced = advancedIn;
 
-        fluidTag = tagIn;
+        fluidTag = new TagLookup<>(ForgeRegistries.FLUIDS, tagIn);
     }
     public FluidIngredient(Fluid fluidIn, boolean advancedIn) {
         super(Stream.empty());
@@ -104,7 +106,7 @@ public class FluidIngredient extends Ingredient {
 
         json.addProperty("advanced", advanced);
         if (fluidTag != null) {
-            json.addProperty("tag", fluidTag.location().toString());
+            json.addProperty("tag", fluidTag.getKey().location().toString());
         }
         else {
             json.addProperty("fluid", getMatchingFluids().get(0).getRegistryName().toString());

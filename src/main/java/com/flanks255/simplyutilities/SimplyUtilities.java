@@ -7,6 +7,7 @@ import com.flanks255.simplyutilities.configuration.CommonConfiguration;
 import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.flanks255.simplyutilities.configuration.ServerConfiguration;
 import com.flanks255.simplyutilities.crafting.FluidIngredient;
+import com.flanks255.simplyutilities.crafting.RightClickRecipe;
 import com.flanks255.simplyutilities.crafting.TargetNBTIngredient;
 import com.flanks255.simplyutilities.data.BoolConfigCondition;
 import com.flanks255.simplyutilities.data.Generator;
@@ -17,6 +18,8 @@ import com.flanks255.simplyutilities.tweaks.DoubleDoorFix;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ClientRegistry;
@@ -24,6 +27,7 @@ import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
@@ -59,6 +63,8 @@ public class SimplyUtilities
         modBus.addListener(ModelLayers::registerLayerDefinitions);
         modBus.addListener(ModelLayers::registerEntityRenderers);
 
+        modBus.addGenericListener(Item.class, this::onRecipeTypeRegister);
+
         // Configs
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfiguration.SERVER_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfiguration.COMMON_CONFIG);
@@ -77,6 +83,7 @@ public class SimplyUtilities
         MinecraftForge.EVENT_BUS.addListener(EnderInhibitor::TeleportEvent);
         MinecraftForge.EVENT_BUS.addListener(EnderInhibitor::PearlTeleportEvent);
         MinecraftForge.EVENT_BUS.addListener(ExoLeggings::onEntityHurt);
+        //MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, RightClickRecipe::RightClickEvent);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, DoubleDoorFix::playerInteraction);
 
     }
@@ -105,6 +112,10 @@ public class SimplyUtilities
 
     private void onConfigReload(ModConfigEvent event) {
         ConfigCache.RefreshCache();
+    }
+
+    private void onRecipeTypeRegister(final RegistryEvent.Register<Item> event) {
+        SUCrafting.Types.RIGHT_CLICK = RecipeType.register(SimplyUtilities.MODID + ":right_click");
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -24,6 +24,6 @@ public class SUCrafting {
     }
 
     public static class Types {
-        public static final RecipeType<RightClickRecipe> RIGHT_CLICK = RecipeType.register(SimplyUtilities.MODID + ":right_click");
+        public static RecipeType<RightClickRecipe> RIGHT_CLICK;
     }
 }

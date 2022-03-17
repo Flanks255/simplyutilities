@@ -4,15 +4,18 @@ import com.flanks255.simplyutilities.SUBlocks;
 import com.flanks255.simplyutilities.SUItems;
 import com.flanks255.simplyutilities.SimplyUtilities;
 import com.flanks255.simplyutilities.crafting.FluidIngredient;
+import com.flanks255.simplyutilities.crafting.RightClickRecipe;
 import com.google.gson.JsonObject;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.HashCache;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.conditions.AndCondition;
@@ -115,6 +118,13 @@ public class Recipes extends RecipeProvider {
                     .unlockedBy("", has(Items.AIR))::save)
             .generateAdvancement()
             .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "online_detector"));
+/*
+        consumer.accept(new RightClickRecipe.FinishedRecipe(new ResourceLocation(SimplyUtilities.MODID, "test_rightclick"), new ItemStack(Items.DIAMOND), Ingredient.of(Items.EMERALD), Blocks.ANVIL));
+
+        ShapelessRecipeBuilder.shapeless(Items.MAGMA_BLOCK)
+            .requires(Tags.Items.COBBLESTONE)
+            .requires(new FluidIngredient(FluidTags.LAVA, false))
+            .unlockedBy("", has(Items.AIR)).save(consumer, new ResourceLocation(SimplyUtilities.MODID, "test_fluidingredient"));*/
     }
 
     @Override
