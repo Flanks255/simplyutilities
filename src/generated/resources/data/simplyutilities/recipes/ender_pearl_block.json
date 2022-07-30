@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PP",
+    "PP"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:ender_pearls"
+    }
+  },
+  "result": {
+    "item": "simplyutilities:ender_pearl_block"
+  }
+}

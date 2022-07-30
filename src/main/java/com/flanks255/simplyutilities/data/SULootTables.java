@@ -42,6 +42,8 @@ public class SULootTables extends LootTableProvider {
         protected void addTables() {
             this.dropSelf(SUBlocks.ENDER_INHIBITOR.get());
             this.dropSelf(SUBlocks.ONLINE_DETECTOR.get());
+            this.dropSelf(SUBlocks.CHARCOAL_BLOCK.get());
+            this.dropSelf(SUBlocks.ENDER_PEARL_BLOCK.get());
         }
 
         @Nonnull

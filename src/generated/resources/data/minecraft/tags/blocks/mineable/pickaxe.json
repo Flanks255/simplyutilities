@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "simplyutilities:online_detector",
-    "simplyutilities:ender_inhibitor"
+    "simplyutilities:ender_inhibitor",
+    "simplyutilities:charcoal_block",
+    "simplyutilities:ender_pearl_block"
   ]
 }

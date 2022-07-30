@@ -56,6 +56,7 @@ public class SimplyUtilities
     public SimplyUtilities() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        SUTags.init();
         SUBlocks.init(modBus);
         SUItems.init(modBus);
         SUCrafting.init(modBus);

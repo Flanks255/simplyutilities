@@ -1,0 +1,32 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "value": {
+            "modid": "mekanism",
+            "type": "forge:mod_loaded"
+          },
+          "type": "forge:not"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "CCC",
+          "CCC",
+          "CCC"
+        ],
+        "key": {
+          "C": {
+            "item": "minecraft:charcoal"
+          }
+        },
+        "result": {
+          "item": "simplyutilities:charcoal_block"
+        }
+      }
+    }
+  ]
+}

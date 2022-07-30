@@ -23,6 +23,8 @@ public class ItemModels extends ItemModelProvider {
         simpleItem(SUItems.EXOLEGGINGS.get());
 
         registerBlockItem(SUBlocks.ENDER_INHIBITOR.get());
+        registerBlockItem(SUBlocks.CHARCOAL_BLOCK.get());
+        registerBlockItem(SUBlocks.ENDER_PEARL_BLOCK.get());
         registerBlockISTER(SUBlocks.ONLINE_DETECTOR.get());
     }
 

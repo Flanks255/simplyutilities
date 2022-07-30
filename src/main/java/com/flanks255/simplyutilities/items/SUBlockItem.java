@@ -32,7 +32,8 @@ public class SUBlockItem extends BlockItem {
     @Override
     public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level worldIn, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        if (Screen.hasShiftDown()) {
+        boolean hasAny = hasTranslation(block.getDescriptionId() + ".info");
+        if (Screen.hasShiftDown() && hasAny) {
             tooltip.add(new TranslatableComponent(block.getDescriptionId() + ".info"));
             if (hasTranslation(block.getDescriptionId()+".info2"))
                 tooltip.add(new TranslatableComponent(block.getDescriptionId() + ".info2"));
@@ -40,7 +41,8 @@ public class SUBlockItem extends BlockItem {
                 tooltip.add(new TranslatableComponent(block.getDescriptionId() + ".info3"));
         }
         else {
-            tooltip.add(new TranslatableComponent("su.moreinfo", new TranslatableComponent("su.key.shift").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC)));
+            if (hasAny)
+                tooltip.add(new TranslatableComponent("su.moreinfo", new TranslatableComponent("su.key.shift").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC)));
         }
     }
 }

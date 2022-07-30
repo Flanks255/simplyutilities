@@ -1,0 +1,28 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "value": {
+            "modid": "mekanism",
+            "type": "forge:mod_loaded"
+          },
+          "type": "forge:not"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shapeless",
+        "ingredients": [
+          {
+            "tag": "forge:storage_blocks/charcoal"
+          }
+        ],
+        "result": {
+          "item": "minecraft:charcoal",
+          "count": 9
+        }
+      }
+    }
+  ]
+}

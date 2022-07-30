@@ -1,5 +1,7 @@
 package com.flanks255.simplyutilities.data;
 
+import com.flanks255.simplyutilities.SUBlocks;
+import com.flanks255.simplyutilities.SUTags;
 import com.flanks255.simplyutilities.SimplyUtilities;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
@@ -26,5 +28,8 @@ public class SUItemTags extends ItemTagsProvider {
         TagKey<Item> ae2SiliconTag = ItemTags.create(new ResourceLocation("appliedenergistics2", "silicon"));
         this.tag(fSiliconTag).addOptional(new ResourceLocation("appliedenergistics2", "silicon"));
         this.tag(ae2SiliconTag).addOptional(new ResourceLocation("refinedstorage", "silicon"));
+
+        tag(SUTags.STORAGE_BLOCKS_CHARCOAL).add(SUBlocks.CHARCOAL_BLOCK.getItem());
+        tag(SUTags.STORAGE_BLOCKS_ENDER_PEARL).add(SUBlocks.ENDER_PEARL_BLOCK.getItem());
     }
 }

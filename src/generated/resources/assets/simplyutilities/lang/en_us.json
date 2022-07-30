@@ -1,6 +1,8 @@
 {
+  "block.simplyutilities.charcoal_block": "Block of Charcoal",
   "block.simplyutilities.ender_inhibitor": "Ender Inhibitor",
   "block.simplyutilities.ender_inhibitor.info": "Prevents Endermen around it from teleporting.",
+  "block.simplyutilities.ender_pearl_block": "Block of Ender Pearls",
   "block.simplyutilities.online_detector": "Online Detector",
   "block.simplyutilities.online_detector.info": "Emits a redstone signal when the player who placed the block is online.",
   "block.simplyutilities.online_detector.jei.info": "Outputs a redstone signal\nwhen the player who placed\nthe block is online.",

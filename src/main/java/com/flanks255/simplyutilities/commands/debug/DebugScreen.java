@@ -8,6 +8,8 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import com.mojang.blaze3d.platform.Lighting;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
@@ -47,12 +49,7 @@ public class DebugScreen extends Screen {
         guiLeft = (width - xSize) / 2;
         guiTop = (height - ySize) / 2;
 
-        Button.OnPress tabClick = new Button.OnPress() {
-            @Override
-            public void onPress(Button p_onPress_1_) {
-                ((ViewButton)p_onPress_1_).clickTab();
-            }
-        };
+        Button.OnPress tabClick = button -> ((ViewButton)button).clickTab();
 
         addWidget(new ViewButton(this,guiLeft + 20, guiTop + 3, 56, 10, new TextComponent("Basic"), viewTab.BASIC, tabClick));
         addWidget(new ViewButton(this,guiLeft + 76, guiTop + 3, 56, 10, new TextComponent("Tags"), viewTab.TAGS, tabClick));
@@ -89,8 +86,13 @@ public class DebugScreen extends Screen {
                 drawString(matrixStack, font, "Display Name: " + stack.getHoverName().getString() ,guiLeft + 8, guiTop + 24, 0xFFFFFF);
                 drawString(matrixStack, font,"Registry Name: " + stack.getItem().getRegistryName() ,guiLeft + 8, guiTop + 34, 0xFFFFFF);
                 break;
-            case TAGS: //TODO i hope this works later...
-                drawString(matrixStack, font, "Tags: " + stack.getTags() ,guiLeft + 8, guiTop + 24, 0xFFFFFF);
+            case TAGS:
+                var tags = stack.getTags().toList();
+                int y = guiTop + 24;
+                for (TagKey<Item> tag : tags) {
+                    drawString(matrixStack, font, tag.location().toString() ,guiLeft + 8, y, 0xFFFFFF);
+                    y+=10;
+                }
                 break;
             case NBT:
                 if (stack.hasTag()) {

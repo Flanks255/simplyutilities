@@ -6,14 +6,20 @@ import com.flanks255.simplyutilities.items.SUBlockItem;
 import com.flanks255.simplyutilities.render.OnlineDetectorItemStackRender;
 import com.flanks255.simplyutilities.tile.BEOnlineDetector;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
@@ -36,6 +42,17 @@ public class SUBlocks {
                 });
             }
         }, BEOnlineDetector::new);
+
+    public static final SUBlockReg<Block, SUBlockItem, ?> CHARCOAL_BLOCK = new SUBlockReg<>("charcoal_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BROWN).requiresCorrectToolForDrops().strength(5.0F, 6.0F)),
+        (b) -> new SUBlockItem(b, new Item.Properties().stacksTo(64).tab(CreativeModeTab.TAB_BUILDING_BLOCKS)) {
+            @Override
+            public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
+                return 16000;
+            }
+        });
+
+    public static final SUBlockReg<Block, SUBlockItem, ?> ENDER_PEARL_BLOCK = new SUBlockReg<>("ender_pearl_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_GREEN).requiresCorrectToolForDrops().strength(5.0F, 6.0F)),
+        (b) -> new SUBlockItem(b, new Item.Properties().stacksTo(64).tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
 
     public static void init(IEventBus eventBus) {
         BLOCKS.register(eventBus);

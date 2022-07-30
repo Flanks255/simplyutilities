@@ -36,9 +36,10 @@ public class Lang extends LanguageProvider {
 
         add("message.su.inhibitororphans", "Removed %d orphaned inhibitors in this dimension.");
 
-        //addItem(SimplyUtilities.CANISTER, "Fluid Canister");
         addBlock(SUBlocks.ENDER_INHIBITOR, "Ender Inhibitor");
         addBlock(SUBlocks.ONLINE_DETECTOR, "Online Detector");
+        addBlock(SUBlocks.CHARCOAL_BLOCK, "Block of Charcoal");
+        addBlock(SUBlocks.ENDER_PEARL_BLOCK, "Block of Ender Pearls");
         addBlockExtra(SUBlocks.ENDER_INHIBITOR, ".info", "Prevents Endermen around it from teleporting.");
         addBlockExtra(SUBlocks.ONLINE_DETECTOR, ".info", "Emits a redstone signal when the player who placed the block is online.");
 

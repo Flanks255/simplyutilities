@@ -22,5 +22,8 @@ public class BlockStates extends BlockStateProvider {
 //        ModelFile placeholderCube = models().cubeAll("placeholder", placeholderTex);
 
         simpleBlock(SUBlocks.ONLINE_DETECTOR.getBlock(), blank);
+
+        simpleBlock(SUBlocks.CHARCOAL_BLOCK.getBlock());
+        simpleBlock(SUBlocks.ENDER_PEARL_BLOCK.getBlock());
     }
 }

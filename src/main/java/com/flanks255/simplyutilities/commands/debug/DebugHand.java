@@ -1,10 +1,13 @@
 package com.flanks255.simplyutilities.commands.debug;
 
+import com.flanks255.simplyutilities.SimplyUtilities;
+import com.flanks255.simplyutilities.network.OpenDebugHandMessage;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraftforge.network.PacketDistributor;
 
 
 public class DebugHand {

@@ -2,6 +2,7 @@ package com.flanks255.simplyutilities.data;
 
 import com.flanks255.simplyutilities.SUBlocks;
 import com.flanks255.simplyutilities.SUItems;
+import com.flanks255.simplyutilities.SUTags;
 import com.flanks255.simplyutilities.SimplyUtilities;
 import com.flanks255.simplyutilities.crafting.FluidIngredient;
 import com.flanks255.simplyutilities.crafting.RightClickRecipe;
@@ -118,6 +119,38 @@ public class Recipes extends RecipeProvider {
                     .unlockedBy("", has(Items.AIR))::save)
             .generateAdvancement()
             .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "online_detector"));
+
+        ConditionalRecipe.builder()
+            .addCondition(new NotCondition(new ModLoadedCondition("mekanism")))
+            .addRecipe(
+                ShapedRecipeBuilder.shaped(SUBlocks.CHARCOAL_BLOCK.getItem())
+                    .pattern("CCC")
+                    .pattern("CCC")
+                    .pattern("CCC")
+                    .define('C', Items.CHARCOAL)
+                    .unlockedBy("", has(Items.AIR))::save)
+            .generateAdvancement()
+            .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "charcoal_block"));
+
+        ConditionalRecipe.builder()
+            .addCondition(new NotCondition(new ModLoadedCondition("mekanism")))
+            .addRecipe(
+                ShapelessRecipeBuilder.shapeless(Items.CHARCOAL, 9)
+                    .requires(SUTags.STORAGE_BLOCKS_CHARCOAL)
+                    .unlockedBy("has_charcoal_block", has(SUBlocks.CHARCOAL_BLOCK.getItem()))::save)
+                .generateAdvancement()
+                .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "charcoal_from_block"));
+
+        ShapedRecipeBuilder.shaped(SUBlocks.ENDER_PEARL_BLOCK.getItem())
+            .pattern("PP")
+            .pattern("PP")
+            .define('P', Tags.Items.ENDER_PEARLS)
+            .unlockedBy("has_ender_pearl", has(Items.ENDER_PEARL))
+            .save(consumer, new ResourceLocation(SimplyUtilities.MODID, "ender_pearl_block"));
+
+        ShapelessRecipeBuilder.shapeless(Items.ENDER_PEARL, 4)
+            .requires(SUTags.STORAGE_BLOCKS_ENDER_PEARL).unlockedBy("has_ender_pearl_block", has(SUBlocks.ENDER_PEARL_BLOCK.getItem()))
+            .save(consumer, new ResourceLocation(SimplyUtilities.MODID, "ender_pearl"));
 /*
         consumer.accept(new RightClickRecipe.FinishedRecipe(new ResourceLocation(SimplyUtilities.MODID, "test_rightclick"), new ItemStack(Items.DIAMOND), Ingredient.of(Items.EMERALD), Blocks.ANVIL));
 
