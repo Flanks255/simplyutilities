@@ -10,8 +10,8 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.network.PacketDistributor;
 
 public class Zoom {
@@ -24,14 +24,14 @@ public class Zoom {
     public static int setFOV(CommandContext<CommandSourceStack> ctx, double fov) throws CommandSyntaxException {
         ServerPlayer player = ctx.getSource().getPlayerOrException();
         SimplyUtilities.NETWORK.send(PacketDistributor.PLAYER.with(() -> player), new ZoomFOVMessage(fov));
-        ctx.getSource().sendSuccess(new TranslatableComponent("message.su.zoom.setfov", fov), false);
+        ctx.getSource().sendSuccess(Component.translatable("message.su.zoom.setfov", fov), false);
         return 0;
     }
 
     public static int setSmooth(CommandContext<CommandSourceStack> ctx, boolean smooth) throws CommandSyntaxException {
         ServerPlayer player = ctx.getSource().getPlayerOrException();
         SimplyUtilities.NETWORK.send(PacketDistributor.PLAYER.with(() -> player), new ZoomSmoothMessage(smooth));
-        ctx.getSource().sendSuccess(new TranslatableComponent("message.su.zoom.setsmooth", smooth), false);
+        ctx.getSource().sendSuccess(Component.translatable("message.su.zoom.setsmooth", smooth), false);
         return 0;
     }
 }

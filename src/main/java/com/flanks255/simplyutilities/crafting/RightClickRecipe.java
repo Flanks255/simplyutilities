@@ -17,19 +17,20 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 
 public class RightClickRecipe implements Recipe<Inventory> {
     public static String NAME = "right_click";
-    private ResourceLocation id;
-    private Ingredient input;
-    private Block block;
-    private ItemStack output;
+    private final ResourceLocation id;
+    private final Ingredient input;
+    private final Block block;
+    private final ItemStack output;
 
     public RightClickRecipe(ResourceLocation recipeId, ItemStack result, Ingredient ingredient, Block blockIn) {
         id = recipeId;
@@ -48,6 +49,7 @@ public class RightClickRecipe implements Recipe<Inventory> {
         return false; //Nah
     }
 
+    @Nonnull
     @Override
     public ItemStack assemble(Inventory inv) {
         return output;
@@ -58,38 +60,42 @@ public class RightClickRecipe implements Recipe<Inventory> {
         return false;
     }
 
+    @Nonnull
     @Override
     public ItemStack getResultItem() {
         return output;
     }
 
+    @Nonnull
     @Override
     public ResourceLocation getId() {
         return id;
     }
 
+    @Nonnull
     @Override
     public RecipeSerializer<?> getSerializer() {
         return SUCrafting.RIGHT_CLICK_RECIPE.get();
     }
 
+    @Nonnull
     @Override
     public RecipeType<?> getType() {
-        return SUCrafting.Types.RIGHT_CLICK;
+        return SUCrafting.Types.RIGHT_CLICK.get();
     }
 
 
     public static void RightClickEvent(PlayerInteractEvent.RightClickBlock event) {
-        if(!event.getWorld().isClientSide && event.getPlayer() != null) {
-            List<RightClickRecipe> rightClickRecipes = ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(SUCrafting.Types.RIGHT_CLICK);
-            final ItemStack held = event.getPlayer().getItemInHand(event.getHand());
-            final Block block = event.getWorld().getBlockState(event.getPos()).getBlock();
+        if(!event.getLevel().isClientSide && event.getEntity() != null) {
+            List<RightClickRecipe> rightClickRecipes = ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(SUCrafting.Types.RIGHT_CLICK.get());
+            final ItemStack held = event.getEntity().getItemInHand(event.getHand());
+            final Block block = event.getLevel().getBlockState(event.getPos()).getBlock();
 
             for (RightClickRecipe recipe : rightClickRecipes) {
                 if (recipe != null)
                     if (recipe.matches(held, block)) {
                         held.shrink(1);
-                        ItemHandlerHelper.giveItemToPlayer(event.getPlayer(), recipe.getResultItem().copy());
+                        ItemHandlerHelper.giveItemToPlayer(event.getEntity(), recipe.getResultItem().copy());
                         event.setCanceled(true);
                         break;
                     }
@@ -98,7 +104,7 @@ public class RightClickRecipe implements Recipe<Inventory> {
     }
 
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RightClickRecipe> {
+    public static class Serializer implements RecipeSerializer<RightClickRecipe> {
 
         @Override
         public RightClickRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
@@ -124,7 +130,7 @@ public class RightClickRecipe implements Recipe<Inventory> {
         @Override
         public void toNetwork(FriendlyByteBuf buffer, RightClickRecipe recipe) {
             recipe.input.toNetwork(buffer);
-            buffer.writeUtf(recipe.block.getRegistryName().toString());
+            buffer.writeUtf(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(recipe.block)).toString());
             buffer.writeItem(recipe.output);
         }
     }
@@ -145,8 +151,8 @@ public class RightClickRecipe implements Recipe<Inventory> {
         @Override
         public void serializeRecipeData(JsonObject json) {
             json.add("input", input.toJson());
-            json.addProperty("block", block.getRegistryName().toString());
-            json.addProperty("output", output.getItem().getRegistryName().toString());
+            json.addProperty("block", Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).toString());
+            json.addProperty("output", Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(output.getItem())).toString());
         }
 
         @Override

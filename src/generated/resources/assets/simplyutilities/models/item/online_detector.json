@@ -1,18 +1,6 @@
 {
   "parent": "simplyutilities:block/entity",
   "display": {
-    "gui": {
-      "rotation": [
-        30,
-        45,
-        0
-      ],
-      "scale": [
-        0.625,
-        0.625,
-        0.625
-      ]
-    },
     "firstperson_lefthand": {
       "scale": [
         0.625,
@@ -27,6 +15,44 @@
         0.625
       ]
     },
+    "fixed": {
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    },
+    "ground": {
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ],
+      "translation": [
+        0,
+        3,
+        0
+      ]
+    },
+    "gui": {
+      "rotation": [
+        30,
+        45,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    },
+    "head": {
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
     "thirdperson_lefthand": {
       "scale": [
         0.625,
@@ -39,32 +65,6 @@
         0.625,
         0.625,
         0.625
-      ]
-    },
-    "ground": {
-      "translation": [
-        0,
-        3,
-        0
-      ],
-      "scale": [
-        0.625,
-        0.625,
-        0.625
-      ]
-    },
-    "fixed": {
-      "scale": [
-        0.625,
-        0.625,
-        0.625
-      ]
-    },
-    "head": {
-      "scale": [
-        0.5,
-        0.5,
-        0.5
       ]
     }
   }

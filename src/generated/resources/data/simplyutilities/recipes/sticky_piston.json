@@ -1,9 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "x",
-    "y"
-  ],
   "key": {
     "x": {
       "tag": "forge:slimeballs"
@@ -12,6 +8,10 @@
       "item": "minecraft:piston"
     }
   },
+  "pattern": [
+    "x",
+    "y"
+  ],
   "result": {
     "item": "minecraft:sticky_piston"
   }

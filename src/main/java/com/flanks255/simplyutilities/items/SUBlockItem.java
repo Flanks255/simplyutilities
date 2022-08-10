@@ -8,7 +8,6 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -34,15 +33,15 @@ public class SUBlockItem extends BlockItem {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
         boolean hasAny = hasTranslation(block.getDescriptionId() + ".info");
         if (Screen.hasShiftDown() && hasAny) {
-            tooltip.add(new TranslatableComponent(block.getDescriptionId() + ".info"));
+            tooltip.add(Component.translatable(block.getDescriptionId() + ".info"));
             if (hasTranslation(block.getDescriptionId()+".info2"))
-                tooltip.add(new TranslatableComponent(block.getDescriptionId() + ".info2"));
+                tooltip.add(Component.translatable(block.getDescriptionId() + ".info2"));
             if (hasTranslation(block.getDescriptionId()+".info3"))
-                tooltip.add(new TranslatableComponent(block.getDescriptionId() + ".info3"));
+                tooltip.add(Component.translatable(block.getDescriptionId() + ".info3"));
         }
         else {
             if (hasAny)
-                tooltip.add(new TranslatableComponent("su.moreinfo", new TranslatableComponent("su.key.shift").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC)));
+                tooltip.add(Component.translatable("su.moreinfo", Component.translatable("su.key.shift").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC)));
         }
     }
 }

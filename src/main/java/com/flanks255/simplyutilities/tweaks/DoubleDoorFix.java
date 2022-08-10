@@ -17,10 +17,10 @@ import net.minecraftforge.eventbus.api.Event;
 public class DoubleDoorFix {
 
     public static void playerInteraction(PlayerInteractEvent.RightClickBlock interactEvent) {
-        if (interactEvent.getPlayer().isShiftKeyDown() || interactEvent.isCanceled() || interactEvent.getResult() == Event.Result.DENY)
+        if (interactEvent.getEntity().isShiftKeyDown() || interactEvent.isCanceled() || interactEvent.getResult() == Event.Result.DENY)
             return;
 
-        Level world = interactEvent.getWorld();
+        Level world = interactEvent.getLevel();
         BlockPos blockPos = interactEvent.getPos();
 
         if (world.getBlockState(blockPos).getBlock() instanceof DoorBlock) {

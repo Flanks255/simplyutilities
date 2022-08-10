@@ -11,9 +11,9 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 
 import java.util.UUID;
@@ -44,13 +44,13 @@ public class SetHome {
 
         PlayerHomes playerdata = homes.getPlayerHomes(player.getUUID(), player.getDisplayName().getString());
         if (playerdata.getCount() >= maxHomes && !playerdata.isHome(name) && !isFlanks(player) && !ctx.getSource().getEntity().hasPermissions(1)) {
-            ctx.getSource().sendFailure(new TranslatableComponent("message.su.maxhomes", maxHomes));
+            ctx.getSource().sendFailure(Component.translatable("message.su.maxhomes", maxHomes));
         }
         else {
             ResourceKey<Level> worldKey = player.level.dimension();
 
             playerdata.setHome(name, worldKey, player.blockPosition());
-            ctx.getSource().sendSuccess(new TranslatableComponent("message.su.sethome", name), false);
+            ctx.getSource().sendSuccess(Component.translatable("message.su.sethome", name), false);
             homes.setDirty(true);
         }
         return 0;

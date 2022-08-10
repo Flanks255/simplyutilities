@@ -7,7 +7,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -48,14 +47,14 @@ public class ExoLeggings extends ArmorItem {
     public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level worldIn, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
         if (Screen.hasShiftDown()) {
-            tooltip.add(new TranslatableComponent(this.getDescriptionId() + ".info"));
+            tooltip.add(Component.translatable(this.getDescriptionId() + ".info"));
             if (hasTranslation(this.getDescriptionId()+".info2"))
-                tooltip.add(new TranslatableComponent(this.getDescriptionId() + ".info2"));
+                tooltip.add(Component.translatable(this.getDescriptionId() + ".info2"));
             if (hasTranslation(this.getDescriptionId()+".info3"))
-                tooltip.add(new TranslatableComponent(this.getDescriptionId() + ".info3"));
+                tooltip.add(Component.translatable(this.getDescriptionId() + ".info3"));
         }
         else {
-            tooltip.add(new TranslatableComponent("su.moreinfo", new TranslatableComponent("su.key.shift").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC)));
+            tooltip.add(Component.translatable("su.moreinfo", Component.translatable("su.key.shift").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC)));
         }
     }
 

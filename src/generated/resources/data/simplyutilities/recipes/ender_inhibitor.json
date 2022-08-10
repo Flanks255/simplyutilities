@@ -4,20 +4,15 @@
     {
       "conditions": [
         {
-          "config_name": "enableEnderInhibitor",
-          "type": "simplyutilities:bool_config_condition"
+          "type": "simplyutilities:bool_config_condition",
+          "config_name": "enableEnderInhibitor"
         }
       ],
       "recipe": {
         "type": "minecraft:crafting_shaped",
-        "pattern": [
-          " x ",
-          " b ",
-          "aca"
-        ],
         "key": {
-          "x": {
-            "item": "minecraft:ender_pearl"
+          "a": {
+            "tag": "forge:storage_blocks/diamond"
           },
           "b": {
             "tag": "forge:storage_blocks/iron"
@@ -25,10 +20,15 @@
           "c": {
             "item": "minecraft:anvil"
           },
-          "a": {
-            "tag": "forge:storage_blocks/diamond"
+          "x": {
+            "item": "minecraft:ender_pearl"
           }
         },
+        "pattern": [
+          " x ",
+          " b ",
+          "aca"
+        ],
         "result": {
           "item": "simplyutilities:ender_inhibitor"
         }

@@ -15,6 +15,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import com.mojang.math.Vector3f;
 
+import javax.annotation.Nonnull;
+
 public class OnlineDetectorRender implements BlockEntityRenderer<BEOnlineDetector> {
     public OnlineDetectorRender(BlockEntityRendererProvider.Context blah) {
         model = new OnlineDetectorModel(blah.bakeLayer(ModelLayers.ONLINEDETECTOR));
@@ -25,7 +27,7 @@ public class OnlineDetectorRender implements BlockEntityRenderer<BEOnlineDetecto
     private final OnlineDetectorModel model;
 
     @Override
-    public void render(BEOnlineDetector tileEntityIn, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
+    public void render(BEOnlineDetector tileEntityIn, float partialTicks, @Nonnull PoseStack matrixStack, @Nonnull MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
         if (tileEntityIn == null || !tileEntityIn.hasLevel())
             return;
 
@@ -35,29 +37,29 @@ public class OnlineDetectorRender implements BlockEntityRenderer<BEOnlineDetecto
         matrixStack.translate(0.5D, 1.5D, 0.5D);
         matrixStack.scale(-1, -1, 1);
 
-        switch(tileEntityIn.getBlockState().getValue(BlockStateProperties.FACING)) {
-            case NORTH:
+        switch (tileEntityIn.getBlockState().getValue(BlockStateProperties.FACING)) {
+            case NORTH -> {
                 matrixStack.translate(0, 1, -1);
                 matrixStack.mulPose(Vector3f.XP.rotationDegrees(90));
-                break;
-            case WEST:
+            }
+            case WEST -> {
                 matrixStack.translate(1, 1, 0);
                 matrixStack.mulPose(Vector3f.ZP.rotationDegrees(90));
-                break;
-            case EAST:
+            }
+            case EAST -> {
                 matrixStack.translate(-1, 1, 0);
                 matrixStack.mulPose(Vector3f.ZP.rotationDegrees(270));
-                break;
-            case SOUTH:
+            }
+            case SOUTH -> {
                 matrixStack.translate(0, 1, 1);
                 matrixStack.mulPose(Vector3f.XP.rotationDegrees(270));
-                break;
-            case DOWN:
+            }
+            case DOWN -> {
                 matrixStack.translate(0, 2, 0);
                 matrixStack.mulPose(Vector3f.XP.rotationDegrees(180));
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
 
 

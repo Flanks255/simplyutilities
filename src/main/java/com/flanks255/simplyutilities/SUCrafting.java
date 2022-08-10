@@ -11,6 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class SUCrafting {
     public static DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, SimplyUtilities.MODID);
+    public static DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, SimplyUtilities.MODID);
 
     public static final RegistryObject<RecipeSerializer<?>> COPYRECIPE = RECIPES.register(CopyNBTRecipeShaped.NAME, CopyNBTRecipeShaped.Serializer::new);
 
@@ -24,6 +25,6 @@ public class SUCrafting {
     }
 
     public static class Types {
-        public static RecipeType<RightClickRecipe> RIGHT_CLICK;
+        public static final RegistryObject<RecipeType<RightClickRecipe>> RIGHT_CLICK = RECIPE_TYPES.register("right_click", () -> new RecipeType<>() {} );
     }
 }

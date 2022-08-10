@@ -1,7 +1,15 @@
 package com.flanks255.simplyutilities.configuration;
 
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
+
 public class ConfigCache {
-    public static void RefreshCache() {
+    public static void RefreshClientCache() {
+        zoom_fov = ClientConfiguration.ZOOMFOV.get();
+        zoom_smooth = ClientConfiguration.ZOOMSMOOTHCAM.get();
+    }
+
+    public static void RefreshCommonCache() {
         EnderInhibitorEnabled = CommonConfiguration.ENDERINHIBITOR_ENABLE.get();
         EnderInhibitorRange = CommonConfiguration.ENDERINHIBITOR_RANGE.get();
         EnderInhibitorPlayers = CommonConfiguration.ENDERINHIBITOR_PLAYERS.get();
@@ -12,9 +20,13 @@ public class ConfigCache {
         cmd_bed = CommonConfiguration.CMD_BED.get();
         cmd_spawn = CommonConfiguration.CMD_SPAWN.get();
         cmd_home = CommonConfiguration.CMD_HOME.get();
+    }
 
-        zoom_fov = ClientConfiguration.ZOOMFOV.get();
-        zoom_smooth = ClientConfiguration.ZOOMSMOOTHCAM.get();
+    public static void listen(ModConfigEvent event) {
+        if (event.getConfig().getType() == ModConfig.Type.COMMON)
+            RefreshCommonCache();
+        if (event.getConfig().getType() == ModConfig.Type.CLIENT)
+            RefreshClientCache();
     }
 
     public static boolean EnderInhibitorEnabled;

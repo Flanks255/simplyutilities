@@ -7,10 +7,9 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 
 import java.util.HashSet;
@@ -30,10 +29,10 @@ public class Inhibitor {
         Set<BlockPos> inhibitors = InhibitorManager.get(world).getInhibitors();
 
         if (inhibitors.isEmpty()) {
-            ctx.getSource().sendSuccess(new TextComponent("[ ]"), false);
+            ctx.getSource().sendSuccess(Component.literal("[ ]"), false);
         }
         else {
-            ctx.getSource().sendSuccess(new TextComponent(inhibitors.toString()), false);
+            ctx.getSource().sendSuccess(Component.literal(inhibitors.toString()), false);
         }
 
         return 0;
@@ -54,7 +53,7 @@ public class Inhibitor {
         if (!removeset.isEmpty())
             inhibitorManager.removeInhibitors(removeset);
 
-        ctx.getSource().sendSuccess(new TranslatableComponent("message.su.inhibitororphans", removeset.size()), false);
+        ctx.getSource().sendSuccess(Component.translatable("message.su.inhibitororphans", removeset.size()), false);
 
         return 0;
     }

@@ -7,6 +7,7 @@ import com.flanks255.simplyutilities.SimplyUtilities;
 import com.flanks255.simplyutilities.crafting.FluidIngredient;
 import com.flanks255.simplyutilities.crafting.RightClickRecipe;
 import com.google.gson.JsonObject;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.HashCache;
 import net.minecraft.data.recipes.*;
@@ -161,7 +162,7 @@ public class Recipes extends RecipeProvider {
     }
 
     @Override
-    protected void saveAdvancement(@Nonnull HashCache cache, @Nonnull JsonObject cache2, @Nonnull Path advancementJson) {
-        // No thank you, good day sir.
+    protected void saveAdvancement(@Nonnull CachedOutput cachedOutput, @Nonnull JsonObject object, @Nonnull Path path) {
+        // Nope, don't want none of this...
     }
 }

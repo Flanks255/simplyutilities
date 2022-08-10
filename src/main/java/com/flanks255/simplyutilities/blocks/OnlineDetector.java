@@ -1,6 +1,7 @@
 package com.flanks255.simplyutilities.blocks;
 
 import com.flanks255.simplyutilities.tile.BEOnlineDetector;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -22,7 +23,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 
@@ -68,7 +68,7 @@ public class OnlineDetector extends Block implements EntityBlock {
             if (te instanceof BEOnlineDetector) {
                 UUID uuid = ((BEOnlineDetector) te).getPlayerUUID();
                 if (uuid != null) {
-                    player.sendMessage(new TextComponent("Monitoring: " + ((BEOnlineDetector) te).getPlayerName()), Util.NIL_UUID);
+                    player.sendSystemMessage(Component.literal("Monitoring: " + ((BEOnlineDetector) te).getPlayerName()));
                 }
             }
 

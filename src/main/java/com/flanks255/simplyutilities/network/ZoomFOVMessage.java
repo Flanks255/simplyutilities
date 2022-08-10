@@ -34,7 +34,7 @@ public class ZoomFOVMessage {
                 () -> {
                     ClientConfiguration.ZOOMFOV.set(message.getFov());
                     ClientConfiguration.CLIENT_CONFIG.save();
-                    ConfigCache.RefreshCache();
+                    ConfigCache.RefreshClientCache();
                 }
             );
         }

@@ -6,23 +6,22 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
-import com.mojang.blaze3d.platform.Lighting;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import net.minecraft.client.gui.components.Button.OnPress;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @OnlyIn(Dist.CLIENT)
 public class DebugScreen extends Screen {
     public DebugScreen(ItemStack serverStack) {
-        super(new TextComponent("SU Debug Screen")); stack = serverStack;
+        super(Component.literal("SU Debug Screen")); stack = serverStack;
     }
 
     ItemStack stack;
@@ -51,10 +50,10 @@ public class DebugScreen extends Screen {
 
         Button.OnPress tabClick = button -> ((ViewButton)button).clickTab();
 
-        addWidget(new ViewButton(this,guiLeft + 20, guiTop + 3, 56, 10, new TextComponent("Basic"), viewTab.BASIC, tabClick));
-        addWidget(new ViewButton(this,guiLeft + 76, guiTop + 3, 56, 10, new TextComponent("Tags"), viewTab.TAGS, tabClick));
-        addWidget(new ViewButton(this,guiLeft + 132, guiTop + 3, 56, 10, new TextComponent("NBT Data"), viewTab.NBT, tabClick));
-        addWidget(new ViewButton(this,guiLeft + 188, guiTop + 3, 56, 10, new TextComponent("Class info"), viewTab.CLASSES, tabClick));
+        addWidget(new ViewButton(this,guiLeft + 20, guiTop + 3, 56, 10, Component.literal("Basic"), viewTab.BASIC, tabClick));
+        addWidget(new ViewButton(this,guiLeft + 76, guiTop + 3, 56, 10, Component.literal("Tags"), viewTab.TAGS, tabClick));
+        addWidget(new ViewButton(this,guiLeft + 132, guiTop + 3, 56, 10, Component.literal("NBT Data"), viewTab.NBT, tabClick));
+        addWidget(new ViewButton(this,guiLeft + 188, guiTop + 3, 56, 10, Component.literal("Class info"), viewTab.CLASSES, tabClick));
     }
 
     @Override
@@ -84,7 +83,7 @@ public class DebugScreen extends Screen {
         switch (currentTab) {
             case BASIC:
                 drawString(matrixStack, font, "Display Name: " + stack.getHoverName().getString() ,guiLeft + 8, guiTop + 24, 0xFFFFFF);
-                drawString(matrixStack, font,"Registry Name: " + stack.getItem().getRegistryName() ,guiLeft + 8, guiTop + 34, 0xFFFFFF);
+                drawString(matrixStack, font,"Registry Name: " + ForgeRegistries.ITEMS.getKey(stack.getItem()) ,guiLeft + 8, guiTop + 34, 0xFFFFFF);
                 break;
             case TAGS:
                 var tags = stack.getTags().toList();

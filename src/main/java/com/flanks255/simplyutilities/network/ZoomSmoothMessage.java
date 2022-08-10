@@ -33,7 +33,7 @@ public class ZoomSmoothMessage {
                 () -> {
                     ClientConfiguration.ZOOMSMOOTHCAM.set(message.isSmoothcam());
                     ClientConfiguration.CLIENT_CONFIG.save();
-                    ConfigCache.RefreshCache();
+                    ConfigCache.RefreshClientCache();
                 }
             );
         }

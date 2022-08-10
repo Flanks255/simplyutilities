@@ -21,25 +21,25 @@ public class SUNetwork {
         channel.messageBuilder(OpenOtherDoorMessage.class, 1)
                 .decoder(OpenOtherDoorMessage::decode)
                 .encoder(OpenOtherDoorMessage::encode)
-                .consumer(OpenOtherDoorMessage::handle)
+                .consumerNetworkThread(OpenOtherDoorMessage::handle)
                 .add();
 
         channel.messageBuilder(OpenDebugHandMessage.class, 2, NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(OpenDebugHandMessage::decode)
                 .encoder(OpenDebugHandMessage::encode)
-                .consumer(OpenDebugHandMessage::handle)
+                .consumerNetworkThread(OpenDebugHandMessage::handle)
                 .add();
 
         channel.messageBuilder(ZoomFOVMessage.class, 3, NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(ZoomFOVMessage::decode)
                 .encoder(ZoomFOVMessage::encode)
-                .consumer(ZoomFOVMessage::handle)
+                .consumerNetworkThread(ZoomFOVMessage::handle)
                 .add();
 
         channel.messageBuilder(ZoomSmoothMessage.class, 4, NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(ZoomSmoothMessage::decode)
                 .encoder(ZoomSmoothMessage::encode)
-                .consumer(ZoomSmoothMessage::handle)
+                .consumerNetworkThread(ZoomSmoothMessage::handle)
                 .add();
 
 

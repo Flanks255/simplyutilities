@@ -2,7 +2,6 @@ package com.flanks255.simplyutilities.utils;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 
 import java.util.ArrayList;
 import java.util.List;

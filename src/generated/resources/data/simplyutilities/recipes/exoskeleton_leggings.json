@@ -4,28 +4,28 @@
     {
       "conditions": [
         {
-          "config_name": "exoleggings",
-          "type": "simplyutilities:bool_config_condition"
+          "type": "simplyutilities:bool_config_condition",
+          "config_name": "exoleggings"
         }
       ],
       "recipe": {
         "type": "minecraft:crafting_shaped",
+        "key": {
+          "a": {
+            "tag": "forge:storage_blocks/diamond"
+          },
+          "i": {
+            "item": "minecraft:iron_bars"
+          },
+          "x": {
+            "item": "minecraft:leather_leggings"
+          }
+        },
         "pattern": [
           "iai",
           "ixi",
           "i i"
         ],
-        "key": {
-          "x": {
-            "item": "minecraft:leather_leggings"
-          },
-          "i": {
-            "item": "minecraft:iron_bars"
-          },
-          "a": {
-            "tag": "forge:storage_blocks/diamond"
-          }
-        },
         "result": {
           "item": "simplyutilities:exoleggings"
         }

@@ -4,18 +4,18 @@
     {
       "conditions": [
         {
-          "config_name": "smeltFleshIntoLeather",
-          "type": "simplyutilities:bool_config_condition"
+          "type": "simplyutilities:bool_config_condition",
+          "config_name": "smeltFleshIntoLeather"
         }
       ],
       "recipe": {
         "type": "minecraft:smelting",
+        "cookingtime": 400,
+        "experience": 0.0,
         "ingredient": {
           "item": "minecraft:rotten_flesh"
         },
-        "result": "minecraft:leather",
-        "experience": 0.0,
-        "cookingtime": 400
+        "result": "minecraft:leather"
       }
     }
   ]

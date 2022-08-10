@@ -4,11 +4,11 @@
     {
       "conditions": [
         {
+          "type": "forge:not",
           "value": {
-            "modid": "mekanism",
-            "type": "forge:mod_loaded"
-          },
-          "type": "forge:not"
+            "type": "forge:mod_loaded",
+            "modid": "mekanism"
+          }
         }
       ],
       "recipe": {
@@ -19,8 +19,8 @@
           }
         ],
         "result": {
-          "item": "minecraft:charcoal",
-          "count": 9
+          "count": 9,
+          "item": "minecraft:charcoal"
         }
       }
     }

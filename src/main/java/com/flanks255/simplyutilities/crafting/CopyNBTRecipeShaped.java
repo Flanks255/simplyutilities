@@ -11,10 +11,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class CopyNBTRecipeShaped extends ShapedRecipe {
@@ -25,8 +25,9 @@ public class CopyNBTRecipeShaped extends ShapedRecipe {
         super(shapedRecipe.getId(), shapedRecipe.getGroup(), shapedRecipe.getRecipeWidth(), shapedRecipe.getRecipeHeight(), shapedRecipe.getIngredients(), shapedRecipe.getResultItem());
     }
 
+    @Nonnull
     @Override
-    public ItemStack assemble(CraftingContainer inv) {
+    public ItemStack assemble(@Nonnull CraftingContainer inv) {
         final ItemStack craftingResult = super.assemble(inv);
         TargetNBTIngredient donorIngredient = null;
         ItemStack datasource = ItemStack.EMPTY;
@@ -59,7 +60,7 @@ public class CopyNBTRecipeShaped extends ShapedRecipe {
         return SUCrafting.COPYRECIPE.get();
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<CopyNBTRecipeShaped> {
+    public static class Serializer implements RecipeSerializer<CopyNBTRecipeShaped> {
         @Nullable
         @Override
         public CopyNBTRecipeShaped fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {

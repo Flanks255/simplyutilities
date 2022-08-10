@@ -4,24 +4,24 @@
     {
       "conditions": [
         {
-          "config_name": "craftLogsToSticks",
-          "type": "simplyutilities:bool_config_condition"
+          "type": "simplyutilities:bool_config_condition",
+          "config_name": "craftLogsToSticks"
         }
       ],
       "recipe": {
         "type": "minecraft:crafting_shaped",
-        "pattern": [
-          "x",
-          "x"
-        ],
         "key": {
           "x": {
             "tag": "minecraft:logs"
           }
         },
+        "pattern": [
+          "x",
+          "x"
+        ],
         "result": {
-          "item": "minecraft:stick",
-          "count": 16
+          "count": 16,
+          "item": "minecraft:stick"
         }
       }
     }

@@ -4,34 +4,34 @@
     {
       "conditions": [
         {
-          "config_name": "online_detector",
-          "type": "simplyutilities:bool_config_condition"
+          "type": "simplyutilities:bool_config_condition",
+          "config_name": "online_detector"
         }
       ],
       "recipe": {
         "type": "minecraft:crafting_shaped",
-        "pattern": [
-          "GBG",
-          "RER",
-          "HHH"
-        ],
         "key": {
-          "G": {
-            "tag": "forge:ingots/gold"
-          },
           "B": {
             "tag": "forge:storage_blocks/redstone"
           },
           "E": {
             "item": "minecraft:ender_eye"
           },
-          "R": {
-            "item": "minecraft:repeater"
+          "G": {
+            "tag": "forge:ingots/gold"
           },
           "H": {
             "item": "minecraft:warped_hyphae"
+          },
+          "R": {
+            "item": "minecraft:repeater"
           }
         },
+        "pattern": [
+          "GBG",
+          "RER",
+          "HHH"
+        ],
         "result": {
           "item": "simplyutilities:online_detector"
         }

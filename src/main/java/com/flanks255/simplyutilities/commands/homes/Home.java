@@ -11,8 +11,8 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 
 import java.util.Set;
@@ -42,7 +42,7 @@ public class Home {
             HomePoint home = playerHomes.getHome(name);
             ServerLevel targetWorld = player.getServer().getLevel(home.getWorldKey());
             if (targetWorld != null) {
-                ctx.getSource().sendSuccess(new TranslatableComponent("message.su.home", name), false);
+                ctx.getSource().sendSuccess(Component.translatable("message.su.home", name), false);
                 player.teleportTo(targetWorld, home.getPostion().getX(), home.getPostion().getY(), home.getPostion().getZ(), player.getViewYRot(0), player.getViewXRot(0));
             }
         }

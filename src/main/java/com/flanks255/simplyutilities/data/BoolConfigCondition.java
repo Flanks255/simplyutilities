@@ -23,23 +23,16 @@ public class BoolConfigCondition implements ICondition {
     }
 
     @Override
-    public boolean test() {
-        switch (boolConfig) {
-            default:
-                return true;
-            case "smeltFleshIntoLeather":
-                return CommonConfiguration.RECIPE_FLESH_LEATHER.get();
-            case "craftLogsToSticks":
-                return CommonConfiguration.RECIPE_LOG_STICK.get();
-            case "craftLogsToChests":
-                return CommonConfiguration.RECIPE_LOG_CHESTS.get();
-            case "enableEnderInhibitor":
-                return ConfigCache.EnderInhibitorEnabled;
-            case "exoleggings":
-                return CommonConfiguration.EXO_LEGGINGS.get();
-            case "online_detector":
-                return CommonConfiguration.ONLINE_DETECTOR.get();
-        }
+    public boolean test(IContext context) {
+        return switch (boolConfig) {
+            default -> true;
+            case "smeltFleshIntoLeather" -> CommonConfiguration.RECIPE_FLESH_LEATHER.get();
+            case "craftLogsToSticks" -> CommonConfiguration.RECIPE_LOG_STICK.get();
+            case "craftLogsToChests" -> CommonConfiguration.RECIPE_LOG_CHESTS.get();
+            case "enableEnderInhibitor" -> ConfigCache.EnderInhibitorEnabled;
+            case "exoleggings" -> CommonConfiguration.EXO_LEGGINGS.get();
+            case "online_detector" -> CommonConfiguration.ONLINE_DETECTOR.get();
+        };
     }
 
     public static class Serializer implements IConditionSerializer<BoolConfigCondition> {

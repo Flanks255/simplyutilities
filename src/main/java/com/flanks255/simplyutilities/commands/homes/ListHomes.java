@@ -7,8 +7,8 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.network.chat.TextComponent;
 
 
 import java.util.Set;
@@ -27,10 +27,10 @@ public class ListHomes {
         Set<String> homenames = homes.getPlayerHomes(player.getUUID(), player.getDisplayName().toString()).getHomes();
 
         if (homenames.isEmpty()) {
-            ctx.getSource().sendSuccess(new TextComponent("[ ]"), false);
+            ctx.getSource().sendSuccess(Component.literal("[ ]"), false);
         }
         else {
-            ctx.getSource().sendSuccess(new TextComponent(homenames.toString()), false);
+            ctx.getSource().sendSuccess(Component.literal(homenames.toString()), false);
         }
 
         return 0;
