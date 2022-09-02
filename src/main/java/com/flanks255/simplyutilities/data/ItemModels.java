@@ -30,6 +30,9 @@ public class ItemModels extends ItemModelProvider {
         registerBlockItem(SUBlocks.CHARCOAL_BLOCK.get());
         registerBlockItem(SUBlocks.ENDER_PEARL_BLOCK.get());
         registerBlockISTER(SUBlocks.ONLINE_DETECTOR.get());
+
+        simpleItem(SUItems.MINICOAL.get());
+        simpleItem(SUItems.MINICHARCOAL.get());
     }
 
     private String getRegPath(Item item) {

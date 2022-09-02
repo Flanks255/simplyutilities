@@ -87,10 +87,15 @@ dependencies {
 
 /*    compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")*/
-//    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}") //new
-//    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
-//    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+/*    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}") //new
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")*/
     compileOnly fg.deobf("curse.maven:TOP-245211:3671753")
+
+/*    runtimeOnly fg.deobf("curse.maven:MCJTY-233105:3920706")
+    runtimeOnly fg.deobf("curse.maven:RFTB-326041:3920710")
+    runtimeOnly fg.deobf("curse.maven:RFTBUILD-347706:3920725")
+    compileOnly fg.deobf("curse.maven:RFTBUILD-347706:3920725")*/
 }
 
 jar {
@@ -144,7 +149,6 @@ if (ENV.CURSEFORGE_KEY) {
             id = project.curseforge_id
             releaseType = "release"
             addGameVersion "Forge"
-            addGameVersion "1.19.1"
             addGameVersion "1.19.2"
             mainArtifact(jar)
             changelog = getGitChangelog

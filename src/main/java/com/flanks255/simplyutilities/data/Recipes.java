@@ -152,6 +152,29 @@ public class Recipes extends RecipeProvider {
         ShapelessRecipeBuilder.shapeless(Items.ENDER_PEARL, 4)
             .requires(SUTags.STORAGE_BLOCKS_ENDER_PEARL).unlockedBy("has_ender_pearl_block", has(SUBlocks.ENDER_PEARL_BLOCK.getItem()))
             .save(consumer, new ResourceLocation(SimplyUtilities.MODID, "ender_pearl"));
+
+        ShapelessRecipeBuilder.shapeless(SUItems.MINICOAL.get(), 8)
+                .requires(Items.COAL).unlockedBy("has_coal", has(Items.COAL))
+                .save(consumer, new ResourceLocation(SimplyUtilities.MODID, "mini_coal"));
+        ShapelessRecipeBuilder.shapeless(SUItems.MINICHARCOAL.get(), 8)
+                .requires(Items.CHARCOAL).unlockedBy("has_charcoal", has(Items.CHARCOAL))
+                .save(consumer, new ResourceLocation(SimplyUtilities.MODID, "mini_charcoal"));
+
+        ShapedRecipeBuilder.shaped(Items.COAL)
+                .pattern("MMM")
+                .pattern("M M")
+                .pattern("MMM")
+                .define('M', SUItems.MINICOAL.get())
+                .unlockedBy("has_minicoal", has(SUItems.MINICOAL.get()))
+                .save(consumer, new ResourceLocation(SimplyUtilities.MODID, "minicoal_to_coal"));
+        ShapedRecipeBuilder.shaped(Items.CHARCOAL)
+                .pattern("MMM")
+                .pattern("M M")
+                .pattern("MMM")
+                .define('M', SUItems.MINICHARCOAL.get())
+                .unlockedBy("has_minicoal", has(SUItems.MINICHARCOAL.get()))
+                .save(consumer, new ResourceLocation(SimplyUtilities.MODID, "minicharcoal_to_coal"));
+
 /*
         consumer.accept(new RightClickRecipe.FinishedRecipe(new ResourceLocation(SimplyUtilities.MODID, "test_rightclick"), new ItemStack(Items.DIAMOND), Ingredient.of(Items.EMERALD), Blocks.ANVIL));
 

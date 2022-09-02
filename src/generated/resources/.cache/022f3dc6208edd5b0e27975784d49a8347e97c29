@@ -1,6 +1,8 @@
-// 1.19.1	2022-07-30T17:47:00.8954614	Item Models: simplyutilities
+// 1.19.2	2022-09-02T17:36:45.9378383	Item Models: simplyutilities
 6c355604c53d0263e344661822f01a522ed7aa9a assets/simplyutilities/models/item/charcoal_block.json
 ec2acefa442ea24bcb7935bf44e66178acb7212c assets/simplyutilities/models/item/ender_inhibitor.json
 73d35ad34ca9262d4109862f2ba8bec44f81efa1 assets/simplyutilities/models/item/ender_pearl_block.json
 b3f8339c486f17d57e7ae734e587ba7b259109cf assets/simplyutilities/models/item/exoleggings.json
+d50ed0cdfe8a2e00d0ed5c3e304e2e4c9c1ac99d assets/simplyutilities/models/item/mini_charcoal.json
+6b74e93ab5b6597c9ac7a59be32e67406f2820f7 assets/simplyutilities/models/item/mini_coal.json
 50b5c22cd7441941b45c0300ca24ccc685dffbaf assets/simplyutilities/models/item/online_detector.json
