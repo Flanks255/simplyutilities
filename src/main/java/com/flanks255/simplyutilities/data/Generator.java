@@ -1,5 +1,8 @@
 package com.flanks255.simplyutilities.data;
 
+import com.flanks255.simplyutilities.data.tags.SUBlockTags;
+import com.flanks255.simplyutilities.data.tags.SUEntityTypeTags;
+import com.flanks255.simplyutilities.data.tags.SUItemTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -17,5 +20,6 @@ public class Generator {
         SUBlockTags blockTags = new SUBlockTags(generator, event.getExistingFileHelper());
         generator.addProvider(true, blockTags);
         generator.addProvider(true, new SUItemTags(generator, blockTags, event.getExistingFileHelper()));
+        generator.addProvider(true, new SUEntityTypeTags(generator, event.getExistingFileHelper()));
     }
 }

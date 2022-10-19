@@ -1,4 +1,4 @@
-package com.flanks255.simplyutilities.data;
+package com.flanks255.simplyutilities.data.tags;
 
 import com.flanks255.simplyutilities.SUBlocks;
 import com.flanks255.simplyutilities.SUTags;

@@ -11,13 +11,14 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
 
 public class DoubleDoorFix {
 
     public static void playerInteraction(PlayerInteractEvent.RightClickBlock interactEvent) {
-        if (interactEvent.getEntity().isShiftKeyDown() || interactEvent.isCanceled() || interactEvent.getResult() == Event.Result.DENY)
+        if (interactEvent.getEntity() instanceof FakePlayer || interactEvent.getEntity().isShiftKeyDown() || interactEvent.isCanceled() || interactEvent.getResult() == Event.Result.DENY)
             return;
 
         Level world = interactEvent.getLevel();
