@@ -4,6 +4,7 @@ import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.flanks255.simplyutilities.homes.HomePoint;
 import com.flanks255.simplyutilities.homes.PlayerHomes;
 import com.flanks255.simplyutilities.save.HomeDataManager;
+import com.flanks255.simplyutilities.utils.MiscUtils;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -43,7 +44,7 @@ public class Home {
             ServerLevel targetWorld = player.getServer().getLevel(home.getWorldKey());
             if (targetWorld != null) {
                 ctx.getSource().sendSuccess(new TranslatableComponent("message.su.home", name), false);
-                player.teleportTo(targetWorld, home.getPostion().getX(), home.getPostion().getY(), home.getPostion().getZ(), player.getViewYRot(0), player.getViewXRot(0));
+                MiscUtils.Teleport(player, targetWorld, home.getPostion(), player.getViewYRot(0), player.getViewXRot(0));
             }
         }
         return 0;

@@ -1,6 +1,7 @@
 package com.flanks255.simplyutilities.commands;
 
 import com.flanks255.simplyutilities.configuration.ConfigCache;
+import com.flanks255.simplyutilities.utils.MiscUtils;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -20,7 +21,7 @@ public class Spawn {
         ServerPlayer player = ctx.getSource().getPlayerOrException();
         LevelData worldInfo = player.level.getLevelData();
 
-        player.teleportTo(ctx.getSource().getServer().overworld(), worldInfo.getXSpawn(), worldInfo.getYSpawn(), worldInfo.getZSpawn(), player.getViewYRot(0), player.getViewXRot(0));
+        MiscUtils.Teleport(player, ctx.getSource().getServer().overworld(), worldInfo.getXSpawn(), worldInfo.getYSpawn(), worldInfo.getZSpawn(), player.getViewYRot(0), player.getViewXRot(0));
         return 0;
     }
 }

@@ -1,0 +1,45 @@
+package com.flanks255.simplyutilities.items;
+
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+
+public class SUItem extends Item {
+    public SUItem(Properties pProperties) {
+        super(pProperties);
+    }
+
+    private boolean hasTranslation(String key) {
+        return I18n.exists(key);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level worldIn, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        boolean hasAny = hasTranslation(stack.getDescriptionId() + ".info");
+        if (Screen.hasShiftDown() && hasAny) {
+            tooltip.add(new TranslatableComponent(stack.getDescriptionId() + ".info"));
+            if (hasTranslation(stack.getDescriptionId()+".info2"))
+                tooltip.add(new TranslatableComponent(stack.getDescriptionId() + ".info2"));
+            if (hasTranslation(stack.getDescriptionId()+".info3"))
+                tooltip.add(new TranslatableComponent(stack.getDescriptionId() + ".info3"));
+        }
+        else {
+            if (hasAny)
+                tooltip.add(new TranslatableComponent("su.moreinfo", new TranslatableComponent("su.key.shift").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC)));
+        }
+    }
+}

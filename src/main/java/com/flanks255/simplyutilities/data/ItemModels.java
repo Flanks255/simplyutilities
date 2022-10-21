@@ -3,6 +3,7 @@ package com.flanks255.simplyutilities.data;
 import com.flanks255.simplyutilities.SUBlocks;
 import com.flanks255.simplyutilities.SUItems;
 import com.flanks255.simplyutilities.SimplyUtilities;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Item;
@@ -26,6 +27,9 @@ public class ItemModels extends ItemModelProvider {
         registerBlockItem(SUBlocks.CHARCOAL_BLOCK.get());
         registerBlockItem(SUBlocks.ENDER_PEARL_BLOCK.get());
         registerBlockISTER(SUBlocks.ONLINE_DETECTOR.get());
+
+        simpleItem(SUItems.MINICOAL.get());
+        simpleItem(SUItems.MINICHARCOAL.get());
     }
 
     private void simpleItem(Item item) {
@@ -42,46 +46,46 @@ public class ItemModels extends ItemModelProvider {
     private void registerBlockISTER(Block block) {
         String path = block.getRegistryName().getPath();
         getBuilder(path).parent(new ModelFile.UncheckedModelFile(modLoc("block/entity")))
-            .transforms().transform(ModelBuilder.Perspective.GUI)
-            .rotation(30f ,45f ,0f)
-            .translation(0f,0f,0f)
-            .scale(0.625f, 0.625f, 0.625f)
-            .end()
-            .transform(ModelBuilder.Perspective.FIRSTPERSON_LEFT)
-            .rotation(0f,0f,0f)
-            .translation(0f,0f,0f)
-            .scale(0.625f, 0.625f, 0.625f)
-            .end()
-            .transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
-            .rotation(0f,0f,0f)
-            .translation(0f,0f,0f)
-            .scale(0.625f, 0.625f, 0.625f)
-            .end()
-            .transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
-            .rotation(0f,0f,0f)
-            .translation(0f,0f,0f)
-            .scale(0.625f, 0.625f, 0.625f)
-            .end()
-            .transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
-            .rotation(0f,0f,0f)
-            .translation(0f,0f,0f)
-            .scale(0.625f, 0.625f, 0.625f)
-            .end()
-            .transform(ModelBuilder.Perspective.GROUND)
-            .rotation(0f,0f,0f)
-            .translation(0f,3f,0f)
-            .scale(0.625f, 0.625f, 0.625f)
-            .end()
-            .transform(ModelBuilder.Perspective.FIXED)
-            .rotation(0f,0f,0f)
-            .translation(0f,0f,0f)
-            .scale(0.625f, 0.625f, 0.625f)
-            .end()
-            .transform(ModelBuilder.Perspective.HEAD)
-            .rotation(0f,0f,0f)
-            .translation(0f,0f,0f)
-            .scale(0.5f, 0.5f, 0.5f)
-            .end();
+                .transforms().transform(ItemTransforms.TransformType.GUI)
+                .rotation(30f ,45f ,0f)
+                .translation(0f,0f,0f)
+                .scale(0.625f, 0.625f, 0.625f)
+                .end()
+                .transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND)
+                .rotation(0f,0f,0f)
+                .translation(0f,0f,0f)
+                .scale(0.625f, 0.625f, 0.625f)
+                .end()
+                .transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
+                .rotation(0f,0f,0f)
+                .translation(0f,0f,0f)
+                .scale(0.625f, 0.625f, 0.625f)
+                .end()
+                .transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
+                .rotation(0f,0f,0f)
+                .translation(0f,0f,0f)
+                .scale(0.625f, 0.625f, 0.625f)
+                .end()
+                .transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
+                .rotation(0f,0f,0f)
+                .translation(0f,0f,0f)
+                .scale(0.625f, 0.625f, 0.625f)
+                .end()
+                .transform(ItemTransforms.TransformType.GROUND)
+                .rotation(0f,0f,0f)
+                .translation(0f,3f,0f)
+                .scale(0.625f, 0.625f, 0.625f)
+                .end()
+                .transform(ItemTransforms.TransformType.FIXED)
+                .rotation(0f,0f,0f)
+                .translation(0f,0f,0f)
+                .scale(0.625f, 0.625f, 0.625f)
+                .end()
+                .transform(ItemTransforms.TransformType.HEAD)
+                .rotation(0f,0f,0f)
+                .translation(0f,0f,0f)
+                .scale(0.5f, 0.5f, 0.5f)
+                .end();
     }
 
 }

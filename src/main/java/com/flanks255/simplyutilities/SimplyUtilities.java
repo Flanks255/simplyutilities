@@ -14,6 +14,7 @@ import com.flanks255.simplyutilities.data.Generator;
 import com.flanks255.simplyutilities.items.ExoLeggings;
 import com.flanks255.simplyutilities.network.SUNetwork;
 import com.flanks255.simplyutilities.render.ModelLayers;
+import com.flanks255.simplyutilities.tweaks.MobGriefProtection;
 import com.flanks255.simplyutilities.tweaks.DoubleDoorFix;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.KeyMapping;
@@ -86,6 +87,7 @@ public class SimplyUtilities
         MinecraftForge.EVENT_BUS.addListener(ExoLeggings::onEntityHurt);
         //MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, RightClickRecipe::RightClickEvent);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, DoubleDoorFix::playerInteraction);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, MobGriefProtection::mobGriefingEvent);
 
     }
 
