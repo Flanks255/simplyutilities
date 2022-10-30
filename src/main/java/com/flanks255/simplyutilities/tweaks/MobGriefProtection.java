@@ -6,7 +6,7 @@ import net.minecraftforge.eventbus.api.Event;
 
 public class MobGriefProtection {
     public static void mobGriefingEvent(EntityMobGriefingEvent event) {
-        if (SUTags.NO_GRIEFING.contains(event.getEntity().getType()))
+        if (event.getEntity() != null && SUTags.NO_GRIEFING.contains(event.getEntity().getType()))
             event.setResult(Event.Result.DENY);
     }
 }
