@@ -21,6 +21,7 @@ apply from: 'https://files.saps.dev/ci/git-md-changelog.gradle'
 apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
 repositories {
+    maven { url = 'https://maven.creeperhost.net/' }
     maven { url "https://www.cursemaven.com" }
     maven { url "https://dvs1.progwml6.com/files/maven" }
 }
@@ -87,9 +88,9 @@ dependencies {
 
 /*    compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")*/
-/*    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}") //new
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}") //new
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")*/
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
     compileOnly fg.deobf("curse.maven:TOP-245211:3671753")
 
 /*    runtimeOnly fg.deobf("curse.maven:MCJTY-233105:3920706")
@@ -149,7 +150,7 @@ if (ENV.CURSEFORGE_KEY) {
             id = project.curseforge_id
             releaseType = "release"
             addGameVersion "Forge"
-            addGameVersion "1.19.2"
+            addGameVersion "1.19.3"
             mainArtifact(jar)
             changelog = getGitChangelog
             changelogType = 'markdown'

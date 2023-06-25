@@ -17,13 +17,13 @@ public class SUItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SimplyUtilities.MODID);
 
     public static final RegistryObject<Item> EXOLEGGINGS = ITEMS.register("exoleggings", ExoLeggings::new);
-    public static final RegistryObject<Item> MINICOAL = ITEMS.register("mini_coal", () -> new SUItem(new Item.Properties().stacksTo(64).tab(CreativeModeTab.TAB_MISC)){
+    public static final RegistryObject<Item> MINICOAL = ITEMS.register("mini_coal", () -> new SUItem(new Item.Properties().stacksTo(64)){
         @Override
         public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
             return 200;
         }
     });
-    public static final RegistryObject<Item> MINICHARCOAL = ITEMS.register("mini_charcoal", () -> new SUItem(new Item.Properties().stacksTo(64).tab(CreativeModeTab.TAB_MISC)){
+    public static final RegistryObject<Item> MINICHARCOAL = ITEMS.register("mini_charcoal", () -> new SUItem(new Item.Properties().stacksTo(64)){
         @Override
         public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
             return 200;

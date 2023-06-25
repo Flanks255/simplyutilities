@@ -19,7 +19,7 @@ public class ItemModels extends ItemModelProvider {
 
 
     public ItemModels(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, SimplyUtilities.MODID, existingFileHelper);
+        super(generator.getPackOutput(), SimplyUtilities.MODID, existingFileHelper);
     }
 
     @Override

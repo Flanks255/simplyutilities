@@ -18,12 +18,14 @@ import com.flanks255.simplyutilities.tweaks.DoubleDoorFix;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -79,6 +81,7 @@ public class SimplyUtilities
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modBus.addListener(this::doClientStuff);
             modBus.addListener(this::registerKeyBinding);
+            modBus.addListener(this::creativeTabEvent);
         }
         modBus.addListener(this::doClientStuff);
         MinecraftForge.EVENT_BUS.addListener(EnderInhibitor::TeleportEvent);
@@ -127,5 +130,20 @@ public class SimplyUtilities
         }
     }
 
-
+    private void creativeTabEvent(final CreativeModeTabEvent.BuildContents event) {
+        if (event.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.accept(SUBlocks.ENDER_INHIBITOR.get());
+            event.accept(SUBlocks.ONLINE_DETECTOR.get());
+        }
+        else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(SUItems.MINICHARCOAL.get());
+            event.accept(SUItems.MINICOAL.get());
+        }
+        else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(SUBlocks.CHARCOAL_BLOCK.get());
+            event.accept(SUBlocks.ENDER_PEARL_BLOCK.get());
+        }
+        else if (event.getTab() == CreativeModeTabs.COMBAT)
+            event.accept(SUItems.EXOLEGGINGS.get());
+    }
 }

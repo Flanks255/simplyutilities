@@ -23,7 +23,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class ExoLeggings extends ArmorItem {
     public ExoLeggings() {
-        super(new ExoMaterial(), EquipmentSlot.LEGS,  (new Item.Properties()).tab(CreativeModeTab.TAB_COMBAT));
+        super(new ExoMaterial(), EquipmentSlot.LEGS,  (new Item.Properties()));
     }
 
     @Override

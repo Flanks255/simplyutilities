@@ -30,10 +30,10 @@ public class SUBlocks {
     public static DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, SimplyUtilities.MODID);
 
     public static final SUBlockReg<EnderInhibitor, SUBlockItem, ?> ENDER_INHIBITOR = new SUBlockReg<>("ender_inhibitor", EnderInhibitor::new,
-        (b) -> new SUBlockItem(b,new Item.Properties().stacksTo(64).tab(CreativeModeTab.TAB_MISC)));
+        (b) -> new SUBlockItem(b,new Item.Properties().stacksTo(64)));
 
     public static final SUBlockReg<OnlineDetector, SUBlockItem, BEOnlineDetector> ONLINE_DETECTOR = new SUBlockReg<>("online_detector", OnlineDetector::new,
-        (b) -> new SUBlockItem(b, new Item.Properties().stacksTo(64).tab(CreativeModeTab.TAB_MISC)) {
+        (b) -> new SUBlockItem(b, new Item.Properties().stacksTo(64)) {
             @Override
             public void initializeClient(@Nonnull Consumer<IClientItemExtensions> consumer) {
                 consumer.accept(new IClientItemExtensions() {
@@ -46,7 +46,7 @@ public class SUBlocks {
         }, BEOnlineDetector::new);
 
     public static final SUBlockReg<Block, SUBlockItem, ?> CHARCOAL_BLOCK = new SUBlockReg<>("charcoal_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BROWN).requiresCorrectToolForDrops().strength(5.0F, 6.0F)),
-        (b) -> new SUBlockItem(b, new Item.Properties().stacksTo(64).tab(CreativeModeTab.TAB_BUILDING_BLOCKS)) {
+        (b) -> new SUBlockItem(b, new Item.Properties().stacksTo(64)) {
             @Override
             public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
                 return 16000;
@@ -54,7 +54,7 @@ public class SUBlocks {
         });
 
     public static final SUBlockReg<Block, SUBlockItem, ?> ENDER_PEARL_BLOCK = new SUBlockReg<>("ender_pearl_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_GREEN).requiresCorrectToolForDrops().strength(5.0F, 6.0F)),
-        (b) -> new SUBlockItem(b, new Item.Properties().stacksTo(64).tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
+        (b) -> new SUBlockItem(b, new Item.Properties().stacksTo(64)));
 
     public static void init(IEventBus eventBus) {
         BLOCKS.register(eventBus);

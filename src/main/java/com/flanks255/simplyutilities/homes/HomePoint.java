@@ -1,5 +1,6 @@
 package com.flanks255.simplyutilities.homes;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -19,7 +20,7 @@ public class HomePoint {
     }
 
     public ResourceKey<Level> getWorldKey() {
-        return ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(world));
+        return ResourceKey.create(Registries.DIMENSION, new ResourceLocation(world));
     }
 
     public BlockPos getPostion() {

@@ -121,7 +121,7 @@ public class DebugScreen extends Screen {
 
     class ViewButton extends Button {
         public ViewButton(DebugScreen parentIn, int x, int y, int width, int height, Component title, viewTab tab, OnPress action) {
-            super(x, y, width, height, title, action);
+            super(x, y, width, height, title, action, DEFAULT_NARRATION);
             parent = parentIn;
             myTab = tab;
         }
@@ -137,11 +137,11 @@ public class DebugScreen extends Screen {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, GUI);
             if (parent.currentTab == myTab)
-                blit(matrixStack, x, y, 0, 232, 56, 12, 256 ,256);
+                blit(matrixStack, getX(), getY(), 0, 232, 56, 12, 256 ,256);
             else
-                blit(matrixStack, x, y, 0, 220, 56, 12, 256 ,256);
+                blit(matrixStack, getX(), getY(), 0, 220, 56, 12, 256 ,256);
 
-            drawCenteredString(matrixStack, font, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 6) / 2, 0xFFFFFF);
+            drawCenteredString(matrixStack, font, this.getMessage(), getX() + this.width / 2, getY() + (this.height - 6) / 2, 0xFFFFFF);
         }
     }
 }

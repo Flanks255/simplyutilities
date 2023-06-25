@@ -26,19 +26,20 @@ import net.minecraftforge.common.crafting.conditions.NotCondition;
 
 import javax.annotation.Nonnull;
 import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class Recipes extends RecipeProvider {
     public Recipes(DataGenerator generatorIn) {
-        super(generatorIn);
+        super(generatorIn.getPackOutput());
     }
 
     @Override
-    protected void buildCraftingRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
         ConditionalRecipe.builder()
             .addCondition(new BoolConfigCondition("craftLogsToSticks"))
             .addRecipe(
-                ShapedRecipeBuilder.shaped(Items.STICK, 16)
+                ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.STICK, 16)
                     .pattern("x")
                     .pattern("x")
                     .define('x', ItemTags.LOGS)
@@ -49,7 +50,7 @@ public class Recipes extends RecipeProvider {
         ConditionalRecipe.builder()
             .addCondition(new AndCondition(new NotCondition(new ModLoadedCondition("quark")), new BoolConfigCondition("craftLogsToChests")))
             .addRecipe(
-                ShapedRecipeBuilder.shaped(Items.CHEST, 4)
+                ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.CHEST, 4)
                     .pattern("xxx")
                     .pattern("x x")
                     .pattern("xxx")
@@ -61,12 +62,12 @@ public class Recipes extends RecipeProvider {
         ConditionalRecipe.builder()
             .addCondition(new BoolConfigCondition("smeltFleshIntoLeather"))
             .addRecipe(
-                SimpleCookingRecipeBuilder.smelting(Ingredient.of(Items.ROTTEN_FLESH), Items.LEATHER, 0.0F, 400)
+                SimpleCookingRecipeBuilder.smelting(Ingredient.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.0F, 400)
                     .unlockedBy("has_flesh", has(Items.ROTTEN_FLESH))::save)
             .generateAdvancement()
             .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "leather_from_flesh"));
 
-        ShapedRecipeBuilder.shaped(Items.STICKY_PISTON)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.STICKY_PISTON)
             .pattern("x")
             .pattern("y")
             .define('x', Tags.Items.SLIMEBALLS)
@@ -78,7 +79,7 @@ public class Recipes extends RecipeProvider {
         ConditionalRecipe.builder()
             .addCondition(new BoolConfigCondition("enableEnderInhibitor"))
             .addRecipe(
-                ShapedRecipeBuilder.shaped(SUBlocks.ENDER_INHIBITOR.getItem())
+                ShapedRecipeBuilder.shaped(RecipeCategory.MISC, SUBlocks.ENDER_INHIBITOR.getItem())
                     .pattern(" x ")
                     .pattern(" b ")
                     .pattern("aca")
@@ -94,7 +95,7 @@ public class Recipes extends RecipeProvider {
         ConditionalRecipe.builder()
             .addCondition(new BoolConfigCondition("exoleggings"))
             .addRecipe(
-                ShapedRecipeBuilder.shaped(SUItems.EXOLEGGINGS.get())
+                ShapedRecipeBuilder.shaped(RecipeCategory.MISC, SUItems.EXOLEGGINGS.get())
                     .pattern("iai")
                     .pattern("ixi")
                     .pattern("i i")
@@ -108,7 +109,7 @@ public class Recipes extends RecipeProvider {
         ConditionalRecipe.builder()
             .addCondition(new BoolConfigCondition("online_detector"))
             .addRecipe(
-                ShapedRecipeBuilder.shaped(SUBlocks.ONLINE_DETECTOR.getItem())
+                ShapedRecipeBuilder.shaped(RecipeCategory.MISC, SUBlocks.ONLINE_DETECTOR.getItem())
                     .pattern("GBG")
                     .pattern("RER")
                     .pattern("HHH")
@@ -124,7 +125,7 @@ public class Recipes extends RecipeProvider {
         ConditionalRecipe.builder()
             .addCondition(new NotCondition(new ModLoadedCondition("mekanism")))
             .addRecipe(
-                ShapedRecipeBuilder.shaped(SUBlocks.CHARCOAL_BLOCK.getItem())
+                ShapedRecipeBuilder.shaped(RecipeCategory.MISC, SUBlocks.CHARCOAL_BLOCK.getItem())
                     .pattern("CCC")
                     .pattern("CCC")
                     .pattern("CCC")
@@ -136,38 +137,38 @@ public class Recipes extends RecipeProvider {
         ConditionalRecipe.builder()
             .addCondition(new NotCondition(new ModLoadedCondition("mekanism")))
             .addRecipe(
-                ShapelessRecipeBuilder.shapeless(Items.CHARCOAL, 9)
+                ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.CHARCOAL, 9)
                     .requires(SUTags.STORAGE_BLOCKS_CHARCOAL)
                     .unlockedBy("has_charcoal_block", has(SUBlocks.CHARCOAL_BLOCK.getItem()))::save)
                 .generateAdvancement()
                 .build(consumer, new ResourceLocation(SimplyUtilities.MODID, "charcoal_from_block"));
 
-        ShapedRecipeBuilder.shaped(SUBlocks.ENDER_PEARL_BLOCK.getItem())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, SUBlocks.ENDER_PEARL_BLOCK.getItem())
             .pattern("PP")
             .pattern("PP")
             .define('P', Tags.Items.ENDER_PEARLS)
             .unlockedBy("has_ender_pearl", has(Items.ENDER_PEARL))
             .save(consumer, new ResourceLocation(SimplyUtilities.MODID, "ender_pearl_block"));
 
-        ShapelessRecipeBuilder.shapeless(Items.ENDER_PEARL, 4)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.ENDER_PEARL, 4)
             .requires(SUTags.STORAGE_BLOCKS_ENDER_PEARL).unlockedBy("has_ender_pearl_block", has(SUBlocks.ENDER_PEARL_BLOCK.getItem()))
             .save(consumer, new ResourceLocation(SimplyUtilities.MODID, "ender_pearl"));
 
-        ShapelessRecipeBuilder.shapeless(SUItems.MINICOAL.get(), 8)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, SUItems.MINICOAL.get(), 8)
                 .requires(Items.COAL).unlockedBy("has_coal", has(Items.COAL))
                 .save(consumer, new ResourceLocation(SimplyUtilities.MODID, "mini_coal"));
-        ShapelessRecipeBuilder.shapeless(SUItems.MINICHARCOAL.get(), 8)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, SUItems.MINICHARCOAL.get(), 8)
                 .requires(Items.CHARCOAL).unlockedBy("has_charcoal", has(Items.CHARCOAL))
                 .save(consumer, new ResourceLocation(SimplyUtilities.MODID, "mini_charcoal"));
 
-        ShapedRecipeBuilder.shaped(Items.COAL)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.COAL)
                 .pattern("MMM")
                 .pattern("M M")
                 .pattern("MMM")
                 .define('M', SUItems.MINICOAL.get())
                 .unlockedBy("has_minicoal", has(SUItems.MINICOAL.get()))
                 .save(consumer, new ResourceLocation(SimplyUtilities.MODID, "minicoal_to_coal"));
-        ShapedRecipeBuilder.shaped(Items.CHARCOAL)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.CHARCOAL)
                 .pattern("MMM")
                 .pattern("M M")
                 .pattern("MMM")
@@ -185,7 +186,8 @@ public class Recipes extends RecipeProvider {
     }
 
     @Override
-    protected void saveAdvancement(@Nonnull CachedOutput cachedOutput, @Nonnull JsonObject object, @Nonnull Path path) {
+    protected CompletableFuture<?> saveAdvancement(@Nonnull CachedOutput cachedOutput, @Nonnull FinishedRecipe finishedRecipe, @Nonnull JsonObject object) {
         // Nope, don't want none of this...
+        return null;
     }
 }

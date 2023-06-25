@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 public class Lang extends LanguageProvider {
     public Lang(DataGenerator gen) {
-        super(gen, SimplyUtilities.MODID, "en_us");
+        super(gen.getPackOutput(), SimplyUtilities.MODID, "en_us");
     }
 
     @Override

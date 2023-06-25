@@ -16,10 +16,10 @@ public class Generator {
         generator.addProvider(true, new Recipes(generator));
         generator.addProvider(true, new Lang(generator));
         generator.addProvider(true, new BlockStates(generator, event.getExistingFileHelper()));
-        generator.addProvider(true, new SULootTables(generator));
-        SUBlockTags blockTags = new SUBlockTags(generator, event.getExistingFileHelper());
+        generator.addProvider(true, SULootTables.getProvider(generator.getPackOutput()));
+        SUBlockTags blockTags = new SUBlockTags(generator,event.getLookupProvider(), event.getExistingFileHelper());
         generator.addProvider(true, blockTags);
-        generator.addProvider(true, new SUItemTags(generator, blockTags, event.getExistingFileHelper()));
-        generator.addProvider(true, new SUEntityTypeTags(generator, event.getExistingFileHelper()));
+        generator.addProvider(true, new SUItemTags(generator, event.getLookupProvider(), blockTags, event.getExistingFileHelper()));
+        generator.addProvider(true, new SUEntityTypeTags(generator, event.getLookupProvider(), event.getExistingFileHelper()));
     }
 }

@@ -22,6 +22,7 @@
       ],
       "recipe": {
         "type": "minecraft:crafting_shaped",
+        "category": "misc",
         "key": {
           "x": {
             "tag": "minecraft:logs"

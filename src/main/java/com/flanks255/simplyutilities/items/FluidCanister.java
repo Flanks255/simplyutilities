@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
 
 public class FluidCanister extends Item {
     public FluidCanister() {
-        super(new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS));
+        super(new Item.Properties().stacksTo(1));
     }
 
     @Nonnull
