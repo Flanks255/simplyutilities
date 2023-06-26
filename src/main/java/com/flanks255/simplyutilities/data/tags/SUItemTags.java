@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
 public class SUItemTags extends ItemTagsProvider {
 
     public SUItemTags(DataGenerator dataGenerator, CompletableFuture<HolderLookup.Provider> thingIDontUse, BlockTagsProvider blockTagProvider, ExistingFileHelper existingFileHelper) {
-        super(dataGenerator.getPackOutput(), thingIDontUse, blockTagProvider, SimplyUtilities.MODID, existingFileHelper);
+        super(dataGenerator.getPackOutput(), thingIDontUse, blockTagProvider.contentsGetter(), SimplyUtilities.MODID, existingFileHelper);
     }
 
 

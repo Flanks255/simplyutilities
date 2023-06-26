@@ -114,7 +114,7 @@ public class DebugScreen extends Screen {
         matrixStack.pushPose();
         RenderSystem.enableDepthTest();
         //Lighting.turnBackOn();
-        itemRenderer.renderAndDecorateItem(stack, guiLeft + 3,guiTop + 3);
+        itemRenderer.renderAndDecorateItem(matrixStack, stack, guiLeft + 3,guiTop + 3);
         //Lighting.turnOff();
         matrixStack.popPose();
     }
@@ -133,7 +133,7 @@ public class DebugScreen extends Screen {
         }
 
         @Override
-        public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, GUI);
             if (parent.currentTab == myTab)

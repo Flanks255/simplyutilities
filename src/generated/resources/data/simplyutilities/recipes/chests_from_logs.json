@@ -36,7 +36,8 @@
         "result": {
           "count": 4,
           "item": "minecraft:chest"
-        }
+        },
+        "show_notification": false
       }
     }
   ]

@@ -23,7 +23,8 @@
         "result": {
           "count": 16,
           "item": "minecraft:stick"
-        }
+        },
+        "show_notification": false
       }
     }
   ]

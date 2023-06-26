@@ -32,7 +32,8 @@
         ],
         "result": {
           "item": "simplyutilities:ender_inhibitor"
-        }
+        },
+        "show_notification": false
       }
     }
   ]

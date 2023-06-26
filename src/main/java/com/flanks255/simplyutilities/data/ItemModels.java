@@ -4,6 +4,7 @@ import com.flanks255.simplyutilities.SUBlocks;
 import com.flanks255.simplyutilities.SUItems;
 import com.flanks255.simplyutilities.SimplyUtilities;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Item;
@@ -57,42 +58,42 @@ public class ItemModels extends ItemModelProvider {
     private void registerBlockISTER(Block block) {
         String path = getRegPath(block);
         getBuilder(path).parent(new ModelFile.UncheckedModelFile(modLoc("block/entity")))
-            .transforms().transform(ItemTransforms.TransformType.GUI)
+            .transforms().transform(ItemDisplayContext.GUI)
             .rotation(30f ,45f ,0f)
             .translation(0f,0f,0f)
             .scale(0.625f, 0.625f, 0.625f)
             .end()
-            .transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND)
+            .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
             .rotation(0f,0f,0f)
             .translation(0f,0f,0f)
             .scale(0.625f, 0.625f, 0.625f)
             .end()
-            .transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
+            .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
             .rotation(0f,0f,0f)
             .translation(0f,0f,0f)
             .scale(0.625f, 0.625f, 0.625f)
             .end()
-            .transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
+            .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
             .rotation(0f,0f,0f)
             .translation(0f,0f,0f)
             .scale(0.625f, 0.625f, 0.625f)
             .end()
-            .transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
+            .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
             .rotation(0f,0f,0f)
             .translation(0f,0f,0f)
             .scale(0.625f, 0.625f, 0.625f)
             .end()
-            .transform(ItemTransforms.TransformType.GROUND)
+            .transform(ItemDisplayContext.GROUND)
             .rotation(0f,0f,0f)
             .translation(0f,3f,0f)
             .scale(0.625f, 0.625f, 0.625f)
             .end()
-            .transform(ItemTransforms.TransformType.FIXED)
+            .transform(ItemDisplayContext.FIXED)
             .rotation(0f,0f,0f)
             .translation(0f,0f,0f)
             .scale(0.625f, 0.625f, 0.625f)
             .end()
-            .transform(ItemTransforms.TransformType.HEAD)
+            .transform(ItemDisplayContext.HEAD)
             .rotation(0f,0f,0f)
             .translation(0f,0f,0f)
             .scale(0.5f, 0.5f, 0.5f)

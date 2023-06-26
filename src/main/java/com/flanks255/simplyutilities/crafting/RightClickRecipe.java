@@ -2,6 +2,7 @@ package com.flanks255.simplyutilities.crafting;
 
 import com.flanks255.simplyutilities.SUCrafting;
 import com.google.gson.JsonObject;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -51,7 +52,7 @@ public class RightClickRecipe implements Recipe<Inventory> {
 
     @Nonnull
     @Override
-    public ItemStack assemble(Inventory inv) {
+    public ItemStack assemble(Inventory inv, RegistryAccess thing) {
         return output;
     }
 
@@ -62,7 +63,7 @@ public class RightClickRecipe implements Recipe<Inventory> {
 
     @Nonnull
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess thing) {
         return output;
     }
 
@@ -95,7 +96,7 @@ public class RightClickRecipe implements Recipe<Inventory> {
                 if (recipe != null)
                     if (recipe.matches(held, block)) {
                         held.shrink(1);
-                        ItemHandlerHelper.giveItemToPlayer(event.getEntity(), recipe.getResultItem().copy());
+                        ItemHandlerHelper.giveItemToPlayer(event.getEntity(), recipe.getResultItem(null).copy());
                         event.setCanceled(true);
                         break;
                     }

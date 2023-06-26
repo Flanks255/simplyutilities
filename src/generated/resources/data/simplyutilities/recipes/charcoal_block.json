@@ -26,7 +26,8 @@
         ],
         "result": {
           "item": "simplyutilities:charcoal_block"
-        }
+        },
+        "show_notification": false
       }
     }
   ]

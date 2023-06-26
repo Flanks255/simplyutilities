@@ -2,6 +2,7 @@ package com.flanks255.simplyutilities.items;
 
 import com.flanks255.simplyutilities.SimplyUtilities;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -12,12 +13,12 @@ import javax.annotation.Nonnull;
 
 public class ExoMaterial implements ArmorMaterial {
     @Override
-    public int getDurabilityForSlot(@Nonnull EquipmentSlot slotIn) {
+    public int getDurabilityForType(@Nonnull ArmorItem.Type slotIn) {
         return 256;
     }
 
     @Override
-    public int getDefenseForSlot(@Nonnull EquipmentSlot slotIn) {
+    public int getDefenseForType(@Nonnull ArmorItem.Type slotIn) {
         return 2;
     }
 

@@ -35,7 +35,8 @@
         ],
         "result": {
           "item": "simplyutilities:online_detector"
-        }
+        },
+        "show_notification": false
       }
     }
   ]

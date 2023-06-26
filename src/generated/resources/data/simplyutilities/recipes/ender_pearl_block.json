@@ -12,5 +12,6 @@
   ],
   "result": {
     "item": "simplyutilities:ender_pearl_block"
-  }
+  },
+  "show_notification": false
 }
