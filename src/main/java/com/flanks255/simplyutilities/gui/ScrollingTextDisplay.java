@@ -1,6 +1,7 @@
 package com.flanks255.simplyutilities.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -13,7 +14,7 @@ public class ScrollingTextDisplay extends AbstractWidget {
     }
 
     @Override
-    public void renderWidget(PoseStack p_268228_, int p_268034_, int p_268009_, float p_268085_) {
+    public void renderWidget(GuiGraphics p_268228_, int p_268034_, int p_268009_, float p_268085_) {
 
     }
 

@@ -3,6 +3,7 @@ package com.flanks255.simplyutilities.commands.debug;
 import com.flanks255.simplyutilities.SimplyUtilities;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
@@ -62,34 +63,32 @@ public class DebugScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(PoseStack matrixStack) {
-        super.renderBackground(matrixStack);
+    public void renderBackground(GuiGraphics gg) {
+        super.renderBackground(gg);
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, GUI);
-        blit(matrixStack, guiLeft, guiTop, 0,0, 256, 220, 256, 256);
+        gg.blit(GUI, guiLeft, guiTop, 0,0, 256, 220, 256, 256);
 
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(matrixStack);
+    public void render(GuiGraphics gg, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(gg);
 
         children().forEach((child) -> {
             if (child instanceof AbstractWidget)
-                ((AbstractWidget) child).render(matrixStack, mouseX, mouseY, partialTicks);
+                ((AbstractWidget) child).render(gg, mouseX, mouseY, partialTicks);
         });
 
         switch (currentTab) {
             case BASIC:
-                drawString(matrixStack, font, "Display Name: " + stack.getHoverName().getString() ,guiLeft + 8, guiTop + 24, 0xFFFFFF);
-                drawString(matrixStack, font,"Registry Name: " + ForgeRegistries.ITEMS.getKey(stack.getItem()) ,guiLeft + 8, guiTop + 34, 0xFFFFFF);
+                gg.drawString(font, "Display Name: " + stack.getHoverName().getString() ,guiLeft + 8, guiTop + 24, 0xFFFFFF);
+                gg.drawString(font,"Registry Name: " + ForgeRegistries.ITEMS.getKey(stack.getItem()) ,guiLeft + 8, guiTop + 34, 0xFFFFFF);
                 break;
             case TAGS:
                 var tags = stack.getTags().toList();
                 int y = guiTop + 24;
                 for (TagKey<Item> tag : tags) {
-                    drawString(matrixStack, font, tag.location().toString() ,guiLeft + 8, y, 0xFFFFFF);
+                    gg.drawString(font, tag.location().toString() ,guiLeft + 8, y, 0xFFFFFF);
                     y+=10;
                 }
                 break;
@@ -103,7 +102,7 @@ public class DebugScreen extends Screen {
                     }*/
                 }
                 else
-                    drawString(matrixStack, font, "NBT: None" ,guiLeft + 8, guiTop + 24, 0xFFFFFF);
+                    gg.drawString(font, "NBT: None" ,guiLeft + 8, guiTop + 24, 0xFFFFFF);
                 break;
             case CLASSES:
                 break;
@@ -111,12 +110,12 @@ public class DebugScreen extends Screen {
 
 
         //draw the item
-        matrixStack.pushPose();
+        gg.pose().pushPose();
         RenderSystem.enableDepthTest();
         //Lighting.turnBackOn();
-        itemRenderer.renderAndDecorateItem(matrixStack, stack, guiLeft + 3,guiTop + 3);
+        gg.renderItem(stack, guiLeft + 3,guiTop + 3);
         //Lighting.turnOff();
-        matrixStack.popPose();
+        gg.pose().popPose();
     }
 
     class ViewButton extends Button {
@@ -133,15 +132,15 @@ public class DebugScreen extends Screen {
         }
 
         @Override
-        public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        public void renderWidget(GuiGraphics gg, int mouseX, int mouseY, float partialTicks) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, GUI);
             if (parent.currentTab == myTab)
-                blit(matrixStack, getX(), getY(), 0, 232, 56, 12, 256 ,256);
+                gg.blit(GUI, getX(), getY(), 0, 232, 56, 12, 256 ,256);
             else
-                blit(matrixStack, getX(), getY(), 0, 220, 56, 12, 256 ,256);
+                gg.blit(GUI, getX(), getY(), 0, 220, 56, 12, 256 ,256);
 
-            drawCenteredString(matrixStack, font, this.getMessage(), getX() + this.width / 2, getY() + (this.height - 6) / 2, 0xFFFFFF);
+            gg.drawCenteredString(font, this.getMessage(), getX() + this.width / 2, getY() + (this.height - 6) / 2, 0xFFFFFF);
         }
     }
 }

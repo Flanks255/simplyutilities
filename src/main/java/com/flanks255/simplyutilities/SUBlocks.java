@@ -10,11 +10,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -45,7 +43,7 @@ public class SUBlocks {
             }
         }, BEOnlineDetector::new);
 
-    public static final SUBlockReg<Block, SUBlockItem, ?> CHARCOAL_BLOCK = new SUBlockReg<>("charcoal_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BROWN).requiresCorrectToolForDrops().strength(5.0F, 6.0F)),
+    public static final SUBlockReg<Block, SUBlockItem, ?> CHARCOAL_BLOCK = new SUBlockReg<>("charcoal_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).requiresCorrectToolForDrops().strength(5.0F, 6.0F)),
         (b) -> new SUBlockItem(b, new Item.Properties().stacksTo(64)) {
             @Override
             public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
@@ -53,7 +51,7 @@ public class SUBlocks {
             }
         });
 
-    public static final SUBlockReg<Block, SUBlockItem, ?> ENDER_PEARL_BLOCK = new SUBlockReg<>("ender_pearl_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_GREEN).requiresCorrectToolForDrops().strength(5.0F, 6.0F)),
+    public static final SUBlockReg<Block, SUBlockItem, ?> ENDER_PEARL_BLOCK = new SUBlockReg<>("ender_pearl_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).requiresCorrectToolForDrops().strength(5.0F, 6.0F)),
         (b) -> new SUBlockItem(b, new Item.Properties().stacksTo(64)));
 
     public static void init(IEventBus eventBus) {

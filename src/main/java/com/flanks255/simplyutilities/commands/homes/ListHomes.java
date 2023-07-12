@@ -27,10 +27,10 @@ public class ListHomes {
         Set<String> homenames = homes.getPlayerHomes(player.getUUID(), player.getDisplayName().toString()).getHomes();
 
         if (homenames.isEmpty()) {
-            ctx.getSource().sendSuccess(Component.literal("[ ]"), false);
+            ctx.getSource().sendSuccess(() -> Component.literal("[ ]"), false);
         }
         else {
-            ctx.getSource().sendSuccess(Component.literal(homenames.toString()), false);
+            ctx.getSource().sendSuccess(() -> Component.literal(homenames.toString()), false);
         }
 
         return 0;

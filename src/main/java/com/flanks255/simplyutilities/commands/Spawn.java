@@ -19,7 +19,7 @@ public class Spawn {
 
     public static int spawn(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         ServerPlayer player = ctx.getSource().getPlayerOrException();
-        LevelData worldInfo = player.level.getLevelData();
+        LevelData worldInfo = player.level().getLevelData();
 
         //player.teleportTo(ctx.getSource().getServer().overworld(), worldInfo.getXSpawn(), worldInfo.getYSpawn(), worldInfo.getZSpawn(), player.getViewYRot(0), player.getViewXRot(0));
         MiscUtils.Teleport(player, ctx.getSource().getServer().overworld(), worldInfo.getXSpawn(), worldInfo.getYSpawn(), worldInfo.getZSpawn(), player.getViewYRot(0), player.getViewXRot(0));

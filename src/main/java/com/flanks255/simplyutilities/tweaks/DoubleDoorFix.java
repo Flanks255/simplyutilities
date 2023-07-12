@@ -3,9 +3,9 @@ package com.flanks255.simplyutilities.tweaks;
 import com.flanks255.simplyutilities.SimplyUtilities;
 import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.flanks255.simplyutilities.network.OpenOtherDoorMessage;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.core.Direction;
@@ -44,7 +44,7 @@ public class DoubleDoorFix {
         BlockPos doorPos = blockState.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER ? mirroredPos : mirroredPos.below();
         BlockState otherDoor = world.getBlockState(doorPos);
 
-        if (blockState.getMaterial() != Material.METAL && otherDoor.getBlock() == blockState.getBlock() && otherDoor.getValue(DoorBlock.FACING) == facing && otherDoor.getValue(DoorBlock.OPEN) == open && otherDoor.getValue(DoorBlock.HINGE) != mirrored) {
+        if (blockState.getSoundType() != SoundType.METAL && otherDoor.getBlock() == blockState.getBlock() && otherDoor.getValue(DoorBlock.FACING) == facing && otherDoor.getValue(DoorBlock.OPEN) == open && otherDoor.getValue(DoorBlock.HINGE) != mirrored) {
             world.setBlockAndUpdate(doorPos, otherDoor.cycle(DoorBlock.OPEN));
         }
     }

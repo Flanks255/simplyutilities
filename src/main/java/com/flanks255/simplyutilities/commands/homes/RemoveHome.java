@@ -26,7 +26,7 @@ public class RemoveHome {
     }
 
     private static Set<String> getHomesForSuggestion(ServerPlayer playerEntity) {
-        HomeDataManager homedata = HomeDataManager.get(playerEntity.level);
+        HomeDataManager homedata = HomeDataManager.get(playerEntity.level());
         return  homedata.getPlayerHomes(playerEntity.getUUID(), playerEntity.getDisplayName().getString()).getHomes();
     }
 
@@ -36,7 +36,7 @@ public class RemoveHome {
 
         PlayerHomes playerdata = homes.getPlayerHomes(player.getUUID(), player.getDisplayName().getString());
 
-        ctx.getSource().sendSuccess(Component.translatable(playerdata.removeHome(name)?"message.su.removehomesuccess":"message.su.removehomefail", name), false );
+        ctx.getSource().sendSuccess(() -> Component.translatable(playerdata.removeHome(name)?"message.su.removehomesuccess":"message.su.removehomefail", name), false );
         return 0;
     }
 }

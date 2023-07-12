@@ -25,7 +25,7 @@ import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -130,20 +130,20 @@ public class SimplyUtilities
         }
     }
 
-    private void creativeTabEvent(final CreativeModeTabEvent.BuildContents event) {
-        if (event.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+    private void creativeTabEvent(final BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(SUBlocks.ENDER_INHIBITOR.get());
             event.accept(SUBlocks.ONLINE_DETECTOR.get());
         }
-        else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
+        else if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(SUItems.MINICHARCOAL.get());
             event.accept(SUItems.MINICOAL.get());
         }
-        else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
+        else if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(SUBlocks.CHARCOAL_BLOCK.get());
             event.accept(SUBlocks.ENDER_PEARL_BLOCK.get());
         }
-        else if (event.getTab() == CreativeModeTabs.COMBAT)
+        else if (event.getTabKey() == CreativeModeTabs.COMBAT)
             event.accept(SUItems.EXOLEGGINGS.get());
     }
 }

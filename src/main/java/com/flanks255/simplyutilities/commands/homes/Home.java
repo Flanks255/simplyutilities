@@ -30,7 +30,7 @@ public class Home {
     }
 
     private static Set<String> getHomesForSuggestion(ServerPlayer playerEntity) {
-        HomeDataManager homedata = HomeDataManager.get(playerEntity.level);
+        HomeDataManager homedata = HomeDataManager.get(playerEntity.level());
         return  homedata.getPlayerHomes(playerEntity.getUUID(), playerEntity.getDisplayName().getString()).getHomes();
     }
 
@@ -43,7 +43,7 @@ public class Home {
             HomePoint home = playerHomes.getHome(name);
             ServerLevel targetWorld = player.getServer().getLevel(home.getWorldKey());
             if (targetWorld != null) {
-                ctx.getSource().sendSuccess(Component.translatable("message.su.home", name), false);
+                ctx.getSource().sendSuccess(() -> Component.translatable("message.su.home", name), false);
                 //player.teleportTo(targetWorld, home.getPostion().getX(), home.getPostion().getY(), home.getPostion().getZ(), player.getViewYRot(0), player.getViewXRot(0));
                 MiscUtils.Teleport(player, targetWorld, home.getPostion(), player.getViewYRot(0), player.getViewXRot(0));
             }

@@ -5,8 +5,6 @@ import com.flanks255.simplyutilities.save.InhibitorManager;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.BlockPos;
@@ -23,16 +21,10 @@ import javax.annotation.Nonnull;
 
 public class EnderInhibitor extends Block {
     public EnderInhibitor() {
-        super(BlockBehaviour.Properties.of(new Material(
-                MaterialColor.EMERALD,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                PushReaction.BLOCK
-        )).strength(2.0f).noOcclusion());
+        super(BlockBehaviour.Properties.of()
+                .strength(2.0f)
+                .noOcclusion()
+                .pushReaction(PushReaction.BLOCK));
     }
 
     @Override

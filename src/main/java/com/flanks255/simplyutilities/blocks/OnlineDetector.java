@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -20,7 +19,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.BlockGetter;
@@ -31,8 +29,8 @@ import java.util.UUID;
 
 public class OnlineDetector extends Block implements EntityBlock {
     public OnlineDetector() {
-        super(BlockBehaviour.Properties.of(Material.METAL)
-        .strength(2.0f)
+        super(BlockBehaviour.Properties.of()
+            .strength(2.0f)
             .noOcclusion());
 
         registerDefaultState(getStateDefinition().any().setValue(ON, false));

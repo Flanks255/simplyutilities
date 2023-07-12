@@ -47,10 +47,10 @@ public class SetHome {
             ctx.getSource().sendFailure(Component.translatable("message.su.maxhomes", maxHomes));
         }
         else {
-            ResourceKey<Level> worldKey = player.level.dimension();
+            ResourceKey<Level> worldKey = player.level().dimension();
 
             playerdata.setHome(name, worldKey, player.blockPosition());
-            ctx.getSource().sendSuccess(Component.translatable("message.su.sethome", name), false);
+            ctx.getSource().sendSuccess(() -> Component.translatable("message.su.sethome", name), false);
             homes.setDirty(true);
         }
         return 0;
