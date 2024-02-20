@@ -1,58 +1,40 @@
 package com.flanks255.simplyutilities.crafting;
 
 import com.flanks255.simplyutilities.SUCrafting;
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.server.ServerLifecycleHooks;
-
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public class RightClickRecipe implements Recipe<Inventory> {
+public record RightClickRecipe(Ingredient input, Block block, ItemStack output) implements Recipe<Inventory> {
     public static String NAME = "right_click";
-    private final ResourceLocation id;
-    private final Ingredient input;
-    private final Block block;
-    private final ItemStack output;
-
-    public RightClickRecipe(ResourceLocation recipeId, ItemStack result, Ingredient ingredient, Block blockIn) {
-        id = recipeId;
-        input = ingredient;
-        output = result;
-        this.block = blockIn;
-    }
-
 
     public boolean matches(ItemStack itemInput, Block blockInput) {
         return input.test(itemInput) && (block == blockInput);
     }
 
     @Override
-    public boolean matches(Inventory inv, Level worldIn) {
+    public boolean matches(@Nonnull Inventory inv, @Nonnull Level worldIn) {
         return false; //Nah
     }
 
     @Nonnull
     @Override
-    public ItemStack assemble(Inventory inv, RegistryAccess thing) {
+    public ItemStack assemble(@Nonnull Inventory inv, @Nonnull RegistryAccess thing) {
         return output;
     }
 
@@ -63,14 +45,8 @@ public class RightClickRecipe implements Recipe<Inventory> {
 
     @Nonnull
     @Override
-    public ItemStack getResultItem(RegistryAccess thing) {
+    public ItemStack getResultItem(@Nonnull RegistryAccess thing) {
         return output;
-    }
-
-    @Nonnull
-    @Override
-    public ResourceLocation getId() {
-        return id;
     }
 
     @Nonnull
@@ -88,15 +64,15 @@ public class RightClickRecipe implements Recipe<Inventory> {
 
     public static void RightClickEvent(PlayerInteractEvent.RightClickBlock event) {
         if(!event.getLevel().isClientSide && event.getEntity() != null) {
-            List<RightClickRecipe> rightClickRecipes = ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(SUCrafting.Types.RIGHT_CLICK.get());
+            List<RecipeHolder<RightClickRecipe>> rightClickRecipes = ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(SUCrafting.Types.RIGHT_CLICK.get());
             final ItemStack held = event.getEntity().getItemInHand(event.getHand());
             final Block block = event.getLevel().getBlockState(event.getPos()).getBlock();
 
-            for (RightClickRecipe recipe : rightClickRecipes) {
+            for (RecipeHolder<RightClickRecipe> recipe : rightClickRecipes) {
                 if (recipe != null)
-                    if (recipe.matches(held, block)) {
+                    if (recipe.value().matches(held, block)) {
                         held.shrink(1);
-                        ItemHandlerHelper.giveItemToPlayer(event.getEntity(), recipe.getResultItem(null).copy());
+                        ItemHandlerHelper.giveItemToPlayer(event.getEntity(), recipe.value().getResultItem(RegistryAccess.EMPTY).copy());
                         event.setCanceled(true);
                         break;
                     }
@@ -106,76 +82,33 @@ public class RightClickRecipe implements Recipe<Inventory> {
 
 
     public static class Serializer implements RecipeSerializer<RightClickRecipe> {
+        public static final Codec<RightClickRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                Ingredient.CODEC.fieldOf("input").forGetter(recipe -> recipe.input),
+                BuiltInRegistries.BLOCK.byNameCodec().fieldOf("block").forGetter(recipe -> recipe.block),
+                ItemStack.CODEC.fieldOf("output").forGetter(recipe -> recipe.output)
+        ).apply(instance, RightClickRecipe::new));
 
+        @Nonnull
         @Override
-        public RightClickRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            Ingredient ingredient = Ingredient.fromJson(json.getAsJsonObject("input"));
-            String blockname = json.get("block").getAsString();
-            Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockname));
-            ItemStack result = new ItemStack(GsonHelper.getAsItem(json, "output"));
-
-            return new RightClickRecipe(recipeId, result, ingredient, block);
-        }
-
-        @Nullable
-        @Override
-        public RightClickRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public RightClickRecipe fromNetwork(@Nonnull FriendlyByteBuf buffer) {
             Ingredient ingredient = Ingredient.fromNetwork(buffer);
-            String blockname = buffer.readUtf(32767);
-            Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockname));
+            String blockName = buffer.readUtf(32767);
+            Block block = BuiltInRegistries.BLOCK.get(new ResourceLocation(blockName));
             ItemStack result = buffer.readItem();
+            return new RightClickRecipe(ingredient, block, result);
+        }
 
-            return new RightClickRecipe(recipeId, result, ingredient, block);
+        @Nonnull
+        @Override
+        public Codec<RightClickRecipe> codec() {
+            return CODEC;
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf buffer, RightClickRecipe recipe) {
+        public void toNetwork(@Nonnull FriendlyByteBuf buffer, RightClickRecipe recipe) {
             recipe.input.toNetwork(buffer);
-            buffer.writeUtf(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(recipe.block)).toString());
+            buffer.writeUtf(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(recipe.block)).toString());
             buffer.writeItem(recipe.output);
-        }
-    }
-
-    public static class FinishedRecipe implements net.minecraft.data.recipes.FinishedRecipe {
-        private ResourceLocation id;
-        private Ingredient input;
-        private Block block;
-        private ItemStack output;
-
-        public FinishedRecipe(ResourceLocation id, ItemStack output, Ingredient input, Block block) {
-            this.id = id;
-            this.input = input;
-            this.block = block;
-            this.output = output;
-        }
-
-        @Override
-        public void serializeRecipeData(JsonObject json) {
-            json.add("input", input.toJson());
-            json.addProperty("block", Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).toString());
-            json.addProperty("output", Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(output.getItem())).toString());
-        }
-
-        @Override
-        public ResourceLocation getId() {
-            return id;
-        }
-
-        @Override
-        public RecipeSerializer<?> getType() {
-            return SUCrafting.RIGHT_CLICK_RECIPE.get();
-        }
-
-        @Nullable
-        @Override
-        public JsonObject serializeAdvancement() {
-            return null;
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getAdvancementId() {
-            return null;
         }
     }
 }

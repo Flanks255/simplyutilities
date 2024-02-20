@@ -1,44 +1,37 @@
 {
-  "type": "forge:conditional",
-  "recipes": [
+  "neoforge:conditions": [
     {
-      "conditions": [
+      "type": "neoforge:and",
+      "values": [
         {
-          "type": "forge:and",
-          "values": [
-            {
-              "type": "forge:not",
-              "value": {
-                "type": "forge:mod_loaded",
-                "modid": "quark"
-              }
-            },
-            {
-              "type": "simplyutilities:bool_config_condition",
-              "config_name": "craftLogsToChests"
-            }
-          ]
-        }
-      ],
-      "recipe": {
-        "type": "minecraft:crafting_shaped",
-        "category": "misc",
-        "key": {
-          "x": {
-            "tag": "minecraft:logs"
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:mod_loaded",
+            "modid": "quark"
           }
         },
-        "pattern": [
-          "xxx",
-          "x x",
-          "xxx"
-        ],
-        "result": {
-          "count": 4,
-          "item": "minecraft:chest"
-        },
-        "show_notification": false
-      }
+        {
+          "type": "simplyutilities:bool_config",
+          "config_name": "craftLogsToChests"
+        }
+      ]
     }
-  ]
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "x": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "pattern": [
+    "xxx",
+    "x x",
+    "xxx"
+  ],
+  "result": {
+    "count": 4,
+    "item": "minecraft:chest"
+  },
+  "show_notification": false
 }

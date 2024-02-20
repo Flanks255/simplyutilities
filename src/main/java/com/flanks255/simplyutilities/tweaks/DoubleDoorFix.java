@@ -2,18 +2,19 @@ package com.flanks255.simplyutilities.tweaks;
 
 import com.flanks255.simplyutilities.SimplyUtilities;
 import com.flanks255.simplyutilities.configuration.ConfigCache;
-import com.flanks255.simplyutilities.network.OpenOtherDoorMessage;
+import com.flanks255.simplyutilities.network.OpenOtherDoorPacket;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.bus.api.Event;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class DoubleDoorFix {
 
@@ -27,7 +28,7 @@ public class DoubleDoorFix {
         if (world.getBlockState(blockPos).getBlock() instanceof DoorBlock) {
             openOtherDoor(world, blockPos);
             if (world.isClientSide)
-                SimplyUtilities.NETWORK.sendToServer(new OpenOtherDoorMessage(blockPos));
+                PacketDistributor.SERVER.noArg().send(new OpenOtherDoorPacket(blockPos));
         }
     }
 

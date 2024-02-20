@@ -1,13 +1,13 @@
 package com.flanks255.simplyutilities.configuration;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ClientConfiguration {
-    private static final ForgeConfigSpec.Builder CLIENT_BUILDER = new ForgeConfigSpec.Builder();
-    public static ForgeConfigSpec CLIENT_CONFIG;
+    private static final ModConfigSpec.Builder CLIENT_BUILDER = new ModConfigSpec.Builder();
+    public static ModConfigSpec CLIENT_CONFIG;
 
-    public static ForgeConfigSpec.BooleanValue ZOOMSMOOTHCAM;
-    public static ForgeConfigSpec.DoubleValue ZOOMFOV;
+    public static ModConfigSpec.BooleanValue ZOOMSMOOTHCAM;
+    public static ModConfigSpec.DoubleValue ZOOMFOV;
 
     static {
         CLIENT_BUILDER.comment("Zoom options.").push("zoom");

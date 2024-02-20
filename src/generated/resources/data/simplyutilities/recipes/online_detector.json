@@ -1,43 +1,36 @@
 {
-  "type": "forge:conditional",
-  "recipes": [
+  "neoforge:conditions": [
     {
-      "conditions": [
-        {
-          "type": "simplyutilities:bool_config_condition",
-          "config_name": "online_detector"
-        }
-      ],
-      "recipe": {
-        "type": "minecraft:crafting_shaped",
-        "category": "misc",
-        "key": {
-          "B": {
-            "tag": "forge:storage_blocks/redstone"
-          },
-          "E": {
-            "item": "minecraft:ender_eye"
-          },
-          "G": {
-            "tag": "forge:ingots/gold"
-          },
-          "H": {
-            "item": "minecraft:warped_hyphae"
-          },
-          "R": {
-            "item": "minecraft:repeater"
-          }
-        },
-        "pattern": [
-          "GBG",
-          "RER",
-          "HHH"
-        ],
-        "result": {
-          "item": "simplyutilities:online_detector"
-        },
-        "show_notification": false
-      }
+      "type": "simplyutilities:bool_config",
+      "config_name": "online_detector"
     }
-  ]
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "forge:storage_blocks/redstone"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    },
+    "G": {
+      "tag": "forge:ingots/gold"
+    },
+    "H": {
+      "item": "minecraft:warped_hyphae"
+    },
+    "R": {
+      "item": "minecraft:repeater"
+    }
+  },
+  "pattern": [
+    "GBG",
+    "RER",
+    "HHH"
+  ],
+  "result": {
+    "item": "simplyutilities:online_detector"
+  },
+  "show_notification": false
 }

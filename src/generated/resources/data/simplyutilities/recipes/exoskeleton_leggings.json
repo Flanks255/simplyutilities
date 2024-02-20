@@ -1,37 +1,30 @@
 {
-  "type": "forge:conditional",
-  "recipes": [
+  "neoforge:conditions": [
     {
-      "conditions": [
-        {
-          "type": "simplyutilities:bool_config_condition",
-          "config_name": "exoleggings"
-        }
-      ],
-      "recipe": {
-        "type": "minecraft:crafting_shaped",
-        "category": "misc",
-        "key": {
-          "a": {
-            "tag": "forge:storage_blocks/diamond"
-          },
-          "i": {
-            "item": "minecraft:iron_bars"
-          },
-          "x": {
-            "item": "minecraft:leather_leggings"
-          }
-        },
-        "pattern": [
-          "iai",
-          "ixi",
-          "i i"
-        ],
-        "result": {
-          "item": "simplyutilities:exoleggings"
-        },
-        "show_notification": false
-      }
+      "type": "simplyutilities:bool_config",
+      "config_name": "exoleggings"
     }
-  ]
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "a": {
+      "tag": "forge:storage_blocks/diamond"
+    },
+    "i": {
+      "item": "minecraft:iron_bars"
+    },
+    "x": {
+      "item": "minecraft:leather_leggings"
+    }
+  },
+  "pattern": [
+    "iai",
+    "ixi",
+    "i i"
+  ],
+  "result": {
+    "item": "simplyutilities:exoleggings"
+  },
+  "show_notification": false
 }

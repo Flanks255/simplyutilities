@@ -2,20 +2,20 @@ package com.flanks255.simplyutilities.blocks;
 
 import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.flanks255.simplyutilities.save.InhibitorManager;
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.event.entity.EntityTeleportEvent;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 
 import javax.annotation.Nonnull;
 
@@ -35,12 +35,14 @@ public class EnderInhibitor extends Block {
             InhibitorManager.get((ServerLevel)worldIn).addInhibitor(pos);
     }
 
+    @Nonnull
     @Override
-    public void playerWillDestroy(@Nonnull Level worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull Player player) {
-        super.playerWillDestroy(worldIn, pos, state, player);
+    public BlockState playerWillDestroy(@Nonnull Level worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull Player player) {
+        BlockState ret = super.playerWillDestroy(worldIn, pos, state, player);
 
         if (!worldIn.isClientSide)
             InhibitorManager.get((ServerLevel)worldIn).removeInhibitor(pos);
+        return ret;
     }
 
     @Override

@@ -1,56 +1,33 @@
 package com.flanks255.simplyutilities.data;
 
-import com.flanks255.simplyutilities.SimplyUtilities;
 import com.flanks255.simplyutilities.configuration.CommonConfiguration;
-import com.flanks255.simplyutilities.configuration.ConfigCache;
-import com.google.gson.JsonObject;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.crafting.conditions.ICondition;
-import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.neoforged.neoforge.common.conditions.ICondition;
+import org.jetbrains.annotations.NotNull;
 
-public class BoolConfigCondition implements ICondition {
-    private static final ResourceLocation NAME = new ResourceLocation(SimplyUtilities.MODID, "bool_config_condition");
-    private final String boolConfig;
+import javax.annotation.Nonnull;
 
-    public BoolConfigCondition(String config) {
-        this.boolConfig = config;
+public record BoolConfigCondition(String configOption) implements ICondition {
+    public static final Codec<BoolConfigCondition> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+            com.mojang.serialization.Codec.STRING.fieldOf("config_name").forGetter(BoolConfigCondition::configOption)
+    ).apply(instance, BoolConfigCondition::new));
+    @Nonnull
+    @Override
+    public Codec<? extends ICondition> codec() {
+        return CODEC;
     }
 
     @Override
-    public ResourceLocation getID() {
-        return NAME;
-    }
-
-    @Override
-    public boolean test(IContext context) {
-        return switch (boolConfig) {
+    public boolean test(@NotNull IContext context) {
+        return switch (configOption) {
             default -> true;
             case "smeltFleshIntoLeather" -> CommonConfiguration.RECIPE_FLESH_LEATHER.get();
             case "craftLogsToSticks" -> CommonConfiguration.RECIPE_LOG_STICK.get();
             case "craftLogsToChests" -> CommonConfiguration.RECIPE_LOG_CHESTS.get();
-            case "enableEnderInhibitor" -> ConfigCache.EnderInhibitorEnabled;
+            case "enableEnderInhibitor" -> CommonConfiguration.ENDERINHIBITOR_ENABLE.get();
             case "exoleggings" -> CommonConfiguration.EXO_LEGGINGS.get();
             case "online_detector" -> CommonConfiguration.ONLINE_DETECTOR.get();
         };
-    }
-
-    public static class Serializer implements IConditionSerializer<BoolConfigCondition> {
-        public static final BoolConfigCondition.Serializer INSTANCE = new BoolConfigCondition.Serializer();
-
-        @Override
-        public void write(JsonObject json, BoolConfigCondition value) {
-            json.addProperty("config_name", value.boolConfig);
-        }
-
-        @Override
-        public BoolConfigCondition read(JsonObject json) {
-            return new BoolConfigCondition(GsonHelper.getAsString(json, "config_name"));
-        }
-
-        @Override
-        public ResourceLocation getID() {
-            return BoolConfigCondition.NAME;
-        }
     }
 }

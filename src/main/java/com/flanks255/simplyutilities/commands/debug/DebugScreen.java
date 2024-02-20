@@ -1,23 +1,22 @@
 package com.flanks255.simplyutilities.commands.debug;
 
 import com.flanks255.simplyutilities.SimplyUtilities;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
-import net.minecraft.client.gui.components.Button.OnPress;
-import net.minecraftforge.registries.ForgeRegistries;
+import javax.annotation.Nonnull;
 
 @OnlyIn(Dist.CLIENT)
 public class DebugScreen extends Screen {
@@ -58,21 +57,16 @@ public class DebugScreen extends Screen {
     }
 
     @Override
-    public boolean shouldCloseOnEsc() {
-        return true;
-    }
-
-    @Override
-    public void renderBackground(GuiGraphics gg) {
-        super.renderBackground(gg);
+    public void renderBackground(GuiGraphics gg, int mouseX, int mouseY, float partialTicks) {
+        super.renderBackground(gg, mouseX, mouseY, partialTicks);
 
         gg.blit(GUI, guiLeft, guiTop, 0,0, 256, 220, 256, 256);
 
     }
 
     @Override
-    public void render(GuiGraphics gg, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(gg);
+    public void render(@Nonnull GuiGraphics gg, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(gg, mouseX, mouseY, partialTicks);
 
         children().forEach((child) -> {
             if (child instanceof AbstractWidget)
@@ -82,7 +76,7 @@ public class DebugScreen extends Screen {
         switch (currentTab) {
             case BASIC:
                 gg.drawString(font, "Display Name: " + stack.getHoverName().getString() ,guiLeft + 8, guiTop + 24, 0xFFFFFF);
-                gg.drawString(font,"Registry Name: " + ForgeRegistries.ITEMS.getKey(stack.getItem()) ,guiLeft + 8, guiTop + 34, 0xFFFFFF);
+                gg.drawString(font,"Registry Name: " + BuiltInRegistries.ITEM.getKey(stack.getItem()) ,guiLeft + 8, guiTop + 34, 0xFFFFFF);
                 break;
             case TAGS:
                 var tags = stack.getTags().toList();

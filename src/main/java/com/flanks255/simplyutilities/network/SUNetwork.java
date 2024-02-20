@@ -1,48 +1,17 @@
 package com.flanks255.simplyutilities.network;
 
 import com.flanks255.simplyutilities.SimplyUtilities;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
+import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 
 
 public class SUNetwork {
-    public static final ResourceLocation channelName = new ResourceLocation(SimplyUtilities.MODID, "network");
-    public static final String networkVersion = new ResourceLocation(SimplyUtilities.MODID, "1").toString();
+    public static void register(final RegisterPayloadHandlerEvent event) {
+        IPayloadRegistrar reg = event.registrar(SimplyUtilities.MODID);
 
-    public static SimpleChannel getNetworkChannel() {
-        final SimpleChannel channel = NetworkRegistry.ChannelBuilder.named(channelName)
-                .clientAcceptedVersions(version -> true)
-                .serverAcceptedVersions(version -> true)
-                .networkProtocolVersion(() -> networkVersion)
-                .simpleChannel();
-
-        channel.messageBuilder(OpenOtherDoorMessage.class, 1)
-                .decoder(OpenOtherDoorMessage::decode)
-                .encoder(OpenOtherDoorMessage::encode)
-                .consumerNetworkThread(OpenOtherDoorMessage::handle)
-                .add();
-
-        channel.messageBuilder(OpenDebugHandMessage.class, 2, NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(OpenDebugHandMessage::decode)
-                .encoder(OpenDebugHandMessage::encode)
-                .consumerNetworkThread(OpenDebugHandMessage::handle)
-                .add();
-
-        channel.messageBuilder(ZoomFOVMessage.class, 3, NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(ZoomFOVMessage::decode)
-                .encoder(ZoomFOVMessage::encode)
-                .consumerNetworkThread(ZoomFOVMessage::handle)
-                .add();
-
-        channel.messageBuilder(ZoomSmoothMessage.class, 4, NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(ZoomSmoothMessage::decode)
-                .encoder(ZoomSmoothMessage::encode)
-                .consumerNetworkThread(ZoomSmoothMessage::handle)
-                .add();
-
-
-        return channel;
+        reg.play(ZoomFOVPacket.ID, ZoomFOVPacket::new, handler -> handler.client(ZoomFOVPacket::handle));
+        reg.play(ZoomSmoothMessage.ID, ZoomSmoothMessage::new, handler -> handler.client(ZoomSmoothMessage::handle));
+        reg.play(OpenOtherDoorPacket.ID, OpenOtherDoorPacket::new, handler -> handler.server(OpenOtherDoorPacket::handle));
+        reg.play(OpenDebugHandPacket.ID, OpenDebugHandPacket::new, handler -> handler.client(OpenDebugHandPacket::handle));
     }
 }

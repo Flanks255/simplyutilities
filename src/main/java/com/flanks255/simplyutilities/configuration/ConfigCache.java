@@ -1,7 +1,7 @@
 package com.flanks255.simplyutilities.configuration;
 
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.config.ModConfigEvent;
 
 public class ConfigCache {
     public static void RefreshClientCache() {

@@ -8,20 +8,21 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
-public record ZoomSmoothMessage(boolean smoothCam) implements CustomPacketPayload {
-    public static final ResourceLocation ID = new ResourceLocation(SimplyUtilities.MODID, "smoothzoom");
-    public ZoomSmoothMessage(final FriendlyByteBuf buffer) {
-        this(buffer.readBoolean());
+public record ZoomFOVPacket(double fov) implements CustomPacketPayload {
+    public static final ResourceLocation ID = new ResourceLocation(SimplyUtilities.MODID, "zoomfov");
+
+    public ZoomFOVPacket(final FriendlyByteBuf buffer) {
+        this(buffer.readDouble());
     }
 
-    public boolean isSmoothCam() {
-        return smoothCam;
+    public double getFov() {
+        return fov;
     }
 
-    public static void handle(final ZoomSmoothMessage message, final PlayPayloadContext ctx) {
+    public static void handle(final ZoomFOVPacket message, final PlayPayloadContext ctx) {
             ctx.workHandler().submitAsync(
                 () -> {
-                    ClientConfiguration.ZOOMSMOOTHCAM.set(message.isSmoothCam());
+                    ClientConfiguration.ZOOMFOV.set(message.getFov());
                     ClientConfiguration.CLIENT_CONFIG.save();
                     ConfigCache.RefreshClientCache();
                 }
@@ -30,7 +31,7 @@ public record ZoomSmoothMessage(boolean smoothCam) implements CustomPacketPayloa
 
     @Override
     public void write(FriendlyByteBuf pBuffer) {
-        pBuffer.writeBoolean(smoothCam);
+        pBuffer.writeDouble(fov);
     }
 
     @Override

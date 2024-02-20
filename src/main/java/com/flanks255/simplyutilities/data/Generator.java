@@ -4,12 +4,11 @@ import com.flanks255.simplyutilities.data.tags.SUBlockTags;
 import com.flanks255.simplyutilities.data.tags.SUEntityTypeTags;
 import com.flanks255.simplyutilities.data.tags.SUItemTags;
 import net.minecraft.data.DataGenerator;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 public class Generator {
     public static void gatherData(GatherDataEvent event) {
-        CraftingHelper.register(BoolConfigCondition.Serializer.INSTANCE);
+        //CraftingHelper.register(BoolConfigCondition.Serializer.INSTANCE);
 
         DataGenerator generator = event.getGenerator();
         generator.addProvider(true, new ItemModels(generator, event.getExistingFileHelper()));

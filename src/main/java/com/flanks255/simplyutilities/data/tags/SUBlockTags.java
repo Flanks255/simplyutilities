@@ -1,14 +1,12 @@
 package com.flanks255.simplyutilities.data.tags;
 
 import com.flanks255.simplyutilities.SUBlocks;
-import com.flanks255.simplyutilities.SUTags;
 import com.flanks255.simplyutilities.SimplyUtilities;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.data.BlockTagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
 import java.util.concurrent.CompletableFuture;

@@ -6,39 +6,32 @@ import com.flanks255.simplyutilities.configuration.ClientConfiguration;
 import com.flanks255.simplyutilities.configuration.CommonConfiguration;
 import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.flanks255.simplyutilities.configuration.ServerConfiguration;
-import com.flanks255.simplyutilities.crafting.FluidIngredient;
-import com.flanks255.simplyutilities.crafting.TargetNBTIngredient;
-import com.flanks255.simplyutilities.data.BoolConfigCondition;
+import com.flanks255.simplyutilities.crafting.RightClickRecipe;
 import com.flanks255.simplyutilities.data.Generator;
 import com.flanks255.simplyutilities.items.ExoLeggings;
-import com.flanks255.simplyutilities.network.SUNetwork;
 import com.flanks255.simplyutilities.render.ModelLayers;
-import com.flanks255.simplyutilities.tweaks.MobGriefProtection;
 import com.flanks255.simplyutilities.tweaks.DoubleDoorFix;
-import net.minecraft.client.Minecraft;
+import com.flanks255.simplyutilities.tweaks.MobGriefProtection;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.event.ViewportEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.simple.SimpleChannel;
-
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.event.ViewportEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,19 +40,18 @@ public class SimplyUtilities
 {
     public static final String MODID = "simplyutilities";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
-    public static SimpleChannel NETWORK;
-
     public static boolean isQuarkLoaded = false;
 
     private final NonNullList<KeyMapping> keyBinds = NonNullList.create();
 
-    public SimplyUtilities() {
-        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public SimplyUtilities(IEventBus modBus) {
+        IEventBus neoBus = NeoForge.EVENT_BUS;
 
         SUTags.init();
         SUBlocks.init(modBus);
         SUItems.init(modBus);
         SUCrafting.init(modBus);
+        SUConditions.init(modBus);
 
         modBus.addListener(ModelLayers::registerLayerDefinitions);
         modBus.addListener(ModelLayers::registerEntityRenderers);
@@ -71,7 +63,7 @@ public class SimplyUtilities
         modBus.addListener(ConfigCache::listen);
 
         // Commands
-        MinecraftForge.EVENT_BUS.addListener(this::onCommandsRegister);
+        neoBus.addListener(this::onCommandsRegister);
 
         // Data Generators
         modBus.addListener(Generator::gatherData);
@@ -84,28 +76,22 @@ public class SimplyUtilities
             modBus.addListener(this::creativeTabEvent);
         }
         modBus.addListener(this::doClientStuff);
-        MinecraftForge.EVENT_BUS.addListener(EnderInhibitor::TeleportEvent);
-        MinecraftForge.EVENT_BUS.addListener(EnderInhibitor::PearlTeleportEvent);
-        MinecraftForge.EVENT_BUS.addListener(ExoLeggings::onEntityHurt);
-        //MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, RightClickRecipe::RightClickEvent);
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, DoubleDoorFix::playerInteraction);
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, MobGriefProtection::mobGriefingEvent);
+        neoBus.addListener(EnderInhibitor::TeleportEvent);
+        neoBus.addListener(EnderInhibitor::PearlTeleportEvent);
+        neoBus.addListener(ExoLeggings::onEntityHurt);
+        neoBus.addListener(EventPriority.LOWEST, RightClickRecipe::RightClickEvent);
+        neoBus.addListener(EventPriority.LOWEST, DoubleDoorFix::playerInteraction);
+        neoBus.addListener(EventPriority.LOWEST, MobGriefProtection::mobGriefingEvent);
 
     }
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        event.enqueueWork(() -> {
-            CraftingHelper.register(BoolConfigCondition.Serializer.INSTANCE);
-            CraftingHelper.register(FluidIngredient.Serializer.NAME, FluidIngredient.SERIALIZER);
-            CraftingHelper.register(TargetNBTIngredient.Serializer.NAME, TargetNBTIngredient.SERIALIZER);
-        });
-        NETWORK = SUNetwork.getNetworkChannel();
         isQuarkLoaded = ModList.get().isLoaded("quark");
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        MinecraftForge.EVENT_BUS.addListener(this::onViewportEvent);
+        NeoForge.EVENT_BUS.addListener(this::onViewportEvent);
     }
     @OnlyIn(Dist.CLIENT)
     private void registerKeyBinding(final RegisterKeyMappingsEvent event) {

@@ -8,18 +8,17 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 
 public class ExoLeggings extends ArmorItem {
     public ExoLeggings() {
@@ -59,8 +58,7 @@ public class ExoLeggings extends ArmorItem {
     }
 
     public static void onEntityHurt(LivingFallEvent event) {
-        if (event.getEntity() instanceof Player && event.getDistance() > 3) {
-            Player playerEntity = (Player) event.getEntity();
+        if (event.getEntity() instanceof Player playerEntity && event.getDistance() > 3) {
             ItemStack pants = playerEntity.getItemBySlot(EquipmentSlot.LEGS);
             if (pants.getItem() instanceof ExoLeggings)
                 event.setCanceled(true);

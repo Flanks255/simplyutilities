@@ -1,29 +1,28 @@
 package com.flanks255.simplyutilities.configuration;
 
-
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class CommonConfiguration {
-    private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
-    public static ForgeConfigSpec COMMON_CONFIG;
+    private static final ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
+    public static ModConfigSpec COMMON_CONFIG;
 
-    public static ForgeConfigSpec.BooleanValue RECIPE_FLESH_LEATHER;
-    public static ForgeConfigSpec.BooleanValue RECIPE_LOG_STICK;
-    public static ForgeConfigSpec.BooleanValue RECIPE_LOG_CHESTS;
-    public static ForgeConfigSpec.BooleanValue FIXES_DOUBLEDOORFIX;
-    public static ForgeConfigSpec.BooleanValue FIXES_FORCEDOUBLEDOORFIX;
+    public static ModConfigSpec.BooleanValue RECIPE_FLESH_LEATHER;
+    public static ModConfigSpec.BooleanValue RECIPE_LOG_STICK;
+    public static ModConfigSpec.BooleanValue RECIPE_LOG_CHESTS;
+    public static ModConfigSpec.BooleanValue FIXES_DOUBLEDOORFIX;
+    public static ModConfigSpec.BooleanValue FIXES_FORCEDOUBLEDOORFIX;
 
-    public static ForgeConfigSpec.IntValue ENDERINHIBITOR_RANGE;
-    public static ForgeConfigSpec.BooleanValue ENDERINHIBITOR_ENABLE;
-    public static ForgeConfigSpec.BooleanValue ENDERINHIBITOR_PLAYERS;
+    public static ModConfigSpec.IntValue ENDERINHIBITOR_RANGE;
+    public static ModConfigSpec.BooleanValue ENDERINHIBITOR_ENABLE;
+    public static ModConfigSpec.BooleanValue ENDERINHIBITOR_PLAYERS;
 
-    public static ForgeConfigSpec.BooleanValue EXO_LEGGINGS;
+    public static ModConfigSpec.BooleanValue EXO_LEGGINGS;
 
-    public static ForgeConfigSpec.BooleanValue ONLINE_DETECTOR;
+    public static ModConfigSpec.BooleanValue ONLINE_DETECTOR;
 
-    public static ForgeConfigSpec.BooleanValue CMD_BED;
-    public static ForgeConfigSpec.BooleanValue CMD_SPAWN;
-    public static ForgeConfigSpec.BooleanValue CMD_HOME;
+    public static ModConfigSpec.BooleanValue CMD_BED;
+    public static ModConfigSpec.BooleanValue CMD_SPAWN;
+    public static ModConfigSpec.BooleanValue CMD_HOME;
 
     static {
         COMMON_BUILDER.comment("Convenience Recipes").push("recipes");

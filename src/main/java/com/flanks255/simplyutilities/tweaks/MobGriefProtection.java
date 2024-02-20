@@ -1,12 +1,12 @@
 package com.flanks255.simplyutilities.tweaks;
 
 import com.flanks255.simplyutilities.SUTags;
-import net.minecraftforge.event.entity.EntityMobGriefingEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.bus.api.Event;
+import net.neoforged.neoforge.event.entity.EntityMobGriefingEvent;
 
 public class MobGriefProtection {
     public static void mobGriefingEvent(EntityMobGriefingEvent event) {
-        if (event.getEntity() != null && SUTags.NO_GRIEFING.contains(event.getEntity().getType()))
+        if (event.getEntity() != null && event.getEntity().getType().is(SUTags.NO_GRIEFING))
             event.setResult(Event.Result.DENY);
     }
 }

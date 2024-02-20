@@ -26,7 +26,7 @@ public class InhibitorManager extends SavedData {
     private final Set<BlockPos> inhibitors = new HashSet<>();
 
     public static InhibitorManager get(ServerLevel world) {
-        return world.getDataStorage().computeIfAbsent(InhibitorManager::load, InhibitorManager::new, NAME);
+        return world.getDataStorage().computeIfAbsent(new Factory<>(InhibitorManager::new, InhibitorManager::load), NAME);
     }
 
     public void addInhibitor(BlockPos pos) {

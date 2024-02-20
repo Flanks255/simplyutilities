@@ -5,10 +5,10 @@ import com.flanks255.simplyutilities.SimplyUtilities;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public class SUEntityTypeTags extends EntityTypeTagsProvider {
@@ -18,6 +18,6 @@ public class SUEntityTypeTags extends EntityTypeTagsProvider {
 
     @Override
     protected void addTags(@Nonnull HolderLookup.Provider something) {
-        getOrCreateRawBuilder(SUTags.NO_GRIEFING_KEY);
+        getOrCreateRawBuilder(SUTags.NO_GRIEFING);
     }
 }

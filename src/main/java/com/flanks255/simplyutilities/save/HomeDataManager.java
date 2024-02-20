@@ -20,7 +20,7 @@ public class HomeDataManager extends SavedData {
 
     public static HomeDataManager get(Level world) {
         ServerLevel serverWorld = world.getServer().overworld();
-        return serverWorld.getDataStorage().computeIfAbsent(HomeDataManager::load, HomeDataManager::new, NAME);
+        return serverWorld.getDataStorage().computeIfAbsent(new Factory<>(HomeDataManager::new, HomeDataManager::load), NAME);
     }
 
     public static HomeDataManager load(CompoundTag nbt) {

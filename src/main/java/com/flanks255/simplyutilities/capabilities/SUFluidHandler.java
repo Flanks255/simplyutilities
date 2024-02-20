@@ -1,14 +1,12 @@
 package com.flanks255.simplyutilities.capabilities;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 import java.util.UUID;
-
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class SUFluidHandler implements IFluidHandler {
 
@@ -43,13 +41,13 @@ public class SUFluidHandler implements IFluidHandler {
         return nbt;
     }
 
-    public static LazyOptional<SUFluidHandler> fromNBT(CompoundTag nbt) {
+    public static Optional<SUFluidHandler> fromNBT(CompoundTag nbt) {
         if(nbt.contains("UUID") && nbt.contains("Capacity")) {
             SUFluidHandler canHandler = new SUFluidHandler(nbt.getUUID("UUID"), nbt.getInt("Capacity"));
             canHandler.setStoredFluid(FluidStack.loadFluidStackFromNBT(nbt.getCompound("Fluid")));
-            return LazyOptional.of(() -> canHandler);
+            return Optional.of(canHandler);
         }
-        return LazyOptional.empty();
+        return Optional.empty();
     }
 
     public void setStoredFluid(FluidStack stack) {

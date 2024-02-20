@@ -4,8 +4,8 @@ import com.flanks255.simplyutilities.SUBlocks;
 import com.flanks255.simplyutilities.SimplyUtilities;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 public class ModelLayers {
     public static final ModelLayerLocation ONLINEDETECTOR = new ModelLayerLocation(new ResourceLocation(SimplyUtilities.MODID, "onlinedetector"), "onlinedetector");

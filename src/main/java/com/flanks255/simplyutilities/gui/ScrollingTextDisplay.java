@@ -1,6 +1,5 @@
 package com.flanks255.simplyutilities.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -24,13 +23,13 @@ public class ScrollingTextDisplay extends AbstractWidget {
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
         if (visible) {
 
 
             return true;
         }
         else
-            return super.mouseScrolled(mouseX,mouseY,delta);
+            return super.mouseScrolled(mouseX,mouseY,scrollX, scrollY);
     }
 }

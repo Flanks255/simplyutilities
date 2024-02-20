@@ -1,40 +1,33 @@
 {
-  "type": "forge:conditional",
-  "recipes": [
+  "neoforge:conditions": [
     {
-      "conditions": [
-        {
-          "type": "simplyutilities:bool_config_condition",
-          "config_name": "enableEnderInhibitor"
-        }
-      ],
-      "recipe": {
-        "type": "minecraft:crafting_shaped",
-        "category": "misc",
-        "key": {
-          "a": {
-            "tag": "forge:storage_blocks/diamond"
-          },
-          "b": {
-            "tag": "forge:storage_blocks/iron"
-          },
-          "c": {
-            "item": "minecraft:anvil"
-          },
-          "x": {
-            "item": "minecraft:ender_pearl"
-          }
-        },
-        "pattern": [
-          " x ",
-          " b ",
-          "aca"
-        ],
-        "result": {
-          "item": "simplyutilities:ender_inhibitor"
-        },
-        "show_notification": false
-      }
+      "type": "simplyutilities:bool_config",
+      "config_name": "enableEnderInhibitor"
     }
-  ]
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "a": {
+      "tag": "forge:storage_blocks/diamond"
+    },
+    "b": {
+      "tag": "forge:storage_blocks/iron"
+    },
+    "c": {
+      "item": "minecraft:anvil"
+    },
+    "x": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "pattern": [
+    " x ",
+    " b ",
+    "aca"
+  ],
+  "result": {
+    "item": "simplyutilities:ender_inhibitor"
+  },
+  "show_notification": false
 }
