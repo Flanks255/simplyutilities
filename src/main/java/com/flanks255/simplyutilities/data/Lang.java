@@ -46,8 +46,8 @@ public class Lang extends LanguageProvider {
         addItem(SUItems.EXOLEGGINGS, "Exoskeleton Leggings");
         addItemExtra(SUItems.EXOLEGGINGS, ".info", "Prevents fall damage.");
         addItem(SUItems.MINICOAL, "Mini-coal");
-        addItemExtra(SUItems.MINICOAL, ".info", "smelts 1 item.");
-        addItemExtra(SUItems.MINICHARCOAL, ".info", "smelts 1 item.");
+        addItemExtra(SUItems.MINICOAL, ".info", "Smelts 1 item.");
+        addItemExtra(SUItems.MINICHARCOAL, ".info", "Smelts 1 item.");
         addItem(SUItems.MINICHARCOAL, "Mini-charcoal");
 
         addJEITabBlock(SUBlocks.ONLINE_DETECTOR, "Outputs a redstone signal\nwhen the player who placed\nthe block is online.");

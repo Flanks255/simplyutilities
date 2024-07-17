@@ -9,6 +9,7 @@ import com.flanks255.simplyutilities.configuration.ServerConfiguration;
 import com.flanks255.simplyutilities.crafting.RightClickRecipe;
 import com.flanks255.simplyutilities.data.Generator;
 import com.flanks255.simplyutilities.items.ExoLeggings;
+import com.flanks255.simplyutilities.network.SUNetwork;
 import com.flanks255.simplyutilities.render.ModelLayers;
 import com.flanks255.simplyutilities.tweaks.DoubleDoorFix;
 import com.flanks255.simplyutilities.tweaks.MobGriefProtection;
@@ -64,6 +65,8 @@ public class SimplyUtilities
 
         // Commands
         neoBus.addListener(this::onCommandsRegister);
+
+        modBus.addListener(SUNetwork::register);
 
         // Data Generators
         modBus.addListener(Generator::gatherData);
