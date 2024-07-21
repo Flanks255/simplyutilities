@@ -21,6 +21,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
@@ -45,7 +46,7 @@ public class SimplyUtilities
 
     private final NonNullList<KeyMapping> keyBinds = NonNullList.create();
 
-    public SimplyUtilities(IEventBus modBus) {
+    public SimplyUtilities(IEventBus modBus, ModContainer container, Dist dist) {
         IEventBus neoBus = NeoForge.EVENT_BUS;
 
         SUTags.init();
@@ -53,14 +54,15 @@ public class SimplyUtilities
         SUItems.init(modBus);
         SUCrafting.init(modBus);
         SUConditions.init(modBus);
+        SUMaterials.init(modBus);
 
         modBus.addListener(ModelLayers::registerLayerDefinitions);
         modBus.addListener(ModelLayers::registerEntityRenderers);
 
         // Configs
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfiguration.SERVER_CONFIG);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfiguration.COMMON_CONFIG);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfiguration.CLIENT_CONFIG);
+        container.registerConfig(ModConfig.Type.SERVER, ServerConfiguration.SERVER_CONFIG);
+        container.registerConfig(ModConfig.Type.COMMON, CommonConfiguration.COMMON_CONFIG);
+        container.registerConfig(ModConfig.Type.CLIENT, ClientConfiguration.CLIENT_CONFIG);
         modBus.addListener(ConfigCache::listen);
 
         // Commands
@@ -73,7 +75,7 @@ public class SimplyUtilities
 
         // Misc Event Hooks
         modBus.addListener(this::setup);
-        if (FMLEnvironment.dist == Dist.CLIENT) {
+        if (dist == Dist.CLIENT) {
             modBus.addListener(this::doClientStuff);
             modBus.addListener(this::registerKeyBinding);
             modBus.addListener(this::creativeTabEvent);

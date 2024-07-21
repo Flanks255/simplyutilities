@@ -1,5 +1,6 @@
 package com.flanks255.simplyutilities.render;
 
+import com.flanks255.simplyutilities.SimplyUtilities;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
@@ -15,7 +16,7 @@ import javax.annotation.Nonnull;
 @SuppressWarnings("unused")
 public class OnlineDetectorModel<T extends Entity> extends EntityModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("modid", "onlinedetector"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SimplyUtilities.MODID, "onlinedetector"), "main");
     public final ModelPart ArmAndStand;
     public final ModelPart Base;
     public final ModelPart Eye;
@@ -99,7 +100,7 @@ public class OnlineDetectorModel<T extends Entity> extends EntityModel<T> {
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
         ArmAndStand.render(poseStack, buffer, packedLight, packedOverlay);
         Base.render(poseStack, buffer, packedLight, packedOverlay);
         Eye.render(poseStack, buffer, packedLight, packedOverlay);

@@ -22,7 +22,7 @@ public class Spawn {
         LevelData worldInfo = player.level().getLevelData();
 
         //player.teleportTo(ctx.getSource().getServer().overworld(), worldInfo.getXSpawn(), worldInfo.getYSpawn(), worldInfo.getZSpawn(), player.getViewYRot(0), player.getViewXRot(0));
-        MiscUtils.Teleport(player, ctx.getSource().getServer().overworld(), worldInfo.getXSpawn(), worldInfo.getYSpawn(), worldInfo.getZSpawn(), player.getViewYRot(0), player.getViewXRot(0));
+        MiscUtils.Teleport(player, ctx.getSource().getServer().overworld(), worldInfo.getSpawnPos().getX(), worldInfo.getSpawnPos().getY(), worldInfo.getSpawnPos().getZ(), player.getViewYRot(0), player.getViewXRot(0));
         return 0;
     }
 }

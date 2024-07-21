@@ -2,6 +2,7 @@ package com.flanks255.simplyutilities.data;
 
 import com.flanks255.simplyutilities.configuration.CommonConfiguration;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import org.jetbrains.annotations.NotNull;
@@ -9,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 
 public record BoolConfigCondition(String configOption) implements ICondition {
-    public static final Codec<BoolConfigCondition> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            com.mojang.serialization.Codec.STRING.fieldOf("config_name").forGetter(BoolConfigCondition::configOption)
+    public static final MapCodec<BoolConfigCondition> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+            Codec.STRING.fieldOf("config_name").forGetter(BoolConfigCondition::configOption)
     ).apply(instance, BoolConfigCondition::new));
     @Nonnull
     @Override
-    public Codec<? extends ICondition> codec() {
+    public MapCodec<? extends ICondition> codec() {
         return CODEC;
     }
 

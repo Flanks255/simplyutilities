@@ -5,6 +5,7 @@ import com.flanks255.simplyutilities.SUItems;
 import com.flanks255.simplyutilities.SUTags;
 import com.flanks255.simplyutilities.SimplyUtilities;
 import com.flanks255.simplyutilities.utils.NoAdvRecipeOutput;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
@@ -18,10 +19,11 @@ import net.neoforged.neoforge.common.conditions.NotCondition;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class Recipes extends RecipeProvider {
-    public Recipes(DataGenerator generatorIn) {
-        super(generatorIn.getPackOutput());
+    public Recipes(DataGenerator generatorIn, CompletableFuture<HolderLookup.Provider> registries) {
+        super(generatorIn.getPackOutput(), registries);
     }
 
     @Override
@@ -35,7 +37,7 @@ public class Recipes extends RecipeProvider {
                 .showNotification(false)
                 .unlockedBy("has_logs", has(Items.OAK_LOG))
                 .save(output.withConditions(new BoolConfigCondition("craftLogsToSticks")),
-                        new ResourceLocation(SimplyUtilities.MODID, "stick_from_logs"));
+                        rl("stick_from_logs"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.CHEST, 4)
             .pattern("xxx")
@@ -45,11 +47,11 @@ public class Recipes extends RecipeProvider {
             .showNotification(false)
             .unlockedBy("has_logs", has(Items.OAK_LOG))
             .save(output.withConditions(new AndCondition(List.of(new NotCondition(new ModLoadedCondition("quark")), new BoolConfigCondition("craftLogsToChests")))),
-                    new ResourceLocation(SimplyUtilities.MODID, "chests_from_logs"));
+                    rl("chests_from_logs"));
 
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.0F, 400)
             .unlockedBy("has_flesh", has(Items.ROTTEN_FLESH))
-            .save(output.withConditions(new BoolConfigCondition("smeltFleshIntoLeather")), new ResourceLocation(SimplyUtilities.MODID, "leather_from_flesh"));
+            .save(output.withConditions(new BoolConfigCondition("smeltFleshIntoLeather")), rl("leather_from_flesh"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.STICKY_PISTON)
             .pattern("x")
@@ -58,7 +60,7 @@ public class Recipes extends RecipeProvider {
             .define('y', Items.PISTON)
             .showNotification(false)
             .unlockedBy("hasSlimeBall", has(Items.SLIME_BALL))
-            .save(output,new ResourceLocation(SimplyUtilities.MODID, "sticky_piston"));
+            .save(output,rl("sticky_piston"));
 
         // Ender inhibitor
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, SUBlocks.ENDER_INHIBITOR.getItem())
@@ -71,7 +73,7 @@ public class Recipes extends RecipeProvider {
             .define('a', Tags.Items.STORAGE_BLOCKS_DIAMOND)
             .showNotification(false)
             .unlockedBy("has_pearl", has(Items.ENDER_PEARL))
-            .save(output.withConditions(new BoolConfigCondition("enableEnderInhibitor")), new ResourceLocation(SimplyUtilities.MODID, "ender_inhibitor"));
+            .save(output.withConditions(new BoolConfigCondition("enableEnderInhibitor")), rl("ender_inhibitor"));
 
         // Exoskeleton Leggings
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, SUItems.EXOLEGGINGS.get())
@@ -83,7 +85,7 @@ public class Recipes extends RecipeProvider {
             .define('a', Tags.Items.STORAGE_BLOCKS_DIAMOND)
             .showNotification(false)
             .unlockedBy("has_leather_pants", has(Items.LEATHER_LEGGINGS))
-            .save(output.withConditions(new BoolConfigCondition("exoleggings")), new ResourceLocation(SimplyUtilities.MODID, "exoskeleton_leggings"));
+            .save(output.withConditions(new BoolConfigCondition("exoleggings")), rl("exoskeleton_leggings"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, SUBlocks.ONLINE_DETECTOR.getItem())
             .pattern("GBG")
@@ -96,7 +98,7 @@ public class Recipes extends RecipeProvider {
             .define('H', Items.WARPED_HYPHAE)
             .showNotification(false)
             .unlockedBy("", has(Items.AIR))
-            .save(output.withConditions(new BoolConfigCondition("online_detector")), new ResourceLocation(SimplyUtilities.MODID, "online_detector"));
+            .save(output.withConditions(new BoolConfigCondition("online_detector")), rl("online_detector"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, SUBlocks.CHARCOAL_BLOCK.getItem())
             .pattern("CCC")
@@ -105,12 +107,12 @@ public class Recipes extends RecipeProvider {
             .define('C', Items.CHARCOAL)
             .showNotification(false)
             .unlockedBy("", has(Items.AIR))
-            .save(output.withConditions(new NotCondition(new ModLoadedCondition("mekanism"))), new ResourceLocation(SimplyUtilities.MODID, "charcoal_block"));
+            .save(output.withConditions(new NotCondition(new ModLoadedCondition("mekanism"))), rl("charcoal_block"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.CHARCOAL, 9)
             .requires(SUTags.STORAGE_BLOCKS_CHARCOAL)
             .unlockedBy("has_charcoal_block", has(SUBlocks.CHARCOAL_BLOCK.getItem()))
-            .save(output.withConditions(new NotCondition(new ModLoadedCondition("mekanism"))), new ResourceLocation(SimplyUtilities.MODID, "charcoal_from_block"));
+            .save(output.withConditions(new NotCondition(new ModLoadedCondition("mekanism"))), rl("charcoal_from_block"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, SUBlocks.ENDER_PEARL_BLOCK.getItem())
             .pattern("PP")
@@ -118,18 +120,18 @@ public class Recipes extends RecipeProvider {
             .define('P', Tags.Items.ENDER_PEARLS)
             .showNotification(false)
             .unlockedBy("has_ender_pearl", has(Items.ENDER_PEARL))
-            .save(output, new ResourceLocation(SimplyUtilities.MODID, "ender_pearl_block"));
+            .save(output, rl("ender_pearl_block"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.ENDER_PEARL, 4)
             .requires(SUTags.STORAGE_BLOCKS_ENDER_PEARL).unlockedBy("has_ender_pearl_block", has(SUBlocks.ENDER_PEARL_BLOCK.getItem()))
-            .save(output, new ResourceLocation(SimplyUtilities.MODID, "ender_pearl"));
+            .save(output, rl("ender_pearl"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, SUItems.MINICOAL.get(), 8)
                 .requires(Items.COAL).unlockedBy("has_coal", has(Items.COAL))
-                .save(output, new ResourceLocation(SimplyUtilities.MODID, "mini_coal"));
+                .save(output, rl("mini_coal"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, SUItems.MINICHARCOAL.get(), 8)
                 .requires(Items.CHARCOAL).unlockedBy("has_charcoal", has(Items.CHARCOAL))
-                .save(output, new ResourceLocation(SimplyUtilities.MODID, "mini_charcoal"));
+                .save(output, rl("mini_charcoal"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.COAL)
                 .pattern("MMM")
@@ -138,7 +140,7 @@ public class Recipes extends RecipeProvider {
                 .define('M', SUItems.MINICOAL.get())
                 .unlockedBy("has_minicoal", has(SUItems.MINICOAL.get()))
                 .showNotification(false)
-                .save(output, new ResourceLocation(SimplyUtilities.MODID, "minicoal_to_coal"));
+                .save(output, rl("minicoal_to_coal"));
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.CHARCOAL)
                 .pattern("MMM")
                 .pattern("M M")
@@ -146,14 +148,18 @@ public class Recipes extends RecipeProvider {
                 .define('M', SUItems.MINICHARCOAL.get())
                 .showNotification(false)
                 .unlockedBy("has_minicoal", has(SUItems.MINICHARCOAL.get()))
-                .save(output, new ResourceLocation(SimplyUtilities.MODID, "minicharcoal_to_coal"));
+                .save(output, rl("minicharcoal_to_coal"));
 
-/*        output.accept(new ResourceLocation(SimplyUtilities.MODID, "test_rightclick"), new RightClickRecipe(Ingredient.of(Items.EMERALD), Blocks.ANVIL, new ItemStack(Items.DIAMOND)), null);
+/*        output.accept(rl("test_rightclick"), new RightClickRecipe(Ingredient.of(Items.EMERALD), Blocks.ANVIL, new ItemStack(Items.DIAMOND)), null);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.MAGMA_BLOCK)
             .requires(Tags.Items.COBBLESTONE)
             //.requires(new FluidIngredient(FluidTags.LAVA))
             .requires(new FluidIngredient(Fluids.LAVA))
-            .unlockedBy("", has(Items.AIR)).save(output, new ResourceLocation(SimplyUtilities.MODID, "test_fluidingredient"));*/
+            .unlockedBy("", has(Items.AIR)).save(output, rl("test_fluidingredient"));*/
+    }
+
+    public static ResourceLocation rl(String path) {
+        return ResourceLocation.fromNamespaceAndPath(SimplyUtilities.MODID, path);
     }
 }

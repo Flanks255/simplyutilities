@@ -24,6 +24,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
@@ -59,8 +60,9 @@ public class OnlineDetector extends Block implements EntityBlock {
         }
     }
 
+    @Nonnull
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(@Nonnull BlockState state, Level worldIn, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull BlockHitResult hit) {
         if(!worldIn.isClientSide) {
             BlockEntity te = worldIn.getBlockEntity(pos);
             if (te instanceof BEOnlineDetector) {
@@ -70,7 +72,7 @@ public class OnlineDetector extends Block implements EntityBlock {
                 }
             }
 
-            return super.use(state, worldIn, pos, player, handIn, hit);
+            return super.useWithoutItem(state, worldIn, pos, player, hit);
         }
         return InteractionResult.SUCCESS;
     }

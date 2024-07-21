@@ -20,7 +20,7 @@ public class HomePoint {
     }
 
     public ResourceKey<Level> getWorldKey() {
-        return ResourceKey.create(Registries.DIMENSION, new ResourceLocation(world));
+        return ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(world));
     }
 
     public BlockPos getPostion() {

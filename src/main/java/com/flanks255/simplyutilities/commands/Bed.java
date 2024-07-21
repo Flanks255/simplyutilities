@@ -28,9 +28,9 @@ public class Bed {
         ServerLevel TargetWorld = player.getServer().getLevel(player.getRespawnDimension());
         BlockPos spawnPoint = player.getRespawnPosition();
         if (spawnPoint != null && TargetWorld != null) {
-            Optional<Vec3> respawnPosition = TargetWorld.getBlockState(spawnPoint).getRespawnPosition(EntityType.PLAYER, TargetWorld, spawnPoint, 0, player);
+            Optional<ServerPlayer.RespawnPosAngle> respawnPosition = TargetWorld.getBlockState(spawnPoint).getRespawnPosition(EntityType.PLAYER, TargetWorld, spawnPoint, player.getViewYRot(0));
             respawnPosition.ifPresentOrElse(
-                (p) -> MiscUtils.Teleport(player, TargetWorld, p, player.getViewYRot(0), player.getViewXRot(0)),
+                (p) -> MiscUtils.Teleport(player, TargetWorld, p.position(), player.getViewYRot(0), player.getViewXRot(0)),
                 () -> MiscUtils.Teleport(player, TargetWorld, spawnPoint, player.getViewYRot(0), player.getViewXRot(0)));
         }
         return 0;

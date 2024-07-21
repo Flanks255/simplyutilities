@@ -1,5 +1,6 @@
 package com.flanks255.simplyutilities.capabilities;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -27,24 +28,22 @@ public class SUFluidHandler implements IFluidHandler {
         return uuid;
     }
 
-    public CompoundTag toNBT() {
+    public CompoundTag toNBT(HolderLookup.Provider lookupProvider) {
         CompoundTag nbt = new CompoundTag();
 
         nbt.putUUID("UUID", uuid);
         nbt.putInt("Capacity", capacity);
         if (!storedFluid.isEmpty()) {
-            CompoundTag fluidnbt = new CompoundTag();
-            storedFluid.writeToNBT(fluidnbt);
-            nbt.put("Fluid", fluidnbt);
+            nbt.put("Fluid", storedFluid.save(lookupProvider));
         }
 
         return nbt;
     }
 
-    public static Optional<SUFluidHandler> fromNBT(CompoundTag nbt) {
+    public static Optional<SUFluidHandler> fromNBT(HolderLookup.Provider lookupProvider, CompoundTag nbt) {
         if(nbt.contains("UUID") && nbt.contains("Capacity")) {
             SUFluidHandler canHandler = new SUFluidHandler(nbt.getUUID("UUID"), nbt.getInt("Capacity"));
-            canHandler.setStoredFluid(FluidStack.loadFluidStackFromNBT(nbt.getCompound("Fluid")));
+            canHandler.setStoredFluid(FluidStack.parseOptional(lookupProvider, nbt.getCompound("Fluid")));
             return Optional.of(canHandler);
         }
         return Optional.empty();

@@ -1,7 +1,9 @@
 package com.flanks255.simplyutilities.utils;
 
+import com.flanks255.simplyutilities.SimplyUtilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundSetExperiencePacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
@@ -19,5 +21,11 @@ public class MiscUtils {
         player.connection.send(new ClientboundSetExperiencePacket(player.experienceProgress, player.totalExperience, player.experienceLevel));
     }
 
+    public static ResourceLocation rl(String namespace, String path) {
+        return ResourceLocation.fromNamespaceAndPath(namespace, path);
+    }
 
+    public static ResourceLocation rl(String path) {
+        return ResourceLocation.fromNamespaceAndPath(SimplyUtilities.MODID, path);
+    }
 }

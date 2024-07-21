@@ -12,10 +12,10 @@ public class Generator {
 
         DataGenerator generator = event.getGenerator();
         generator.addProvider(true, new ItemModels(generator, event.getExistingFileHelper()));
-        generator.addProvider(true, new Recipes(generator));
+        generator.addProvider(true, new Recipes(generator, event.getLookupProvider()));
         generator.addProvider(true, new Lang(generator));
         generator.addProvider(true, new BlockStates(generator, event.getExistingFileHelper()));
-        generator.addProvider(true, SULootTables.getProvider(generator.getPackOutput()));
+        generator.addProvider(true, SULootTables.getProvider(generator.getPackOutput(), event.getLookupProvider()));
         SUBlockTags blockTags = new SUBlockTags(generator,event.getLookupProvider(), event.getExistingFileHelper());
         generator.addProvider(true, blockTags);
         generator.addProvider(true, new SUItemTags(generator, event.getLookupProvider(), blockTags, event.getExistingFileHelper()));

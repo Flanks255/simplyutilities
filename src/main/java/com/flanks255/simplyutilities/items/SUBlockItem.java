@@ -29,8 +29,8 @@ public class SUBlockItem extends BlockItem {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level worldIn, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(@Nonnull ItemStack stack, @Nonnull TooltipContext context, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flagIn) {
+        super.appendHoverText(stack, context, tooltip, flagIn);
         boolean hasAny = hasTranslation(block.getDescriptionId() + ".info");
         if (Screen.hasShiftDown() && hasAny) {
             tooltip.add(Component.translatable(block.getDescriptionId() + ".info"));

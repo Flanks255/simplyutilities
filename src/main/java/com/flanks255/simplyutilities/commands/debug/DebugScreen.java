@@ -7,6 +7,8 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -34,7 +36,7 @@ public class DebugScreen extends Screen {
     }
     viewTab currentTab = viewTab.BASIC;
 
-    private ResourceLocation GUI = new ResourceLocation(SimplyUtilities.MODID, "textures/gui/debughand.png");
+    private ResourceLocation GUI = ResourceLocation.fromNamespaceAndPath(SimplyUtilities.MODID, "textures/gui/debughand.png");
     private int guiLeft;
     private int guiTop;
     private int xSize = 256;
@@ -87,7 +89,7 @@ public class DebugScreen extends Screen {
                 }
                 break;
             case NBT:
-                if (stack.hasTag()) {
+                if (stack.has(DataComponents.CUSTOM_DATA)) {
 /*                    String lineList[] = stack.getTag().getPrettyDisplay(" ", 1).getString().split("\n");
                     int y = guiTop + 24;
                     for (String line : lineList) {

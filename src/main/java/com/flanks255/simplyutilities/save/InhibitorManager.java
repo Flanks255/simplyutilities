@@ -2,6 +2,7 @@ package com.flanks255.simplyutilities.save;
 
 import com.flanks255.simplyutilities.SimplyUtilities;
 import com.flanks255.simplyutilities.configuration.ConfigCache;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.LongTag;
@@ -54,7 +55,7 @@ public class InhibitorManager extends SavedData {
         return false;
     }
 
-    public static InhibitorManager load(CompoundTag nbt) {
+    public static InhibitorManager load(CompoundTag nbt, HolderLookup.Provider registries) {
         Set<BlockPos> inhibitors = new HashSet<>();
         if (nbt.contains("Inhibitors")) {
             ListTag positions = nbt.getList("Inhibitors", Tag.TAG_LONG);
@@ -65,7 +66,7 @@ public class InhibitorManager extends SavedData {
 
     @Nonnull
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    public CompoundTag save(CompoundTag compound, HolderLookup.Provider registries) {
         ListTag poslist = new ListTag();
         inhibitors.forEach((pos -> poslist.add(LongTag.valueOf(pos.asLong()))));
 

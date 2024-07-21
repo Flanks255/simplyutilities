@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "forge:storage_blocks/ender_pearl"
+      "item": "minecraft:coal"
     }
   ],
   "result": {
-    "count": 4,
-    "item": "minecraft:ender_pearl"
+    "count": 8,
+    "id": "simplyutilities:mini_coal"
   }
 }

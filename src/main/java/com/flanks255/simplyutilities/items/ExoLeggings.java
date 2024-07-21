@@ -1,5 +1,6 @@
 package com.flanks255.simplyutilities.items;
 
+import com.flanks255.simplyutilities.SUMaterials;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.item.TooltipFlag;
@@ -22,7 +23,7 @@ import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 
 public class ExoLeggings extends ArmorItem {
     public ExoLeggings() {
-        super(new ExoMaterial(), Type.LEGGINGS,  (new Item.Properties()));
+        super(SUMaterials.EXO, Type.LEGGINGS,  (new Item.Properties().durability(256)));
     }
 
     @Override
@@ -43,8 +44,8 @@ public class ExoLeggings extends ArmorItem {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level worldIn, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(@Nonnull ItemStack stack, @Nonnull TooltipContext context, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flagIn) {
+        super.appendHoverText(stack, context, tooltip, flagIn);
         if (Screen.hasShiftDown()) {
             tooltip.add(Component.translatable(this.getDescriptionId() + ".info"));
             if (hasTranslation(this.getDescriptionId()+".info2"))

@@ -5,6 +5,7 @@ import com.flanks255.simplyutilities.configuration.ConfigCache;
 import com.flanks255.simplyutilities.network.OpenOtherDoorPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -19,7 +20,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 public class DoubleDoorFix {
 
     public static void playerInteraction(PlayerInteractEvent.RightClickBlock interactEvent) {
-        if (interactEvent.getEntity() instanceof FakePlayer || interactEvent.getEntity().isShiftKeyDown() || interactEvent.isCanceled() || interactEvent.getResult() == Event.Result.DENY)
+        if (interactEvent.getEntity() instanceof FakePlayer || interactEvent.getEntity().isShiftKeyDown() || interactEvent.isCanceled() || interactEvent.getCancellationResult() == InteractionResult.FAIL)
             return;
 
         Level world = interactEvent.getLevel();
@@ -28,7 +29,7 @@ public class DoubleDoorFix {
         if (world.getBlockState(blockPos).getBlock() instanceof DoorBlock) {
             openOtherDoor(world, blockPos);
             if (world.isClientSide)
-                PacketDistributor.SERVER.noArg().send(new OpenOtherDoorPacket(blockPos));
+                PacketDistributor.sendToServer(new OpenOtherDoorPacket(blockPos));
         }
     }
 

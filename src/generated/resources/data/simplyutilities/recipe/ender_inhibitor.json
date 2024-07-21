@@ -9,10 +9,10 @@
   "category": "misc",
   "key": {
     "a": {
-      "tag": "forge:storage_blocks/diamond"
+      "tag": "c:storage_blocks/diamond"
     },
     "b": {
-      "tag": "forge:storage_blocks/iron"
+      "tag": "c:storage_blocks/iron"
     },
     "c": {
       "item": "minecraft:anvil"
@@ -27,7 +27,8 @@
     "aca"
   ],
   "result": {
-    "item": "simplyutilities:ender_inhibitor"
+    "count": 1,
+    "id": "simplyutilities:ender_inhibitor"
   },
   "show_notification": false
 }

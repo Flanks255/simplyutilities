@@ -16,8 +16,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 
 public class OnlineDetectorItemStackRender extends BlockEntityWithoutLevelRenderer {
-    private static final ResourceLocation OFF_TEXTURE = new ResourceLocation(SimplyUtilities.MODID, "textures/tile/onlinedetectoroff.png");
-    private static final ResourceLocation ON_TEXTURE = new ResourceLocation(SimplyUtilities.MODID, "textures/tile/onlinedetectoron.png");
+    private static final ResourceLocation OFF_TEXTURE = ResourceLocation.fromNamespaceAndPath(SimplyUtilities.MODID, "textures/tile/onlinedetectoroff.png");
+    private static final ResourceLocation ON_TEXTURE = ResourceLocation.fromNamespaceAndPath(SimplyUtilities.MODID, "textures/tile/onlinedetectoron.png");
     private final OnlineDetectorModel model;
 
     public OnlineDetectorItemStackRender(BlockEntityRenderDispatcher renderDispatcher, EntityModelSet modelSet) {
@@ -36,7 +36,7 @@ public class OnlineDetectorItemStackRender extends BlockEntityWithoutLevelRender
         matrixStack.scale(-1, -1, 1);
 
 
-        model.renderToBuffer(matrixStack, vertexBuilder, combinedLight, OverlayTexture.NO_OVERLAY, 1,1,1,1);
+        model.renderToBuffer(matrixStack, vertexBuilder, combinedLight, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 
         matrixStack.popPose();
     }

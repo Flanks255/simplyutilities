@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "minecraft:coal"
+      "item": "minecraft:charcoal"
     }
   ],
   "result": {
     "count": 8,
-    "item": "simplyutilities:mini_coal"
+    "id": "simplyutilities:mini_charcoal"
   }
 }

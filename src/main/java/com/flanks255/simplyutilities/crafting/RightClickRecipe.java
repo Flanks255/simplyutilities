@@ -2,10 +2,15 @@ package com.flanks255.simplyutilities.crafting;
 
 import com.flanks255.simplyutilities.SUCrafting;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -20,7 +25,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Objects;
 
-public record RightClickRecipe(Ingredient input, Block block, ItemStack output) implements Recipe<Inventory> {
+public record RightClickRecipe(Ingredient input, Block block, ItemStack output) implements Recipe<EmptyInput> {
     public static String NAME = "right_click";
 
     public boolean matches(ItemStack itemInput, Block blockInput) {
@@ -28,13 +33,13 @@ public record RightClickRecipe(Ingredient input, Block block, ItemStack output) 
     }
 
     @Override
-    public boolean matches(@Nonnull Inventory inv, @Nonnull Level worldIn) {
+    public boolean matches(@Nonnull EmptyInput inv, @Nonnull Level worldIn) {
         return false; //Nah
     }
 
     @Nonnull
     @Override
-    public ItemStack assemble(@Nonnull Inventory inv, @Nonnull RegistryAccess thing) {
+    public ItemStack assemble(EmptyInput input, HolderLookup.Provider registries) {
         return output;
     }
 
@@ -45,7 +50,7 @@ public record RightClickRecipe(Ingredient input, Block block, ItemStack output) 
 
     @Nonnull
     @Override
-    public ItemStack getResultItem(@Nonnull RegistryAccess thing) {
+    public ItemStack getResultItem(@Nonnull HolderLookup.Provider registries) {
         return output;
     }
 
@@ -82,33 +87,41 @@ public record RightClickRecipe(Ingredient input, Block block, ItemStack output) 
 
 
     public static class Serializer implements RecipeSerializer<RightClickRecipe> {
-        public static final Codec<RightClickRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        public static final MapCodec<RightClickRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Ingredient.CODEC.fieldOf("input").forGetter(recipe -> recipe.input),
                 BuiltInRegistries.BLOCK.byNameCodec().fieldOf("block").forGetter(recipe -> recipe.block),
                 ItemStack.CODEC.fieldOf("output").forGetter(recipe -> recipe.output)
         ).apply(instance, RightClickRecipe::new));
 
+        public static final StreamCodec<RegistryFriendlyByteBuf, RightClickRecipe> STREAM_CODEC = StreamCodec.of(
+                RightClickRecipe.Serializer::toNetwork,
+                RightClickRecipe.Serializer::fromNetwork);
+
         @Nonnull
-        @Override
-        public RightClickRecipe fromNetwork(@Nonnull FriendlyByteBuf buffer) {
-            Ingredient ingredient = Ingredient.fromNetwork(buffer);
+        public static RightClickRecipe fromNetwork(@Nonnull RegistryFriendlyByteBuf buffer) {
+            Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
             String blockName = buffer.readUtf(32767);
-            Block block = BuiltInRegistries.BLOCK.get(new ResourceLocation(blockName));
-            ItemStack result = buffer.readItem();
+            Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(blockName));
+            ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
             return new RightClickRecipe(ingredient, block, result);
         }
 
         @Nonnull
         @Override
-        public Codec<RightClickRecipe> codec() {
+        public MapCodec<RightClickRecipe> codec() {
             return CODEC;
         }
 
+        @Nonnull
         @Override
-        public void toNetwork(@Nonnull FriendlyByteBuf buffer, RightClickRecipe recipe) {
-            recipe.input.toNetwork(buffer);
+        public StreamCodec<RegistryFriendlyByteBuf, RightClickRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
+
+        public static void toNetwork(@Nonnull RegistryFriendlyByteBuf buffer, RightClickRecipe recipe) {
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.input);
             buffer.writeUtf(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(recipe.block)).toString());
-            buffer.writeItem(recipe.output);
+            ItemStack.STREAM_CODEC.encode(buffer, recipe.output);
         }
     }
 }

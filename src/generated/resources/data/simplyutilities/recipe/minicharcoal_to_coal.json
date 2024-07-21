@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "M": {
-      "item": "simplyutilities:mini_coal"
+      "item": "simplyutilities:mini_charcoal"
     }
   },
   "pattern": [
@@ -12,7 +12,8 @@
     "MMM"
   ],
   "result": {
-    "item": "minecraft:coal"
+    "count": 1,
+    "id": "minecraft:charcoal"
   },
   "show_notification": false
 }

@@ -5,9 +5,14 @@ import com.flanks255.simplyutilities.SimplyUtilities;
 import com.google.gson.JsonObject;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
@@ -30,19 +35,19 @@ public class CopyNBTRecipeShaped extends ShapedRecipe {
     }
     @Nonnull
     @Override
-    public ItemStack assemble(@Nonnull CraftingContainer inv, RegistryAccess thing) {
-        final ItemStack craftingResult = super.assemble(inv, thing);
+    public ItemStack assemble(@Nonnull CraftingInput inv, @Nonnull HolderLookup.Provider provider) {
+        final ItemStack craftingResult = super.assemble(inv, provider);
         TargetNBTIngredient donorIngredient = null;
         ItemStack datasource = ItemStack.EMPTY;
         NonNullList<Ingredient> ingredients = getIngredients();
         for (Ingredient ingredient : ingredients) {
-            if (ingredient instanceof TargetNBTIngredient) {
-                donorIngredient = (TargetNBTIngredient) ingredient;
+            if (ingredient.getCustomIngredient() instanceof TargetNBTIngredient) {
+                donorIngredient = (TargetNBTIngredient) ingredient.getCustomIngredient();
                 break;
             }
         }
         if (donorIngredient != null && !inv.isEmpty()) {
-            for (int i = 0; i < inv.getContainerSize(); i++) {
+            for (int i = 0; i < inv.size(); i++) {
                 final ItemStack item = inv.getItem(i);
                 if (!item.isEmpty() && donorIngredient.test(item)) {
                     datasource = item;
@@ -51,8 +56,8 @@ public class CopyNBTRecipeShaped extends ShapedRecipe {
             }
         }
 
-        if (!datasource.isEmpty() && datasource.hasTag())
-            craftingResult.setTag(datasource.getTag().copy());
+        if (!datasource.isEmpty() && datasource.has(DataComponents.CUSTOM_DATA))
+            craftingResult.set(DataComponents.CUSTOM_DATA, datasource.get(DataComponents.CUSTOM_DATA));
 
         return craftingResult;
     }
@@ -64,33 +69,17 @@ public class CopyNBTRecipeShaped extends ShapedRecipe {
     }
 
     public static class Serializer implements RecipeSerializer<CopyNBTRecipeShaped> {
-        /*        private static final Codec<CopyBackpackDataRecipe> CODEC = RecordCodecBuilder.create($ -> $.group( // :(
-                        ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(ShapedRecipe::getGroup),
-                        CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(ShapedRecipe::category),
-                        ShapedRecipePattern.MAP_CODEC.forGetter(a -> a.pattern),
-                        ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(c -> c.getResultItem(RegistryAccess.EMPTY)),
-                        ExtraCodecs.strictOptionalField(Codec.BOOL, "show_notification", false).forGetter(ShapedRecipe::showNotification)
-                ).apply($, CopyBackpackDataRecipe::new));*/
-        private static final Codec<CopyNBTRecipeShaped> CODEC = ShapedRecipe.Serializer.CODEC.xmap(CopyNBTRecipeShaped::new, $ -> $);
+        private static final MapCodec<CopyNBTRecipeShaped> CODEC = ShapedRecipe.Serializer.CODEC.xmap(CopyNBTRecipeShaped::new, $ -> $);
+        private static final StreamCodec<RegistryFriendlyByteBuf, CopyNBTRecipeShaped> STREAM_CODEC = ShapedRecipe.Serializer.STREAM_CODEC.map(CopyNBTRecipeShaped::new, CopyNBTRecipeShaped::new);
         @Override
-        public @NotNull Codec<CopyNBTRecipeShaped> codec() {
+        public @NotNull MapCodec<CopyNBTRecipeShaped> codec() {
             return CODEC;
         }
 
         @Override
-        public @NotNull CopyNBTRecipeShaped fromNetwork(@NotNull FriendlyByteBuf pBuffer) {
-            return new CopyNBTRecipeShaped(RecipeSerializer.SHAPED_RECIPE.fromNetwork(pBuffer));
+        public StreamCodec<RegistryFriendlyByteBuf, CopyNBTRecipeShaped> streamCodec() {
+            return STREAM_CODEC;
         }
 
-        @Override
-        public void toNetwork(@Nonnull FriendlyByteBuf buffer, @Nonnull CopyNBTRecipeShaped recipe) {
-            try {
-                RecipeSerializer.SHAPED_RECIPE.toNetwork(buffer, recipe);
-            }
-            catch (Exception exception) {
-                SimplyUtilities.LOGGER.info("Error writing CopyNBTRecipeShaped Recipe to packet: ", exception);
-                throw exception;
-            }
-        }
     }
 }

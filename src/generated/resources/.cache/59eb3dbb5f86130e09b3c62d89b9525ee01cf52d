@@ -1,5 +1,5 @@
-// 1.20.4	2024-02-19T17:19:39.2795628	Loot Tables
-7851c3c19df5391c833417117af23ccd06e8d71b data/simplyutilities/loot_tables/blocks/charcoal_block.json
-e38d40185129dc562687c1301ede33d3885dc006 data/simplyutilities/loot_tables/blocks/ender_inhibitor.json
-60d669e60015fae0200787a344c6f2d6f3d935b0 data/simplyutilities/loot_tables/blocks/ender_pearl_block.json
-0f77cb276722dcbaf6fa5cbacd1442f12524cad0 data/simplyutilities/loot_tables/blocks/online_detector.json
+// 1.21	2024-07-19T21:47:10.5297807	Loot Tables
+7851c3c19df5391c833417117af23ccd06e8d71b data/simplyutilities/loot_table/blocks/charcoal_block.json
+e38d40185129dc562687c1301ede33d3885dc006 data/simplyutilities/loot_table/blocks/ender_inhibitor.json
+60d669e60015fae0200787a344c6f2d6f3d935b0 data/simplyutilities/loot_table/blocks/ender_pearl_block.json
+0f77cb276722dcbaf6fa5cbacd1442f12524cad0 data/simplyutilities/loot_table/blocks/online_detector.json

@@ -8,7 +8,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 public class ModelLayers {
-    public static final ModelLayerLocation ONLINEDETECTOR = new ModelLayerLocation(new ResourceLocation(SimplyUtilities.MODID, "onlinedetector"), "onlinedetector");
+    public static final ModelLayerLocation ONLINEDETECTOR = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SimplyUtilities.MODID, "onlinedetector"), "onlinedetector");
 
     public static void init(IEventBus bus) {
         bus.addListener(ModelLayers::registerEntityRenderers);

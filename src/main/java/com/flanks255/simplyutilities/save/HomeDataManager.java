@@ -2,6 +2,7 @@ package com.flanks255.simplyutilities.save;
 
 import com.flanks255.simplyutilities.SimplyUtilities;
 import com.flanks255.simplyutilities.homes.PlayerHomes;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -23,7 +24,7 @@ public class HomeDataManager extends SavedData {
         return serverWorld.getDataStorage().computeIfAbsent(new Factory<>(HomeDataManager::new, HomeDataManager::load), NAME);
     }
 
-    public static HomeDataManager load(CompoundTag nbt) {
+    public static HomeDataManager load(CompoundTag nbt, HolderLookup.Provider registries) {
         if (nbt.contains("Players")) {
             ListTag players = nbt.getList("Players", Tag.TAG_COMPOUND);
 
@@ -35,7 +36,7 @@ public class HomeDataManager extends SavedData {
 
     @Nonnull
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    public CompoundTag save(CompoundTag compound, HolderLookup.Provider registries) {
         ListTag players = new ListTag();
 
         data.forEach(((uuid, playerHomes) -> players.add(playerHomes.toNBT())));

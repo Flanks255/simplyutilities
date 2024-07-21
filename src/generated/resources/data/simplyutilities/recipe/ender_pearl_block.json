@@ -2,17 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "M": {
-      "item": "simplyutilities:mini_charcoal"
+    "P": {
+      "tag": "c:ender_pearls"
     }
   },
   "pattern": [
-    "MMM",
-    "M M",
-    "MMM"
+    "PP",
+    "PP"
   ],
   "result": {
-    "item": "minecraft:charcoal"
+    "count": 1,
+    "id": "simplyutilities:ender_pearl_block"
   },
   "show_notification": false
 }

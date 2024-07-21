@@ -22,14 +22,14 @@ public class Zoom {
 
     public static int setFOV(CommandContext<CommandSourceStack> ctx, double fov) throws CommandSyntaxException {
         ServerPlayer player = ctx.getSource().getPlayerOrException();
-        PacketDistributor.PLAYER.with(player).send(new ZoomFOVPacket(fov));
+        PacketDistributor.sendToPlayer(player, new ZoomFOVPacket(fov));
         ctx.getSource().sendSuccess(() -> Component.translatable("message.su.zoom.setfov", fov), false);
         return 0;
     }
 
     public static int setSmooth(CommandContext<CommandSourceStack> ctx, boolean smooth) throws CommandSyntaxException {
         ServerPlayer player = ctx.getSource().getPlayerOrException();
-        PacketDistributor.PLAYER.with(player).send(new ZoomSmoothMessage(smooth));
+        PacketDistributor.sendToPlayer(player, new ZoomSmoothMessage(smooth));
         ctx.getSource().sendSuccess(() -> Component.translatable("message.su.zoom.setsmooth", smooth), false);
         return 0;
     }

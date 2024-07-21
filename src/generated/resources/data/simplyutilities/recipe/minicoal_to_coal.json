@@ -2,16 +2,18 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "P": {
-      "tag": "forge:ender_pearls"
+    "M": {
+      "item": "simplyutilities:mini_coal"
     }
   },
   "pattern": [
-    "PP",
-    "PP"
+    "MMM",
+    "M M",
+    "MMM"
   ],
   "result": {
-    "item": "simplyutilities:ender_pearl_block"
+    "count": 1,
+    "id": "minecraft:coal"
   },
   "show_notification": false
 }

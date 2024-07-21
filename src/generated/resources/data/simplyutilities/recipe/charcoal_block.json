@@ -21,7 +21,8 @@
     "CCC"
   ],
   "result": {
-    "item": "simplyutilities:charcoal_block"
+    "count": 1,
+    "id": "simplyutilities:charcoal_block"
   },
   "show_notification": false
 }

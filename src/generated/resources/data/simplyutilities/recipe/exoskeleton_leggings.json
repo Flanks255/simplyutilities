@@ -9,7 +9,7 @@
   "category": "misc",
   "key": {
     "a": {
-      "tag": "forge:storage_blocks/diamond"
+      "tag": "c:storage_blocks/diamond"
     },
     "i": {
       "item": "minecraft:iron_bars"
@@ -24,7 +24,8 @@
     "i i"
   ],
   "result": {
-    "item": "simplyutilities:exoleggings"
+    "count": 1,
+    "id": "simplyutilities:exoleggings"
   },
   "show_notification": false
 }

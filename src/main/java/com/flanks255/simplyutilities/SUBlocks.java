@@ -7,6 +7,8 @@ import com.flanks255.simplyutilities.render.OnlineDetectorItemStackRender;
 import com.flanks255.simplyutilities.tile.BEOnlineDetector;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;

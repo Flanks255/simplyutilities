@@ -3,6 +3,7 @@ package com.flanks255.simplyutilities.tile;
 import com.flanks255.simplyutilities.SUBlocks;
 import com.flanks255.simplyutilities.blocks.OnlineDetector;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -12,6 +13,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.Util;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 import java.util.UUID;
@@ -37,9 +39,10 @@ public class BEOnlineDetector extends BlockEntity {
     public final Random rand;
 
     //Bulk chunk data packet initial send to client
+    @Nonnull
     @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag nbt = super.getUpdateTag();
+    public CompoundTag getUpdateTag(@Nonnull HolderLookup.Provider registries) {
+        CompoundTag nbt = super.getUpdateTag(registries);
 
         nbt.putUUID("PlacerUUID", uuid);
         nbt.putString("PlacerName", playerName);
@@ -47,8 +50,8 @@ public class BEOnlineDetector extends BlockEntity {
         return nbt;
     }
     @Override
-    public void handleUpdateTag(CompoundTag nbt) {
-        super.handleUpdateTag(nbt);
+    public void handleUpdateTag(@Nonnull CompoundTag nbt, @Nonnull HolderLookup.Provider registries) {
+        super.handleUpdateTag(nbt, registries);
 
         uuid = nbt.getUUID("PlacerUUID");
         playerName = nbt.getString("PlacerName");
@@ -64,14 +67,14 @@ public class BEOnlineDetector extends BlockEntity {
         return ClientboundBlockEntityDataPacket.create(this);
     }
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+    public void onDataPacket(@Nonnull Connection net, ClientboundBlockEntityDataPacket pkt, @Nonnull HolderLookup.Provider registries) {
         CompoundTag nbt = pkt.getTag();
         onlineState = nbt.getBoolean("OnlineState");
     }
 
     @Override
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
+    public void loadAdditional(@Nonnull CompoundTag nbt, @Nonnull HolderLookup.Provider registries) {
+        super.loadAdditional(nbt, registries);
 
         uuid = nbt.getUUID("PlacerUUID");
         playerName = nbt.getString("PlacerName");
@@ -79,7 +82,9 @@ public class BEOnlineDetector extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag nbt) {
+    protected void saveAdditional(@Nonnull CompoundTag nbt, @Nonnull HolderLookup.Provider registries) {
+        super.saveAdditional(nbt, registries);
+
         nbt.putUUID("PlacerUUID", uuid);
         nbt.putString("PlacerName", playerName);
         nbt.putBoolean("OnlineState", onlineState);

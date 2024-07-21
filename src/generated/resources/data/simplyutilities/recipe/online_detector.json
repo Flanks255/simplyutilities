@@ -9,13 +9,13 @@
   "category": "misc",
   "key": {
     "B": {
-      "tag": "forge:storage_blocks/redstone"
+      "tag": "c:storage_blocks/redstone"
     },
     "E": {
       "item": "minecraft:ender_eye"
     },
     "G": {
-      "tag": "forge:ingots/gold"
+      "tag": "c:ingots/gold"
     },
     "H": {
       "item": "minecraft:warped_hyphae"
@@ -30,7 +30,8 @@
     "HHH"
   ],
   "result": {
-    "item": "simplyutilities:online_detector"
+    "count": 1,
+    "id": "simplyutilities:online_detector"
   },
   "show_notification": false
 }

@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "x": {
-      "tag": "forge:slimeballs"
+      "tag": "c:slimeballs"
     },
     "y": {
       "item": "minecraft:piston"
@@ -14,7 +14,8 @@
     "y"
   ],
   "result": {
-    "item": "minecraft:sticky_piston"
+    "count": 1,
+    "id": "minecraft:sticky_piston"
   },
   "show_notification": false
 }

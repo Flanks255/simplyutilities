@@ -22,8 +22,8 @@ public class OnlineDetectorRender implements BlockEntityRenderer<BEOnlineDetecto
         model = new OnlineDetectorModel(blah.bakeLayer(ModelLayers.ONLINEDETECTOR));
     }
 
-    private static final ResourceLocation OFF_TEXTURE = new ResourceLocation(SimplyUtilities.MODID, "textures/tile/onlinedetectoroff.png");
-    private static final ResourceLocation ON_TEXTURE = new ResourceLocation(SimplyUtilities.MODID, "textures/tile/onlinedetectoron.png");
+    private static final ResourceLocation OFF_TEXTURE = ResourceLocation.fromNamespaceAndPath(SimplyUtilities.MODID, "textures/tile/onlinedetectoroff.png");
+    private static final ResourceLocation ON_TEXTURE = ResourceLocation.fromNamespaceAndPath(SimplyUtilities.MODID, "textures/tile/onlinedetectoron.png");
     private final OnlineDetectorModel model;
 
     @Override

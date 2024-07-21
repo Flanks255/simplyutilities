@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 
 @JeiPlugin
 public class JEIPlugin implements IModPlugin {
-    public static final ResourceLocation ID = new ResourceLocation(SimplyUtilities.MODID, "jei_plugin");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(SimplyUtilities.MODID, "jei_plugin");
     @Nonnull
     @Override
     public ResourceLocation getPluginUid() {
