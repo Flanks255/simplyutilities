@@ -14,23 +14,17 @@ import com.flanks255.simplyutilities.render.ModelLayers;
 import com.flanks255.simplyutilities.tweaks.DoubleDoorFix;
 import com.flanks255.simplyutilities.tweaks.MobGriefProtection;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
-import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
-import net.neoforged.neoforge.client.event.ViewportEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -44,7 +38,7 @@ public class SimplyUtilities
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
     public static boolean isQuarkLoaded = false;
 
-    private final NonNullList<KeyMapping> keyBinds = NonNullList.create();
+    public static final NonNullList<KeyMapping> keyBinds = NonNullList.create();
 
     public SimplyUtilities(IEventBus modBus, ModContainer container, Dist dist) {
         IEventBus neoBus = NeoForge.EVENT_BUS;
@@ -77,10 +71,10 @@ public class SimplyUtilities
         modBus.addListener(this::setup);
         if (dist == Dist.CLIENT) {
             modBus.addListener(this::doClientStuff);
-            modBus.addListener(this::registerKeyBinding);
+            modBus.addListener(SUClientEvents::registerKeyBinding);
             modBus.addListener(this::creativeTabEvent);
+            modBus.addListener(SUClientEvents::onClientExtensions);
         }
-        modBus.addListener(this::doClientStuff);
         neoBus.addListener(EnderInhibitor::TeleportEvent);
         neoBus.addListener(EnderInhibitor::PearlTeleportEvent);
         neoBus.addListener(ExoLeggings::onEntityHurt);
@@ -96,30 +90,13 @@ public class SimplyUtilities
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        NeoForge.EVENT_BUS.addListener(this::onViewportEvent);
-    }
-    @OnlyIn(Dist.CLIENT)
-    private void registerKeyBinding(final RegisterKeyMappingsEvent event) {
-        this.keyBinds.add(0, new KeyMapping("key.simplyutilities.zoom.desc", -1, "key.simplyutilities.category"));
-        event.register(keyBinds.get(0));
+        NeoForge.EVENT_BUS.addListener(SUClientEvents::onViewportEvent);
     }
 
     private void onCommandsRegister(RegisterCommandsEvent event) {
         MyCommands.register(event.getDispatcher());
     }
 
-    @OnlyIn(Dist.CLIENT)
-    private void onViewportEvent(ViewportEvent.ComputeFov event) {
-        if (keyBinds.get(0).isDown()) {
-            event.setFOV(ConfigCache.zoom_fov);
-            if (ConfigCache.zoom_smooth)
-                Minecraft.getInstance().options.smoothCamera = true;
-        }
-        else {
-            if (ConfigCache.zoom_smooth)
-                Minecraft.getInstance().options.smoothCamera = false;
-        }
-    }
 
     private void creativeTabEvent(final BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {

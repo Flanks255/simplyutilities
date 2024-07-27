@@ -1,4 +1,8 @@
 ### [ 0.6.4+mc1.21 ]
+- Removed silicon tag shenanigans.
+- Lots of refactoring.
+
+### [ 0.6.4+mc1.21 ]
 - Ported to 1.21
 - Changed versioning.
 

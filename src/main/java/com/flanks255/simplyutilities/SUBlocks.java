@@ -3,26 +3,19 @@ package com.flanks255.simplyutilities;
 import com.flanks255.simplyutilities.blocks.EnderInhibitor;
 import com.flanks255.simplyutilities.blocks.OnlineDetector;
 import com.flanks255.simplyutilities.items.SUBlockItem;
-import com.flanks255.simplyutilities.render.OnlineDetectorItemStackRender;
 import com.flanks255.simplyutilities.tile.BEOnlineDetector;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.function.Consumer;
 
 
 public class SUBlocks {
@@ -33,17 +26,7 @@ public class SUBlocks {
         (b) -> new SUBlockItem(b,new Item.Properties().stacksTo(64)));
 
     public static final SUBlockReg<OnlineDetector, SUBlockItem, BEOnlineDetector> ONLINE_DETECTOR = new SUBlockReg<>("online_detector", OnlineDetector::new,
-        (b) -> new SUBlockItem(b, new Item.Properties().stacksTo(64)) {
-            @Override
-            public void initializeClient(@Nonnull Consumer<IClientItemExtensions> consumer) {
-                consumer.accept(new IClientItemExtensions() {
-                    @Override
-                    public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                        return new OnlineDetectorItemStackRender(null, null);
-                    }
-                });
-            }
-        }, BEOnlineDetector::new);
+        (b) -> new SUBlockItem(b, new Item.Properties().stacksTo(64)), BEOnlineDetector::new);
 
     public static final SUBlockReg<Block, SUBlockItem, ?> CHARCOAL_BLOCK = new SUBlockReg<>("charcoal_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).requiresCorrectToolForDrops().strength(5.0F, 6.0F)),
         (b) -> new SUBlockItem(b, new Item.Properties().stacksTo(64)) {

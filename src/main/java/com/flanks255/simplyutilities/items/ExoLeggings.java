@@ -27,7 +27,7 @@ public class ExoLeggings extends ArmorItem {
     }
 
     @Override
-    public EquipmentSlot getEquipmentSlot(ItemStack stack) {
+    public EquipmentSlot getEquipmentSlot(@Nonnull ItemStack stack) {
         return EquipmentSlot.LEGS;
     }
 

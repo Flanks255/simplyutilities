@@ -27,10 +27,6 @@ public class SUItemTags extends ItemTagsProvider {
 
     @Override
     protected void addTags(@Nonnull HolderLookup.Provider useless) {
-        TagKey<Item> fSiliconTag = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "silicon"));
-        TagKey<Item> ae2SiliconTag = ItemTags.create(ResourceLocation.fromNamespaceAndPath("appliedenergistics2", "silicon"));
-        this.tag(fSiliconTag).addOptional(ResourceLocation.fromNamespaceAndPath("appliedenergistics2", "silicon"));
-        this.tag(ae2SiliconTag).addOptional(ResourceLocation.fromNamespaceAndPath("refinedstorage", "silicon"));
 
         tag(SUTags.STORAGE_BLOCKS_CHARCOAL).add(SUBlocks.CHARCOAL_BLOCK.getItem());
         tag(SUTags.STORAGE_BLOCKS_ENDER_PEARL).add(SUBlocks.ENDER_PEARL_BLOCK.getItem());

@@ -21,16 +21,12 @@ public class SULootTables extends BlockLootSubProvider {
         super(Set.of(), FeatureFlags.REGISTRY.allFlags(), registries);
     }
 
-    public static LootTableProvider getProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> thingIDontUse) {
-        return new LootTableProvider(output, Set.of(), List.of(new LootTableProvider.SubProviderEntry(SULootTables::new, LootContextParamSets.BLOCK)), thingIDontUse);
+    public static LootTableProvider getProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> future) {
+        return new LootTableProvider(output, Set.of(), List.of(new LootTableProvider.SubProviderEntry(SULootTables::new, LootContextParamSets.BLOCK)), future);
     }
 
     @Override
     protected void generate() {
-/*        for(RegistryObject<Block> block : SUBlocks.BLOCKS.getEntries()) {
-            this.dropSelf(block.get());
-        }*/
-
         this.dropSelf(SUBlocks.ENDER_INHIBITOR.get());
         this.dropSelf(SUBlocks.ONLINE_DETECTOR.get());
         this.dropSelf(SUBlocks.CHARCOAL_BLOCK.get());

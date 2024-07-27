@@ -10,6 +10,8 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
+import javax.annotation.Nonnull;
+
 public record ZoomSmoothMessage(boolean smoothCam) implements CustomPacketPayload {
     public static final Type<ZoomSmoothMessage> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(SimplyUtilities.MODID, "smoothzoom"));
     public static final StreamCodec<FriendlyByteBuf, ZoomSmoothMessage> CODEC = StreamCodec.composite(
@@ -30,6 +32,7 @@ public record ZoomSmoothMessage(boolean smoothCam) implements CustomPacketPayloa
             );
     }
 
+    @Nonnull
     @Override
     public Type<? extends CustomPacketPayload> type() {
         return TYPE;

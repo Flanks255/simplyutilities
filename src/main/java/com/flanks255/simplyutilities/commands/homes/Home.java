@@ -45,7 +45,7 @@ public class Home {
             if (targetWorld != null) {
                 ctx.getSource().sendSuccess(() -> Component.translatable("message.su.home", name), false);
                 //player.teleportTo(targetWorld, home.getPostion().getX(), home.getPostion().getY(), home.getPostion().getZ(), player.getViewYRot(0), player.getViewXRot(0));
-                MiscUtils.Teleport(player, targetWorld, home.getPostion(), player.getViewYRot(0), player.getViewXRot(0));
+                MiscUtils.Teleport(player, targetWorld, home.getPosition(), player.getViewYRot(0), player.getViewXRot(0));
             }
         }
         return 0;

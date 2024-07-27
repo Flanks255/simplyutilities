@@ -17,7 +17,7 @@ public class SUBlockTags extends BlockTagsProvider {
     }
 
     @Override
-    protected void addTags(@Nonnull HolderLookup.Provider somethingSomethingDarkside) {
+    protected void addTags(@Nonnull HolderLookup.Provider provider) {
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(SUBlocks.ONLINE_DETECTOR.getBlock());
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(SUBlocks.ENDER_INHIBITOR.getBlock());
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(SUBlocks.CHARCOAL_BLOCK.getBlock());

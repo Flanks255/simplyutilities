@@ -8,8 +8,6 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 public class Generator {
     public static void gatherData(GatherDataEvent event) {
-        //CraftingHelper.register(BoolConfigCondition.Serializer.INSTANCE);
-
         DataGenerator generator = event.getGenerator();
         generator.addProvider(true, new ItemModels(generator, event.getExistingFileHelper()));
         generator.addProvider(true, new Recipes(generator, event.getLookupProvider()));

@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
+@SuppressWarnings("deprecation")
 public class OnlineDetector extends Block implements EntityBlock {
     public OnlineDetector() {
         super(BlockBehaviour.Properties.of()
@@ -51,7 +52,7 @@ public class OnlineDetector extends Block implements EntityBlock {
     }
 
     @Override
-    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(@Nonnull Level worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nullable LivingEntity placer, @Nonnull ItemStack stack) {
         super.setPlacedBy(worldIn, pos, state, placer, stack);
 
         BlockEntity te = worldIn.getBlockEntity(pos);
@@ -78,24 +79,24 @@ public class OnlineDetector extends Block implements EntityBlock {
     }
 
     @Override
-    public int getSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
+    public int getSignal(BlockState blockState, @Nonnull BlockGetter blockAccess, @Nonnull BlockPos pos, @Nonnull Direction side) {
         return blockState.getValue(ON)?15:0;
     }
 
     @Override
-    public boolean isSignalSource(BlockState state) {
+    public boolean isSignalSource(@Nonnull BlockState state) {
         return true;
     }
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+    public BlockEntity newBlockEntity(@Nonnull BlockPos blockPos, @Nonnull BlockState blockState) {
         return new BEOnlineDetector(blockPos, blockState);
     }
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState blockState, BlockEntityType<T> entityType) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, @Nonnull BlockState blockState, @Nonnull BlockEntityType<T> entityType) {
         return world.isClientSide? BEOnlineDetector::clientTick : BEOnlineDetector::serverTick;
     }
 

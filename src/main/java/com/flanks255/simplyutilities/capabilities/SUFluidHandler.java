@@ -82,7 +82,7 @@ public class SUFluidHandler implements IFluidHandler {
     }
 
     @Override
-    public int fill(FluidStack resource, FluidAction action) {
+    public int fill(@Nonnull FluidStack resource, @Nonnull FluidAction action) {
         int filled = 0;
         if (storedFluid.isEmpty()) {
             filled = Math.min(capacity, resource.getAmount());
@@ -91,7 +91,7 @@ public class SUFluidHandler implements IFluidHandler {
                 storedFluid.setAmount(filled);
             }
         }
-        else if (resource.isFluidEqual(storedFluid)) {
+        else if (FluidStack.isSameFluidSameComponents(resource, storedFluid)) {
             filled = Math.min(resource.getAmount() + storedFluid.getAmount(), capacity) - storedFluid.getAmount();
             if (action.execute())
                 storedFluid.grow(filled);
@@ -101,8 +101,8 @@ public class SUFluidHandler implements IFluidHandler {
 
     @Nonnull
     @Override
-    public FluidStack drain(FluidStack resource, FluidAction action) {
-        if (!storedFluid.isEmpty() && resource.isFluidEqual(storedFluid)) {
+    public FluidStack drain(@Nonnull FluidStack resource, @Nonnull FluidAction action) {
+        if (!storedFluid.isEmpty() &&  FluidStack.isSameFluidSameComponents(resource, storedFluid)) {
             int drained = Math.min(storedFluid.getAmount(),resource.getAmount());
             FluidStack drainedFluid = storedFluid.copy();
             drainedFluid.setAmount(drained);
@@ -115,7 +115,7 @@ public class SUFluidHandler implements IFluidHandler {
 
     @Nonnull
     @Override
-    public FluidStack drain(int maxDrain, FluidAction action) {
+    public FluidStack drain(int maxDrain, @Nonnull FluidAction action) {
         if (!storedFluid.isEmpty()) {
             int drained = Math.min(storedFluid.getAmount(), maxDrain);
             FluidStack drainedFluid = storedFluid.copy();

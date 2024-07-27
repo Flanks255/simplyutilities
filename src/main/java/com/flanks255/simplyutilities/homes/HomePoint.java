@@ -5,26 +5,25 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.world.level.Level;
 
 public class HomePoint {
     private final String name;
     private String world;
-    private BlockPos postion;
+    private BlockPos position;
 
     public HomePoint(String name, String world, BlockPos pos) {
         this.name = name;
         this.world = world;
-        this.postion = pos;
+        this.position = pos;
     }
 
     public ResourceKey<Level> getWorldKey() {
         return ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(world));
     }
 
-    public BlockPos getPostion() {
-        return postion;
+    public BlockPos getPosition() {
+        return position;
     }
 
     public String getName() {
@@ -33,7 +32,7 @@ public class HomePoint {
 
     public void update(String newWorld, BlockPos newPos) {
         this.world = newWorld;
-        this.postion = newPos;
+        this.position = newPos;
     }
 
     public CompoundTag toNBT() {
@@ -41,7 +40,7 @@ public class HomePoint {
 
         nbt.putString("Name", name);
         nbt.putString("WorldKey", world);
-        nbt.putLong("Pos", postion.asLong());
+        nbt.putLong("Pos", position.asLong());
 
         return nbt;
     }

@@ -46,7 +46,7 @@ public class EnderInhibitor extends Block {
     }
 
     @Override
-    public void onBlockExploded(BlockState state, Level world, BlockPos pos, Explosion explosion) {
+    public void onBlockExploded(@Nonnull BlockState state, @Nonnull Level world, @Nonnull BlockPos pos, @Nonnull Explosion explosion) {
         super.onBlockExploded(state, world, pos, explosion);
 
         if (!world.isClientSide)
