@@ -126,40 +126,98 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
 sourceSets.main.resources.srcDir generateModMetadata
 neoForge.ideSyncTask generateModMetadata
 
+tasks.register('sourcesJar', Jar) {
+    from sourceSets.main.java
+    archiveClassifier.set('sources')
+}
+
+artifacts {
+    archives sourcesJar
+}
+
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
-            groupId project.group
+/*            groupId project.group
             artifactId base.archivesName.get()
             version project.version
+            from components.java*/
             from components.java
+
+            artifact sourcesJar
         }
     }
 
     repositories {
-        if (ENV.SAPS_TOKEN) {
+        def saps_token = providers.environmentVariable("SAPS_TOKEN")
+        if (saps_token.isPresent()) {
             maven {
-                url "https://maven.saps.dev/minecraft"
+                url "https://maven.saps.dev/releases"
                 credentials {
                     username = "flanks"
-                    password = "${ENV.SAPS_TOKEN}"
+                    password = saps_token.get()
                 }
             }
         }
     }
 }
 
+// From Mikey
+/**
+ * Seek out the changelog for the current version and return it as a string.
+ */
+def createChangelog = () -> {
+    def changelogText = new File("CHANGELOG.md").text
+    def changelog = ""
+
+    def lines = changelogText.split("\n")
+    def inChangelog = false
+    for (int i = 0; i < lines.size(); i++) {
+        def line = lines[i]
+        if (line.startsWith("# ")) {
+            if (inChangelog) {
+                break
+            } else {
+                if (line.contains(mod_version)) {
+                    inChangelog = true
+                }
+            }
+        }
+
+        if (inChangelog) {
+            changelog += line + "\n"
+        }
+    }
+
+    def output = changelog.trim()
+    return output.empty ? "No changelog found" : output
+}
+
+def cfToken = providers.environmentVariable("CURSEFORGE_KEY")
+def ghToken = providers.environmentVariable("GITHUB_TOKEN")
+
 //https://modmuss50.github.io/mod-publish-plugin/
 publishMods {
-    dryRun = !providers.environmentVariable("CURSEFORGE_KEY").isPresent()
+    dryRun = !cfToken.isPresent() || !ghToken.isPresent()
     file = jar.archiveFile
-    changelog = file("./CHANGELOG.md").text
+    changelog = createChangelog().trim()
     modLoaders.add("NeoForge")
     type = BETA
+
+    additionalFiles.from sourcesJar.archiveFile
+
     curseforge {
-        accessToken = providers.environmentVariable("CURSEFORGE_KEY")
+        accessToken = cfToken
         projectId = project.curseforge_id
         minecraftVersions.add(project.minecraft_version)
+        javaVersions.add(JavaVersion.VERSION_21)
+    }
+
+    github {
+        repository = "Flanks255/simplyutilities"
+        accessToken = ghToken
+        commitish = providers.environmentVariable("GITHUB_SHA").orElse("dryRun")
+        tagName = providers.environmentVariable("GITHUB_REF_NAME").orElse("dryRun")
     }
 }
 
