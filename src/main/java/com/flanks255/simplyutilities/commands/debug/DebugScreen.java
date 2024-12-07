@@ -7,10 +7,10 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.core.component.DataComponentType;
-import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.component.TypedDataComponent;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -31,7 +31,7 @@ public class DebugScreen extends Screen {
     enum viewTab {
         BASIC,
         TAGS,
-        NBT,
+        COMPONENTS,
         CLASSES
     }
     viewTab currentTab = viewTab.BASIC;
@@ -54,7 +54,7 @@ public class DebugScreen extends Screen {
 
         addWidget(new ViewButton(this,guiLeft + 20, guiTop + 3, 56, 10, Component.literal("Basic"), viewTab.BASIC, tabClick));
         addWidget(new ViewButton(this,guiLeft + 76, guiTop + 3, 56, 10, Component.literal("Tags"), viewTab.TAGS, tabClick));
-        addWidget(new ViewButton(this,guiLeft + 132, guiTop + 3, 56, 10, Component.literal("NBT Data"), viewTab.NBT, tabClick));
+        addWidget(new ViewButton(this,guiLeft + 132, guiTop + 3, 56, 10, Component.literal("Data Components"), viewTab.COMPONENTS, tabClick));
         addWidget(new ViewButton(this,guiLeft + 188, guiTop + 3, 56, 10, Component.literal("Class info"), viewTab.CLASSES, tabClick));
     }
 
@@ -63,7 +63,6 @@ public class DebugScreen extends Screen {
         super.renderBackground(gg, mouseX, mouseY, partialTicks);
 
         gg.blit(GUI, guiLeft, guiTop, 0,0, 256, 220, 256, 256);
-
     }
 
     @Override
@@ -88,17 +87,12 @@ public class DebugScreen extends Screen {
                     y+=10;
                 }
                 break;
-            case NBT:
-                if (stack.has(DataComponents.CUSTOM_DATA)) {
-/*                    String lineList[] = stack.getTag().getPrettyDisplay(" ", 1).getString().split("\n");
-                    int y = guiTop + 24;
-                    for (String line : lineList) {
-                        drawString(matrixStack, font,new TextComponent(line), guiLeft + 8, y, 0xFFFFFF);
-                        y += 10;
-                    }*/
+            case COMPONENTS:
+                int yy = guiTop + 24;
+                for (TypedDataComponent<?> component : stack.getComponents()) {
+                    gg.drawString(font, font.substrByWidth(FormattedText.of(component.toString()), xSize - 16).getString(),guiLeft + 8, yy, 0xFFFFFF);
+                    yy += 10;
                 }
-                else
-                    gg.drawString(font, "NBT: None" ,guiLeft + 8, guiTop + 24, 0xFFFFFF);
                 break;
             case CLASSES:
                 break;

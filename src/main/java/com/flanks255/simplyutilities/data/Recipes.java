@@ -3,13 +3,11 @@ package com.flanks255.simplyutilities.data;
 import com.flanks255.simplyutilities.SUBlocks;
 import com.flanks255.simplyutilities.SUItems;
 import com.flanks255.simplyutilities.SUTags;
-import com.flanks255.simplyutilities.SimplyUtilities;
 import com.flanks255.simplyutilities.utils.MiscUtils;
 import com.flanks255.simplyutilities.utils.NoAdvRecipeOutput;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -57,7 +55,7 @@ public class Recipes extends RecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.STICKY_PISTON)
             .pattern("x")
             .pattern("y")
-            .define('x', Tags.Items.SLIMEBALLS)
+            .define('x', Tags.Items.SLIME_BALLS)
             .define('y', Items.PISTON)
             .showNotification(false)
             .unlockedBy("hasSlimeBall", has(Items.SLIME_BALL))

@@ -1,4 +1,4 @@
-// 1.21	2024-07-19T21:47:10.5307877	Recipes
+// 1.21.1	2024-12-07T13:31:59.1576624	Recipes
 37ffa1af735047d37e99f15c53f15947bee0a38e data/simplyutilities/recipe/charcoal_block.json
 334c8fd516ecbb62300acb2bb36b944ed051c255 data/simplyutilities/recipe/charcoal_from_block.json
 da4ad5255e0fc36c51be11f4ed01327dcadce166 data/simplyutilities/recipe/chests_from_logs.json
@@ -12,5 +12,5 @@ ecd47bf4c5a82ea475e264acc4723450365095c7 data/simplyutilities/recipe/leather_fro
 3c294d6d3537df701069693e5a331f7da1bdccf8 data/simplyutilities/recipe/mini_charcoal.json
 4bb8f61aaffac4a77edaab7c57674cf15ae3c923 data/simplyutilities/recipe/mini_coal.json
 0be28a5689cc82f4d186f79ad7b614e8695792e6 data/simplyutilities/recipe/online_detector.json
-aa768ea1e1f93595eb887ba473c6320b93372547 data/simplyutilities/recipe/sticky_piston.json
+c140c38d2bfddc9dab9a76e0e13d79f26fc667e1 data/simplyutilities/recipe/sticky_piston.json
 28f9c5ac0f4182fea7f79473fd51bb9914cc364d data/simplyutilities/recipe/stick_from_logs.json

@@ -1,9 +1,9 @@
 modLoader="javafml"
-loaderVersion="[2,)"
+loaderVersion="${loader_version}"
 license="MIT"
 [[mods]]
 modId="simplyutilities"
-version="${file.jarVersion}"
+version="${mod_version}"
 displayName="Simply Utilities"
 # logoFile="examplemod.png" #optional
 credits="" #optional
@@ -11,3 +11,5 @@ authors="Flanks255"
 description='''
 A collection of small commands and useful things.
 '''
+[[accessTransformers]]
+file="META-INF/accesstransformer.cfg"

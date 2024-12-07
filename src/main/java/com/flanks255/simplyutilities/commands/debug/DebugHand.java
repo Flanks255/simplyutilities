@@ -17,7 +17,7 @@ public class DebugHand {
             ctx.getSource().sendFailure(Component.translatable("message.su.debug.hand.noitem"));
             return 0;
         }
-        //SimplyUtilities.NETWORK.send(PacketDistributor.PLAYER.with(()-> player), new OpenDebugHandMessage(player.getMainHandItem()));
+        //PacketDistributor.sendToPlayer(player, new OpenDebugHandPacket(player.getMainHandItem()));
         return 0;
     }
 }

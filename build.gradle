@@ -2,15 +2,12 @@ plugins {
     id 'java-library'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.155'
-    id "me.modmuss50.mod-publish-plugin" version "0.4.5"
+    id 'net.neoforged.moddev' version '1.0.23'
+    id "me.modmuss50.mod-publish-plugin" version "0.7.4"
 }
 
-repositories {
-    maven { url = 'https://maven.creeperhost.net/' }
-    maven { url = 'https://www.cursemaven.com' }
-    maven { url = 'https://maven.theillusivec4.top/' }
-    maven { url = 'https://maven.saps.dev/releases' }
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
 }
 
 def ENV = System.getenv()
@@ -21,45 +18,73 @@ base {
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 
-runs {
-    // applies to all the run configs below
-    configureEach {
-        //Limit ram usage for the dev environment to 4GB
-        jvmArgument '-Xmx8G'
-
-        modSource project.sourceSets.main
+neoForge {
+    version = project.neo_version
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.hasProperty("parchment_minecraft_version") ? project.parchment_minecraft_version : project.minecraft_version
     }
 
-    client {
-        systemProperty 'neoforge.enabledGameTestNamespaces', "simplyutilities"
-        programArguments.addAll('--width', '1280', '--height', '720')
-        if  (ENV.MCDEVUSER) {
-            programArguments.addAll('--username', ENV.MCDEVUSER)
+    runs {
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', "simplyutilities"
+            programArguments.addAll('--width', '1280', '--height', '720')
+            if  (ENV.MCDEVUSER) {
+                programArguments.addAll('--username', ENV.MCDEVUSER)
+            }
+            if (ENV.MCDEVUUID) {
+                programArguments.addAll('--uuid', ENV.MCDEVUUID)
+            }
         }
-        if (ENV.MCDEVUUID) {
-            programArguments.addAll('--uuid', ENV.MCDEVUUID)
+
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', "simplyutilities"
+        }
+
+        gameTestServer {
+            type = "gameTestServer"
+            systemProperty 'neoforge.enabledGameTestNamespaces', "simplyutilities"
+        }
+
+        data {
+            data()
+            programArguments.addAll '--mod', "simplyutilities", '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+        configureEach { run ->
+            jvmArgument '-Xmx8G'
+            if (run.project.javaToolchains.launcherFor(java.toolchain).map { it.metadata.vendor }.getOrElse("").contains("JetBrains")) {
+                run.jvmArgument("-XX:+AllowEnhancedClassRedefinition")
+            }
         }
     }
 
-    server {
-        systemProperty 'neoforge.enabledGameTestNamespaces', "simplyutilities"
-        programArgument '--nogui'
-    }
-
-    gameTestServer {
-        systemProperty 'forge.enabledGameTestNamespaces', "simplyutilities"
-    }
-
-    data {
-        programArguments.addAll '--mod', "simplyutilities", '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+    mods {
+        "simplyutilities" {
+            sourceSet(sourceSets.main)
+        }
     }
 }
 
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+//minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+repositories {
+    maven { url = 'https://maven.creeperhost.net/' }
+    maven { url = 'https://www.cursemaven.com' }
+    maven { url = 'https://maven.theillusivec4.top/' }
+    maven { url = 'https://maven.saps.dev/releases' }
+}
+
+
 dependencies {
-    implementation "net.neoforged:neoforge:${neo_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
     runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
@@ -71,6 +96,7 @@ dependencies {
 }
 
 jar {
+    group = 'artifact'
     manifest {
         attributes([
             "Specification-Title": "simplyutilities",
@@ -82,7 +108,23 @@ jar {
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
+    from sourceSets.main.output
 }
+
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    var replaceProperties = [
+        loader_version:loader_version,
+        mod_version:mod_version
+    ]
+
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
+}
+
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
 
 publishing {
     publications {
@@ -123,4 +165,11 @@ publishMods {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
 }
