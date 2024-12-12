@@ -138,10 +138,6 @@ artifacts {
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
-/*            groupId project.group
-            artifactId base.archivesName.get()
-            version project.version
-            from components.java*/
             from components.java
 
             artifact sourcesJar
@@ -208,8 +204,8 @@ publishMods {
 
     curseforge {
         accessToken = cfToken
-        projectId = project.curseforge_id
-        minecraftVersions.add(project.minecraft_version)
+        projectId = curseforge_id
+        minecraftVersions.add(minecraft_version)
         javaVersions.add(JavaVersion.VERSION_21)
     }
 
