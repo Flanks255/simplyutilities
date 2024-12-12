@@ -5,23 +5,17 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.ints.IntComparators;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
 import net.neoforged.neoforge.common.crafting.IngredientType;
-import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
@@ -31,13 +25,13 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class FluidIngredient implements ICustomIngredient {
-    public static final MapCodec<FluidIngredient> CODEC = RecordCodecBuilder.mapCodec(instance -> instance
+public class ItemstackFluidIngredient implements ICustomIngredient {
+    public static final MapCodec<ItemstackFluidIngredient> CODEC = RecordCodecBuilder.mapCodec(instance -> instance
             .group(FluidValue.CODEC.fieldOf("value")
                             .forGetter($ -> $.value),
                     Codec.BOOL.fieldOf("advanced")
                             .forGetter($ -> $.advanced))
-            .apply(instance, FluidIngredient::new));
+            .apply(instance, ItemstackFluidIngredient::new));
     private final Boolean advanced;
     private final List<Fluid> matchingFluids = new ArrayList<>();
     private Stream<ItemStack> bucketCache = null;
@@ -55,23 +49,23 @@ public class FluidIngredient implements ICustomIngredient {
     }
 
 
-    public FluidIngredient(TagKey<Fluid> tagIn, int amount, boolean advancedIn) {
+    public ItemstackFluidIngredient(TagKey<Fluid> tagIn, int amount, boolean advancedIn) {
         advanced = advancedIn;
         value = new FluidTagValue(tagIn, amount);
     }
-    public FluidIngredient(TagKey<Fluid> tagIn) {
+    public ItemstackFluidIngredient(TagKey<Fluid> tagIn) {
         this(tagIn, 1000, false);
     }
-    public FluidIngredient(Fluid fluidIn, int amount, boolean advancedIn) {
+    public ItemstackFluidIngredient(Fluid fluidIn, int amount, boolean advancedIn) {
         value = new SpecificFluidValue(new FluidStack(fluidIn, amount));
         advanced = advancedIn;
         matchingFluids.add(fluidIn);
     }
-    public FluidIngredient(Fluid fluidIn) {
+    public ItemstackFluidIngredient(Fluid fluidIn) {
         this(fluidIn, 1000, false);
     }
 
-    public FluidIngredient(FluidValue value, boolean advancedIn) {
+    public ItemstackFluidIngredient(FluidValue value, boolean advancedIn) {
         this.value = value;
         advanced = advancedIn;
     }

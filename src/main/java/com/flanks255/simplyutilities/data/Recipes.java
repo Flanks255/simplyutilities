@@ -153,8 +153,8 @@ public class Recipes extends RecipeProvider {
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.MAGMA_BLOCK)
             .requires(Tags.Items.COBBLESTONE)
-            //.requires(new FluidIngredient(FluidTags.LAVA))
-            .requires(new FluidIngredient(Fluids.LAVA))
+            //.requires(new ItemstackFluidIngredient(FluidTags.LAVA))
+            .requires(new ItemstackFluidIngredient(Fluids.LAVA))
             .unlockedBy("", has(Items.AIR)).save(output, rl("test_fluidingredient"));*/
     }
 }
