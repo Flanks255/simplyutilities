@@ -1,4 +1,8 @@
-# 0.6.4+mc1.21
+# 0.6.6+mc1.21
+* Fixed the Bed command position selection.
+* Various internal improvements.
+
+# 0.6.5+mc1.21
 * Removed silicon tag shenanigans.
 * Lots of refactoring.
 
