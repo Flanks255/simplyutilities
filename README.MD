@@ -22,3 +22,5 @@ Exoskeleton Leggings
 Online Detector
     Emits redstone when the player who placed it is currently online on the server.
  
+### Pull Requests
+- Please do not submit large AI generated pull requests, including version ports.
